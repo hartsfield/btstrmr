@@ -13,7 +13,6 @@
     "tests"
   ],
   "dependencies": {
-    "jqlite": "^1.1.1",
     "jquery": "^2.2.3"
   }
 }
