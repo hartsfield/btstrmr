@@ -1,0 +1,19 @@
+{
+  "name": "rewrite",
+  "description": "Example",
+  "main": "js/app.js",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jqlite": "^1.1.1",
+    "jquery": "^2.2.3"
+  }
+}
