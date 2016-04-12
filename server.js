@@ -15,7 +15,7 @@ var jwt         = require('jsonwebtoken');
 var config      = require('./config'); 
 var User        = require('./models/user');
 var serverConf = {
-  port : 3300,
+  port : 3400,
   ip   : '10.0.0.12',
   start: function() {
     console.log('server started @'.blue    +
