@@ -142,10 +142,8 @@ app.post('/api/updateLikes', function(req, res) {
 
 var authRoutes = express.Router();
 app.post('/api/signup', multipartMiddleware, function(req, res) {
-//  var uname = req.body.username;
-//  var pass  = req.body.password;
-  var uname = 'tom';
-  var pass  = '777';
+  var uname = req.body.username;
+  var pass  = req.body.password;
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(pass, salt, function(err, hash) {
       var nick = new User({
@@ -163,7 +161,6 @@ app.post('/api/signup', multipartMiddleware, function(req, res) {
     });
   });
 });
-
 
 app.post('/api/authenticate', multipartMiddleware, function(req, res) {
   issueToken(req, res, true);

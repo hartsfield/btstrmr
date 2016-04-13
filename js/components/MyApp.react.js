@@ -1,6 +1,8 @@
 var React = require('react');
 var List = require('./List.react');
-var AudioStore = require('../stores/AudioStore.js');
+var AudioStore = require('../stores/AudioStore');
+var Signup = require('./Signup.react');
+var UserInfoStore = require('../stores/UserInfoStore.js');
 
 function getDataForState() {
   return {
@@ -27,6 +29,7 @@ var MyApp = React.createClass({
       return (
         <div>
           <List myList={this.state.myList}/> 
+          <Signup />
         </div>
       );
     } else {
