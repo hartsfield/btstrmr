@@ -1,1 +1,3 @@
-todo: make readme
+#BTSTRMR
+
+todo: finish readme
