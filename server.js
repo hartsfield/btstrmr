@@ -60,7 +60,7 @@ function authenticate(req, res, next) {
               req.headers['x-access-token'] + "\n"
       );*/
   if (token) {
-    jwt.verify(token, app.get('superSecret'), 
+    jwt.verify(token, config.secret, 
       function(err, decoded) {
         if (err) {
           console.log(err);
@@ -110,7 +110,7 @@ function issueToken(req, res, pass) {
       } else {
         user.password = "hash";
         console.log(user);
-        var token = jwt.sign({user: user}, app.get('superSecret'), {
+        var token = jwt.sign({user: user}, config.secret, {
           expiresIn: 2000
         });
         res.cookie("auth", token);
@@ -144,12 +144,13 @@ var authRoutes = express.Router();
 app.post('/api/signup', multipartMiddleware, function(req, res) {
   var uname = req.body.username;
   var pass  = req.body.password;
+  console.log(uname, pass);
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(pass, salt, function(err, hash) {
       var nick = new User({
         name: uname,
         password: hash,
-        admin: true
+      //  admin: true
       });
       nick.save(function(err) {
         if (err) {
@@ -180,7 +181,7 @@ authRoutes.use(function(req, res) {
               req.headers['x-access-token'] + "\n"
       );
   if (token) {
-    jwt.verify(token, app.get('superSecret'), 
+    jwt.verify(token, config.secret, 
       function(err, decoded) {
         if (err) {
           console.log(err);

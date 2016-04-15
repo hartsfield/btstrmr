@@ -20,14 +20,31 @@ const WebAPIUtils = {
     }); 
   },
 
-    updateLike: function (key) {
-     $.post('/api/updateLikes',
-       { key: key },
-       function (data, textStatus, jqXHR) {
-         //
-       }
-     );
-    },
+  updateLike: function (key) {
+    $.post('/api/updateLikes',
+      { key: key },
+      function (data, textStatus, jqXHR) {
+        //
+      }
+    );
+  },
+
+  signup: function (credentials) {
+    $.ajax({
+      url: '/api/signup',
+      type: 'POST',
+      processData: false,
+      contentType: false,
+      //dataType: 'xml/html/script/json',
+      data: credentials,
+      success: function (data, textStatus, jqXHR) {
+        console.log(data);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        // error callback
+      }
+    });
+  },
 };
 
 module.exports = WebAPIUtils;

@@ -4,6 +4,13 @@
     <meta charset="utf8">
     <title>BTSTRMR</title>
     <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script>
+      if (localStorage.token) {
+        $.ajaxSetup({
+          headers: { 'x-access-token': localStorage.token }
+        });
+      }
+    </script>
   </head>
   <body>
     <section id="myapp"></section>
