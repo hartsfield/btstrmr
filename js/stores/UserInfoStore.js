@@ -10,6 +10,10 @@ function signup(credentials) {
   WebAPIUtils.signup(credentials)
 }
 
+function login(credentials) {
+  WebAPIUtils.login(credentials)
+}
+
 var UserInfoStore = assign({}, EventEmitter.prototype, {
   getUser: function () {
     return user;
@@ -33,6 +37,11 @@ AppDispatcher.register(function(action) {
   switch (action.ActionType) {
     case 'user_signup':
       signup(action.data);
+      UserInfoStore.emitChange();
+      break;
+
+    case 'user_login':
+      login(action.data);
       UserInfoStore.emitChange();
       break;
 

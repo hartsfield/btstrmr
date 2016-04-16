@@ -7,6 +7,12 @@ var AuthActionCreators = {
       data: credentials,
     });
   },
+  login: function (credentials) {
+    AppDispatcher.dispatch({
+      ActionType: 'user_login',
+      data: credentials,
+    });
+  },
 }
 
 module.exports = AuthActionCreators;

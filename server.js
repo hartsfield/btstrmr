@@ -11,11 +11,11 @@ var multipart   = require('connect-multiparty');
 var colors      = require("colors");
 var favicon     = require('serve-favicon');
 var bcrypt      = require('bcrypt');
-var jwt         = require('jsonwebtoken'); 
-var config      = require('./config'); 
+var jwt         = require('jsonwebtoken');
+var config      = require('./config');
 var User        = require('./models/user');
 var serverConf = {
-  port : 3400,
+  port : config.port,
   ip   : '10.0.0.12',
   start: function() {
     console.log('server started @'.blue    +
@@ -35,7 +35,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(morgan('dev'));
 app.disable('etag');
-  _audio =   [ 
+  _audio =   [
                {liked: true},
                {liked: false},
                {liked: false},
@@ -48,25 +48,25 @@ app.disable('etag');
 
 function authenticate(req, res, next) {
   //NEED TO SEND BACK USER
-  var token = req.body.token     || 
+  var token = req.body.token     ||
               req.query.token    ||
               req.cookies.auth   ||
               req.headers['x-access-token'];
 
 /*  console.log(
-              req.body.token   + "\n"  , 
+              req.body.token   + "\n"  ,
               req.query.token  + "\n"  ,
               req.cookies.auth + "\n"  ,
               req.headers['x-access-token'] + "\n"
       );*/
   if (token) {
-    jwt.verify(token, config.secret, 
+    jwt.verify(token, config.secret,
       function(err, decoded) {
         if (err) {
           console.log(err);
      //     res.json({success:false});
           res.json({
-            success: false, 
+            success: false,
             message: "Bad Token",
           });
         } else {
@@ -82,7 +82,7 @@ function authenticate(req, res, next) {
           });
 
           });
- 
+
        //   next();
         }
       });
@@ -93,7 +93,7 @@ function authenticate(req, res, next) {
       message: 'No token',
     });
   }
- 
+
 }
 
 function issueToken(req, res, pass) {
@@ -122,11 +122,11 @@ function issueToken(req, res, pass) {
           user: user,
         });
       }
-     
+
       });
     }
   });
- 
+
 }
 
 
@@ -158,35 +158,36 @@ app.post('/api/signup', multipartMiddleware, function(req, res) {
         } else {
           issueToken(req, res, true);
         }
-      });     
+      });
     });
   });
 });
 
-app.post('/api/authenticate', multipartMiddleware, function(req, res) {
+app.post('/api/login', multipartMiddleware, function(req, res) {
+  console.log('authenticated');
   issueToken(req, res, true);
 });
 
 
 authRoutes.use(function(req, res) {
-  var token = req.body.token     || 
+  var token = req.body.token     ||
               req.query.token    ||
               req.cookies.auth   ||
               req.headers['x-access-token'];
 
   console.log(
-              req.body.token   + "\n"  , 
+              req.body.token   + "\n"  ,
               req.query.token  + "\n"  ,
               req.cookies.auth + "\n"  ,
               req.headers['x-access-token'] + "\n"
       );
   if (token) {
-    jwt.verify(token, config.secret, 
+    jwt.verify(token, config.secret,
       function(err, decoded) {
         if (err) {
           console.log(err);
           return res.status(403).send({
-            success: false, 
+            success: false,
             message: "Bad Token"
           });
         } else {
@@ -205,7 +206,7 @@ authRoutes.use(function(req, res) {
       message: 'No token'
     });
   }
- 
+
 
 });
 
