@@ -30,28 +30,27 @@ const SignUp = React.createClass({
   render: function () {
     return (
     <div>
-    
-    <form 
-      className="loginForm" 
-      encType="multipart/form-data" 
+    <form
+      className="loginForm"
+      encType="multipart/form-data"
       onSubmit={this.handleSubmit}>
-        <input className="usernameInput" 
-            id="User" 
-            placeholder="username" 
-            onChange={this.handleValueChange} 
+        <input className="usernameInput"
+            id="User"
+            placeholder="username"
+            onChange={this.handleValueChange}
             defaultValue={this.state.User}>
-        </input> 
-        <input className="passwordInput" 
-            id="Password" 
-            type="password" 
-            placeholder="password" 
-            onChange={this.handleValueChange} 
+        </input>
+        <input className="passwordInput"
+            id="Password"
+            type="password"
+            placeholder="password"
+            onChange={this.handleValueChange}
             defaultValue={this.state.Password}>
-        </input> 
+        </input>
       <button onClick={this.handleSignup}>SignUp</button>
-    </form> 
+    </form>
     :
-    <div></div> 
+    <div></div>
 
     </div>
     );
