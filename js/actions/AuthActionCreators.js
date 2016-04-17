@@ -13,6 +13,11 @@ var AuthActionCreators = {
       data: credentials,
     });
   },
+  logout: function () {
+    AppDispatcher.dispatch({
+      ActionType: 'user_logout',
+    });
+  },
 }
 
 module.exports = AuthActionCreators;

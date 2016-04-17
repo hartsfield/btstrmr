@@ -16,7 +16,7 @@ var config      = require('./config');
 var User        = require('./models/user');
 var serverConf = {
   port : config.port,
-  ip   : '10.0.0.12',
+  ip   : config.ip,
   start: function() {
     console.log('server started @'.blue    +
                 ' http://'.green           +
@@ -47,24 +47,15 @@ app.disable('etag');
 
 
 function authenticate(req, res, next) {
-  //NEED TO SEND BACK USER
   var token = req.body.token     ||
               req.query.token    ||
               req.cookies.auth   ||
               req.headers['x-access-token'];
-
-/*  console.log(
-              req.body.token   + "\n"  ,
-              req.query.token  + "\n"  ,
-              req.cookies.auth + "\n"  ,
-              req.headers['x-access-token'] + "\n"
-      );*/
   if (token) {
     jwt.verify(token, config.secret,
       function(err, decoded) {
         if (err) {
           console.log(err);
-     //     res.json({success:false});
           res.json({
             success: false,
             message: "Bad Token",
@@ -87,8 +78,7 @@ function authenticate(req, res, next) {
         }
       });
   } else {
-   // return res.status(403).send({
-          res.json({
+    res.json({
       success: false,
       message: 'No token',
     });
@@ -97,7 +87,7 @@ function authenticate(req, res, next) {
 }
 
 function issueToken(req, res, pass) {
-   User.findOne({
+  User.findOne({
     name: req.body.username
   }, function(err, user) {
     if (err) console.log(err);
@@ -122,11 +112,9 @@ function issueToken(req, res, pass) {
           user: user,
         });
       }
-
       });
     }
   });
-
 }
 
 
@@ -140,7 +128,6 @@ app.post('/api/updateLikes', function(req, res) {
   res.json({success: true});
 });
 
-var authRoutes = express.Router();
 app.post('/api/signup', multipartMiddleware, function(req, res) {
   var uname = req.body.username;
   var pass  = req.body.password;
@@ -164,8 +151,11 @@ app.post('/api/signup', multipartMiddleware, function(req, res) {
 });
 
 app.post('/api/login', multipartMiddleware, function(req, res) {
-  console.log('authenticated');
   issueToken(req, res, true);
+});
+
+app.post('/api/checktoken', function(req, res) {
+  authenticate(req, res);
 });
 
 
@@ -174,13 +164,6 @@ authRoutes.use(function(req, res) {
               req.query.token    ||
               req.cookies.auth   ||
               req.headers['x-access-token'];
-
-  console.log(
-              req.body.token   + "\n"  ,
-              req.query.token  + "\n"  ,
-              req.cookies.auth + "\n"  ,
-              req.headers['x-access-token'] + "\n"
-      );
   if (token) {
     jwt.verify(token, config.secret,
       function(err, decoded) {
@@ -210,7 +193,5 @@ authRoutes.use(function(req, res) {
 
 });
 
-
 app.use('/auth', authRoutes);
-
 httpServer.listen(serverConf.port, serverConf.ip, serverConf.start);

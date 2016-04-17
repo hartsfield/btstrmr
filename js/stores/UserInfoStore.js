@@ -4,14 +4,34 @@ var assign = require('object-assign');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var CHANGE_EVENT = 'change';
 
-var user = {success: false};
+//var user = {success: false};
+var user = WebAPIUtils.auth({}, 'checktoken');
 
 function signup(credentials) {
-  WebAPIUtils.signup(credentials)
+  WebAPIUtils.auth(credentials, 'signup');
 }
 
 function login(credentials) {
-  WebAPIUtils.login(credentials)
+  WebAPIUtils.auth(credentials, 'login');
+}
+
+function setuser(credentials) {
+  if (credentials.success === true) {
+    localStorage.setItem('token', credentials.token);
+    $.ajaxSetup({
+      headers: {'x-access-token': credentials.token}
+    });
+  };
+  user = credentials;
+}
+
+function logout() {
+  localStorage.setItem('token', 'meatball');
+  document.cookie = "auth='meatball'";
+  $.ajaxSetup({
+    headers: {'x-access-token': 'meatball'}
+  });
+  user = {success: false};
 }
 
 var UserInfoStore = assign({}, EventEmitter.prototype, {
@@ -42,6 +62,16 @@ AppDispatcher.register(function(action) {
 
     case 'user_login':
       login(action.data);
+      UserInfoStore.emitChange();
+      break;
+
+    case 'set_user':
+      setuser(action.data);
+      UserInfoStore.emitChange();
+      break;
+
+    case 'user_logout':
+      logout();
       UserInfoStore.emitChange();
       break;
 
