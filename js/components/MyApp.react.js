@@ -2,6 +2,8 @@ var React = require('react');
 var List = require('./List.react');
 var AudioStore = require('../stores/AudioStore.js');
 var Signup = require('./Signup.react');
+var SideBar = require('./SideBar.react.js');
+var Upload = require('./Upload.react.js');
 var UserInfoStore = require('../stores/UserInfoStore.js');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 
@@ -33,9 +35,14 @@ var MyApp = React.createClass({
       return (
         <div>
           <p>{this.state.user.success? "logged in" : "not logged in"}</p>
-          <List myList={this.state.myList}/>
+          <SideBar />
+          <List
+            myList={this.state.myList}
+            user={this.state.user}
+          />
           <Signup />
           <button onClick={this._userlogout}>logout</button>
+          <Upload />
         </div>
       );
     } else {

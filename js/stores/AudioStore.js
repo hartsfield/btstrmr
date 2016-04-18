@@ -4,14 +4,15 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 
-var _audio = WebAPIUtils.getInitialData();
-
+var _audio = WebAPIUtils.getListData('date');
+/*
 function getAudioContent(order) {
+  _audio = WebAPIUtils.getInitialData(order)
   return _audio;
-}
+}*/
 
 function updateLike(key) {
-  _audio[key].liked = !_audio[key].liked;
+//  _audio[key].liked = !_audio[key].liked;
   WebAPIUtils.updateLike(key);
 }
 
@@ -37,12 +38,12 @@ var AudioStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   switch (action.ActionType) {
 
-    case 'updateLikes':
+    case 'update_likes':
       updateLike(action.data);
       AudioStore.emitChange();
       break;
 
-    case 'newList':
+    case 'new_list_data':
       _audio = action.data;
       AudioStore.emitChange();
       break;

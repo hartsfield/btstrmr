@@ -1,24 +1,30 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
-var AudioStore = require('../stores/AudioStore.js');
 
 const WebAPIUtils = {
-  getInitialData: function (order) {
+  getListData: function (order) {
     $.ajax({
-      url: '/api/getInitialData',
+      url: '/api/getListData',
       type: 'GET',
       dataType: 'json',
-      data: {"hello":"world"},
+      data: {"order": order},
       success: function (data, textStatus, jqXHR) {
         AppDispatcher.dispatch({
-          ActionType: 'newList',
+          ActionType: 'new_list_data',
           data: data,
         });
       }
     });
   },
 
-  updateLike: function (key) {
-    $.post('/api/updateLikes', { key: key });
+  updateLike: function (info) {
+    $.post('/auth/likeTrack', info,
+      function (data, textStatus, jqXHR) {
+        AppDispatcher.dispatch({
+          type: 'user_like',
+          data: data,
+        });
+      }
+    );
   },
 
   auth: function (credentials, type) {

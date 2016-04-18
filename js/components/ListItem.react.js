@@ -6,15 +6,21 @@ var ListItem = React.createClass({
   render: function () {
     return (
       <li id={this.props.key}>
-        {this.props.post ? "true" : "false"}
+        {/*this.props.post ? "true" : "false"*/}
         {this.props.key}
+        {this.props.post.Artist} - {this.props.post.Title}
         <button onClick={this._updateLikes}>fav</button>
       </li>
     )
   },
 
   _updateLikes: function () {
-    AudioActions.updateLikes(this.props.num);
+    let info = {
+      post: this.props.num,
+      user: this.props.user
+    };
+    console.log(info, "test");
+    AudioActions.updateLikes(info);
   },
 });
 

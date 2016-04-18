@@ -8,21 +8,26 @@ var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var cookieParser= require('cookie-parser');
 var multipart   = require('connect-multiparty');
+var mongoose    = require('mongoose');
 var colors      = require("colors");
 var favicon     = require('serve-favicon');
 var bcrypt      = require('bcrypt');
 var jwt         = require('jsonwebtoken');
-var config      = require('./config');
-var User        = require('./models/user');
-var serverConf = {
+var config      = require('./config.js');
+var User        = require('./models/user.js');
+var Audio       = require('./models/audio.js');
+var serverConf  = {
   port : config.port,
   ip   : config.ip,
   start: function() {
-    console.log('server started @'.blue    +
-                ' http://'.green           +
-                serverConf.ip + ':'.green  +
-                colors.red(serverConf.port)+
-                '/'.green);
+    mongoose.connect(config.database, function() {
+      console.log('server started @'.blue    +
+                  ' http://'.green           +
+                  serverConf.ip + ':'.green  +
+                  colors.red(serverConf.port)+
+                  '/'.green);
+      console.log("connected to mongodb!")
+    });
   }
 };
 
@@ -35,16 +40,6 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(morgan('dev'));
 app.disable('etag');
-  _audio =   [
-               {liked: true},
-               {liked: false},
-               {liked: false},
-               {liked: true},
-               {liked: false},
-               {liked: false},
-               {liked: true},
-             ];
-
 
 function authenticate(req, res, next) {
   var token = req.body.token     ||
@@ -63,17 +58,22 @@ function authenticate(req, res, next) {
         } else {
           req.decoded = decoded;
           User.findOne({_id: decoded.user._id}, function(err, doc) {
-          console.log(doc.toObject());
-          doc.password = "hash"
-          res.json({
-            success: true,
-            message: 'Enjoy token!',
-            token: token,
-            user: doc,
+            if (err || doc === null) {
+              res.json({
+                success: false,
+                message: 'No such user',
+              });
+            } else {
+              console.log(doc.toObject());
+              doc.password = "hash"
+              res.json({
+                success: true,
+                message: 'Enjoy token!',
+                token: token,
+                user: doc,
+              });
+            }
           });
-
-          });
-
        //   next();
         }
       });
@@ -117,16 +117,55 @@ function issueToken(req, res, pass) {
   });
 }
 
-
 var authRoutes = express.Router();
-app.get('/api/getInitialData', function(req, res) {
-  res.send(_audio);
+app.get('/api/getListData', function(req, res) {
+  Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
+    res.json(posts);
+  });
 });
 
-app.post('/api/updateLikes', function(req, res) {
-  _audio[req.body.key].liked = !_audio[req.body.key].liked;
-  res.json({success: true});
+authRoutes.post('/likeTrack', function (req, res) {
+  console.log(req.body, "dwhwhiewifhiuwehf");
+  var uid = req.body.user._id
+  User.findOne({ _id: uid }, function(err, doc) {
+    if (err) console.log(err);
+    if (!doc) {
+      res.json({ success: false, message: "User not found"});
+    } else if (doc) {
+      var info = JSON.parse(JSON.stringify((doc)));
+      User.update({_id: uid}, { $addToSet: {liked: req.body.post}}, function (err, results) {
+            if (results.nModified) {
+        console.log("swqdhwiqudgqwgdigiwgqid");
+              Audio.update({ "_id": req.body.post},
+                { $inc: {"Likes": 1} },
+                function(err, model) {
+                  if (err) console.log(err);
+                  res.json({
+                    user: info,
+                    success: true,
+                  });
+                }
+              );
+            } else {
+              User.update({_id: uid}, { $pull: {liked: req.body.post}}, function(err, results) {
+                Audio.update({ "_id": req.body.post},
+                  { $inc: {"Likes": -1} },
+                  function(err, model) {
+                    if (err) console.log(err);
+                  res.json({
+                            user: info,
+                            success: true,
+                          });
+                  }
+                );
+              });
+            }
+          });
+    }
+  });
 });
+
+
 
 app.post('/api/signup', multipartMiddleware, function(req, res) {
   var uname = req.body.username;
@@ -157,6 +196,48 @@ app.post('/api/login', multipartMiddleware, function(req, res) {
 app.post('/api/checktoken', function(req, res) {
   authenticate(req, res);
 });
+
+
+app.post('/api/uploadAudioContent', multipartMiddleware, function(req, res) {
+
+  var rb = req.body;
+  var rf  = req.files;
+  //console.log(req.files);
+
+  if (rb.Artist && rb.Title && rf.Song && rf.Image) {
+    //console.log("success");
+
+    fs.readFile(rf.Song.path, function (err, data) {
+      var newPath = "./uploads/audio/" + rb.Artist + "-" + rb.Title + ".mp3";
+      fs.writeFile(newPath, data, function (err) {
+        //console.log("file write", err);
+      });
+    });
+
+    fs.readFile(rf.Image.path, function (err, data) {
+      var newPath = "./uploads/image/" + rb.Artist + "-" + rb.Title;
+      fs.writeFile(newPath, data, function (err) {
+        //console.log("file write", err);
+      });
+    });
+
+    var newSongData = new Audio({
+      Artist : req.body.Artist,
+      Album  : req.body.Album,
+      Title  : req.body.Title,
+      Audio  : "/uploads/audio/" + rb.Artist + "-" + rb.Title,
+      Image  : "/uploads/image/" + rb.Artist + "-" + rb.Title,
+    });
+
+    newSongData.save(function(err) {
+      if (err) console.log(err);
+      res.json({success:true});
+    });
+  }
+
+});
+
+
 
 
 authRoutes.use(function(req, res) {

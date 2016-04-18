@@ -12,13 +12,14 @@ var List = React.createClass({
     var item = [];
 
     for (var key in allItems) {
-      console.log(allItems[key].liked);
+      console.log(allItems[key]);
       item.push(
-        <ListItem 
-          key={key} 
-          num={key} 
-          post={allItems[key].liked} 
-          changeFav={this.props.changeFav} 
+        <ListItem
+          key={key}
+          num={allItems[key]._id}
+          post={allItems[key]}
+          user={this.props.user.user}
+          changeFav={this.props.changeFav}
         />
       );
     }
