@@ -12,23 +12,38 @@ var List = React.createClass({
     var item = [];
 
     for (var key in allItems) {
-      console.log(allItems[key]);
+      let isLiked =    this.props.user.user !== undefined
+                    && this.props.user.user.liked.length > 0
+                    ?  this._checkIfLiked(allItems[key]._id)
+                    :  false;
       item.push(
         <ListItem
           key={key}
-          num={allItems[key]._id}
           post={allItems[key]}
+          isLiked={isLiked}
           user={this.props.user.user}
-          changeFav={this.props.changeFav}
         />
       );
     }
 
     return (
-      <ul id={this.props.myList}>
-        {item}
-      </ul>
+      <div>
+        <ul id={this.props.myList}>
+          {item}
+        </ul>
+        <button>load more</button>
+      </div>
     );
+  },
+
+  _checkIfLiked: function (id) {
+    let liked = this.props.user.user.liked;
+    for (var i = 0, len = liked.length; i < len; i++) {
+      if (liked[i] == id ) {
+        return true;
+      };
+    };
+    return false
   },
 
 });

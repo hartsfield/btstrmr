@@ -35,7 +35,9 @@ var MyApp = React.createClass({
       return (
         <div>
           <p>{this.state.user.success? "logged in" : "not logged in"}</p>
-          <SideBar />
+          <SideBar
+            user={this.state.user}
+          />
           <List
             myList={this.state.myList}
             user={this.state.user}
@@ -43,6 +45,7 @@ var MyApp = React.createClass({
           <Signup />
           <button onClick={this._userlogout}>logout</button>
           <Upload />
+          <audio id="globalAudio"></audio>
         </div>
       );
     } else {

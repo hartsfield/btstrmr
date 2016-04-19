@@ -35,6 +35,8 @@ var serverConf  = {
 var multipartMiddleware = multipart();
 app.use('/', express.static(path.join(__dirname, './build')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+app.use('/uploads',  express.static(__dirname + '/uploads'));
+app.use('/assets',  express.static(__dirname + '/assets'));
 app.use(cookieParser());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -125,7 +127,6 @@ app.get('/api/getListData', function(req, res) {
 });
 
 authRoutes.post('/likeTrack', function (req, res) {
-  console.log(req.body, "dwhwhiewifhiuwehf");
   var uid = req.body.user._id
   User.findOne({ _id: uid }, function(err, doc) {
     if (err) console.log(err);
@@ -135,7 +136,6 @@ authRoutes.post('/likeTrack', function (req, res) {
       var info = JSON.parse(JSON.stringify((doc)));
       User.update({_id: uid}, { $addToSet: {liked: req.body.post}}, function (err, results) {
             if (results.nModified) {
-        console.log("swqdhwiqudgqwgdigiwgqid");
               Audio.update({ "_id": req.body.post},
                 { $inc: {"Likes": 1} },
                 function(err, model) {

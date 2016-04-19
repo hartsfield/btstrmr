@@ -11,9 +11,8 @@ function getAudioContent(order) {
   return _audio;
 }*/
 
-function updateLike(key) {
-//  _audio[key].liked = !_audio[key].liked;
-  WebAPIUtils.updateLike(key);
+function updateLike(info) {
+  WebAPIUtils.updateLike(info);
 }
 
 var AudioStore = assign({}, EventEmitter.prototype, {
