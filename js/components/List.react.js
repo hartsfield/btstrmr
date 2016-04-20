@@ -20,7 +20,10 @@ var List = React.createClass({
         <ListItem
           key={key}
           post={allItems[key]}
+          isPlaying={this.props.isPlaying}
+          currentTrack={this.props.currentTrack}
           isLiked={isLiked}
+          isLikedStore={this.props.isLikedStore}
           user={this.props.user.user}
         />
       );

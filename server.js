@@ -121,6 +121,8 @@ function issueToken(req, res, pass) {
 
 var authRoutes = express.Router();
 app.get('/api/getListData', function(req, res) {
+  var order = req.body.order;
+  console.log(order);
   Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
     res.json(posts);
   });
@@ -128,6 +130,7 @@ app.get('/api/getListData', function(req, res) {
 
 authRoutes.post('/likeTrack', function (req, res) {
   var uid = req.body.user._id
+    console.log(req.body);
   User.findOne({ _id: uid }, function(err, doc) {
     if (err) console.log(err);
     if (!doc) {

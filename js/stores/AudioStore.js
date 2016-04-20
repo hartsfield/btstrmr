@@ -5,6 +5,8 @@ var CHANGE_EVENT = 'change';
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 
 var _audio = WebAPIUtils.getListData('date');
+var _currentSong = null;
+var _isCurrentSongLiked = false;
 /*
 function getAudioContent(order) {
   _audio = WebAPIUtils.getInitialData(order)
@@ -15,9 +17,26 @@ function updateLike(info) {
   WebAPIUtils.updateLike(info);
 }
 
+function setCurrentSong(song, isLiked) {
+  if (song === null) {
+    _isCurrentSongLiked = isLiked;
+  } else {
+    _currentSong = song;
+    _isCurrentSongLiked = isLiked;
+  };
+}
+
 var AudioStore = assign({}, EventEmitter.prototype, {
   getList: function () {
-      return _audio;
+    return _audio;
+  },
+
+  getCurrentSong: function () {
+    return _currentSong;
+  },
+
+  getIsLiked: function () {
+    return _isCurrentSongLiked;
   },
 
   emitChange: function () {
@@ -46,6 +65,12 @@ AppDispatcher.register(function(action) {
       _audio = action.data;
       AudioStore.emitChange();
       break;
+
+    case 'set_current_song':
+      setCurrentSong(action.data, action.isLiked);
+      AudioStore.emitChange();
+      break;
+
 
     default: //
   }

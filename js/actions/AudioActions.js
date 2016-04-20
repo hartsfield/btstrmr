@@ -12,6 +12,15 @@ var AudioActions = {
   changeSort: function (order) {
     WebAPIUtils.getListData(order);
   },
+
+  setCurrentSong: function (song, isLiked) {
+    AppDispatcher.dispatch({
+      ActionType: 'set_current_song',
+      data: song,
+      isLiked: isLiked,
+    });
+  },
+
 }
 
 module.exports = AudioActions;

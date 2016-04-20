@@ -1,5 +1,6 @@
 var React = require('react');
 var AudioActions = require('../actions/AudioActions');
+var AudioStore = require('../stores/AudioStore.js');
 
 var ListItem = React.createClass({
 
@@ -11,14 +12,36 @@ var ListItem = React.createClass({
     };
   },
 
+  componentDidMount: function () {
+    AudioStore.addChangeListener(this._listenForTrack);
+  },
+
+  componentWillUnmount: function () {
+    AudioStore.removeChangeListener(this._listenForTrack);
+  },
+
+
   render: function () {
+    let isPlaying = this.props.isPlaying
+                 && this.props.currentTrack._id
+                === this.props.post._id
+                  ? true
+                  : false;
+
+    let playpause = isPlaying
+                  ? 'pause'
+                  : 'play';
+
+    let isFav = this.state.isLikedState
+              ? "unfav"
+              : "fav";
+
     return (
-      <li id={this.props.key}>
-        <button onClick={this._playTrack}>play</button>
+      <li id={this.props.post._id}>
+        <button onClick={this._playOrPauseTrack}>{playpause}</button>
         {this.props.post.Artist} - {this.props.post.Title}
-        {this.props.post.Posted}
         <button onClick={this._updateLikes}>
-          { this.state.isLikedState ? "unfav" : "fav" }
+        {isFav}
         </button>
       </li>
     )
@@ -33,14 +56,45 @@ var ListItem = React.createClass({
       user: this.props.user
     };
     AudioActions.updateLikes(info);
+    if (this.props.currentTrack !== null &&
+        this.props.currentTrack._id === this.props.post._id) {
+      let isLiked = !this.state.isLikedState;
+      AudioActions.setCurrentSong(null, isLiked);
+    }
   },
 
-  _playTrack: function () {
+  _playOrPauseTrack: function () {
     let ga = document.getElementById('globalAudio');
-    ga.src= '../..' + this.props.post.Audio + '.mp3';
-    ga.load();
-    ga.play();
+    if (this.props.currentTrack === null
+     || this.props.currentTrack._id !== this.props.post._id) {
+      let isLiked = this.state.isLikedState;
+      AudioActions.setCurrentSong(this.props.post, isLiked);
+      ga.src= '../..' + this.props.post.Audio + '.mp3';
+      ga.load();
+      ga.play();
+    } else if (this.props.currentTrack._id === this.props.post._id
+     && this.props.isPlaying) {
+      ga.pause();
+    } else if (this.props.currentTrack._id === this.props.post._id
+     && !this.props.isPlaying) {
+      ga.play();
+    };
   },
+
+  _listenForTrack: function () {
+    let audio = AudioStore.getCurrentSong();
+    let isModified = this.props.currentTrack !== null
+                 && audio._id
+                === this.props.post._id
+                  ? true
+                  : false;
+    if (isModified) {
+    this.setState({
+      isLikedState: AudioStore.getIsLiked()
+    });
+    }
+  },
+
 });
 
 module.exports = ListItem;
