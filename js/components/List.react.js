@@ -12,18 +12,17 @@ var List = React.createClass({
     var item = [];
 
     for (var key in allItems) {
-      let isLiked =    this.props.user.user !== undefined
+/*      let isLiked =    this.props.user.user !== undefined
                     && this.props.user.user.liked.length > 0
                     ?  this._checkIfLiked(allItems[key]._id)
-                    :  false;
+                    :  false;*/
       item.push(
         <ListItem
           key={key}
           post={allItems[key]}
           isPlaying={this.props.isPlaying}
           currentTrack={this.props.currentTrack}
-          isLiked={isLiked}
-          isLikedStore={this.props.isLikedStore}
+          isLiked={allItems[key].isLiked}
           user={this.props.user.user}
         />
       );
@@ -38,7 +37,7 @@ var List = React.createClass({
       </div>
     );
   },
-
+/*
   _checkIfLiked: function (id) {
     let liked = this.props.user.user.liked;
     for (var i = 0, len = liked.length; i < len; i++) {
@@ -48,7 +47,7 @@ var List = React.createClass({
     };
     return false
   },
-
+*/
 });
 
 module.exports = List;

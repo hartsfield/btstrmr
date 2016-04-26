@@ -4,7 +4,7 @@ const WebAPIUtils = {
   getListData: function (order) {
     $.ajax({
       url: '/api/getListData',
-      type: 'GET',
+      type: 'POST',
       dataType: 'json',
       data: {"order": order},
       success: function (data, textStatus, jqXHR) {

@@ -117,20 +117,31 @@ function issueToken(req, res, pass) {
       });
     }
   });
-}
+};
 
 var authRoutes = express.Router();
-app.get('/api/getListData', function(req, res) {
+app.post('/api/getListData', function(req, res) {
   var order = req.body.order;
-  console.log(order);
-  Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
-    res.json(posts);
-  });
+  if (order === 'sortByDate') {
+    Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
+      res.json(posts);
+    });
+  } else if (order === 'sortByLikes') {
+    Audio.find().sort({Likes :-1}).limit(5).exec(function(err, posts){
+      res.json(posts);
+    });
+  } else if (order === 'sortByMine') {
+    //  STUFF
+  } else {
+    Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
+      res.json(posts);
+    });
+  }
 });
 
 authRoutes.post('/likeTrack', function (req, res) {
   var uid = req.body.user._id
-    console.log(req.body);
+  console.log(req.body);
   User.findOne({ _id: uid }, function(err, doc) {
     if (err) console.log(err);
     if (!doc) {
@@ -167,7 +178,6 @@ authRoutes.post('/likeTrack', function (req, res) {
     }
   });
 });
-
 
 
 app.post('/api/signup', multipartMiddleware, function(req, res) {

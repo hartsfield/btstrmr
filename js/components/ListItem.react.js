@@ -4,14 +4,6 @@ var AudioStore = require('../stores/AudioStore.js');
 
 var ListItem = React.createClass({
 
-  getInitialState: function () {
-    // SEED DATA, NOT AN ANTI-PATTERN,
-    // SEE REACT DOCS
-    return {
-      isLikedState: this.props.isLiked,
-    };
-  },
-
   componentDidMount: function () {
     AudioStore.addChangeListener(this._listenForTrack);
   },
@@ -19,7 +11,6 @@ var ListItem = React.createClass({
   componentWillUnmount: function () {
     AudioStore.removeChangeListener(this._listenForTrack);
   },
-
 
   render: function () {
     let isPlaying = this.props.isPlaying
@@ -32,14 +23,15 @@ var ListItem = React.createClass({
                   ? 'pause'
                   : 'play';
 
-    let isFav = this.state.isLikedState
-              ? "unfav"
-              : "fav";
+    let isFav     = this.props.isLiked
+                  ? "unfav"
+                  : "fav";
 
     return (
       <li id={this.props.post._id}>
         <button onClick={this._playOrPauseTrack}>{playpause}</button>
         {this.props.post.Artist} - {this.props.post.Title}
+        {this.props.isLiked2 !== undefined ? this.props.isLiked2.toString : "NOTLIKED"}
         <button onClick={this._updateLikes}>
         {isFav}
         </button>
@@ -48,9 +40,6 @@ var ListItem = React.createClass({
   },
 
   _updateLikes: function () {
-    this.setState({
-      isLikedState: !this.state.isLikedState,
-    });
     let info = {
       post: this.props.post._id,
       user: this.props.user
@@ -67,7 +56,7 @@ var ListItem = React.createClass({
     let ga = document.getElementById('globalAudio');
     if (this.props.currentTrack === null
      || this.props.currentTrack._id !== this.props.post._id) {
-      let isLiked = this.state.isLikedState;
+      let isLiked = this.props.isLiked;
       AudioActions.setCurrentSong(this.props.post, isLiked);
       ga.src= '../..' + this.props.post.Audio + '.mp3';
       ga.load();
@@ -84,10 +73,10 @@ var ListItem = React.createClass({
   _listenForTrack: function () {
     let audio = AudioStore.getCurrentSong();
     let isModified = this.props.currentTrack !== null
-                 && audio._id
-                === this.props.post._id
-                  ? true
-                  : false;
+                  && audio._id
+                 === this.props.post._id
+                   ? true
+                   : false;
     if (isModified) {
     this.setState({
       isLikedState: AudioStore.getIsLiked()

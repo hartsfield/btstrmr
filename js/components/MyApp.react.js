@@ -68,6 +68,7 @@ var MyApp = React.createClass({
             onPause={this._onPause}
             onEnded={this._playNext}>
           </audio>
+          <Upload />
         </div>
       );
     } else {
@@ -75,8 +76,10 @@ var MyApp = React.createClass({
     }
   },
 
+
   _onChange: function () {
     this.setState(getDataForState());
+    console.log(this.state.myList);
   },
 
   _userlogout: function () {
