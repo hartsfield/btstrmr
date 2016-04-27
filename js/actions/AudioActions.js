@@ -9,8 +9,8 @@ var AudioActions = {
     });
   },
 
-  changeSort: function (order) {
-    WebAPIUtils.getListData(order);
+  changeSort: function (order, user) {
+    WebAPIUtils.getListData(order, user);
   },
 
   setCurrentSong: function (song, isLiked) {

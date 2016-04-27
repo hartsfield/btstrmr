@@ -121,7 +121,9 @@ function issueToken(req, res, pass) {
 
 var authRoutes = express.Router();
 app.post('/api/getListData', function(req, res) {
+//change to switch?
   var order = req.body.order;
+  var user = req.body.user;
   if (order === 'sortByDate') {
     Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
       res.json(posts);
@@ -130,8 +132,16 @@ app.post('/api/getListData', function(req, res) {
     Audio.find().sort({Likes :-1}).limit(5).exec(function(err, posts){
       res.json(posts);
     });
-  } else if (order === 'sortByMine') {
-    //  STUFF
+  } else if (order === 'sortByMine' && user !== undefined) {
+    User.find({_id: user._id}, function(err, user) {
+      var likedArray = JSON.parse(JSON.stringify(user[0])).liked;
+      Audio.find({_id: 
+        { $in: likedArray }}, 
+        function(err, docs) { 
+          if (err) console.log(err);
+          res.json((docs));
+        });
+    });
   } else {
     Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
       res.json(posts);

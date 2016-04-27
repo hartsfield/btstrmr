@@ -56,7 +56,6 @@ var MyApp = React.createClass({
             myList={this.state.myList}
             user={this.state.user}
             isPlaying={this.state.isPlaying}
-            isLikedStore={this.state.isLiked}
             currentTrack={this.state.currentTrack}
           />
           <Signup />
@@ -87,10 +86,8 @@ var MyApp = React.createClass({
   },
 
   _onPlay: function () {
-   // console.log(AudioStore.getIsLiked(), "kigiugiugig");
     this.setState({
       isPlaying: true,
-    //  isLiked: this.state.currentTrack.isLiked
     });
   },
 

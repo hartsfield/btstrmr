@@ -1,12 +1,12 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 
 const WebAPIUtils = {
-  getListData: function (order) {
+  getListData: function (order, user) {
     $.ajax({
       url: '/api/getListData',
       type: 'POST',
       dataType: 'json',
-      data: {"order": order},
+      data: {"order": order, "user": user},
       success: function (data, textStatus, jqXHR) {
         AppDispatcher.dispatch({
           ActionType: 'new_list_data',
