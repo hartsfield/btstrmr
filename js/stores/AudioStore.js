@@ -5,10 +5,11 @@ var CHANGE_EVENT = 'change';
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var UserInfoStore = require('../stores/UserInfoStore.js');
 
-var _audio = WebAPIUtils.getListData('date');
+var _audio = WebAPIUtils.getListData('sortByDate');
 var _user = {success: false};
 var _currentSong = null;
 var _isCurrentSongLiked = false;
+var _currentOrder = 'sortByDate'
 
 function updateLike(info) {
   WebAPIUtils.updateLike(info);
@@ -70,6 +71,10 @@ var AudioStore = assign({}, EventEmitter.prototype, {
     return _currentSong;
   },
 
+  getOrder: function () {
+    return _currentOrder;
+  },
+
   getIsLiked: function () {
     return _isCurrentSongLiked;
   },
@@ -98,11 +103,19 @@ AppDispatcher.register(function(action) {
 
     case 'new_list_data':
       checkIfLiked(action.data);
+      _currentOrder = action.order;
       AudioStore.emitChange();
       break;
 
     case 'set_current_song':
       setCurrentSong(action.data, action.isLiked);
+      AudioStore.emitChange();
+      break;
+
+    case 'next_page':
+      console.log("wefefwefew");
+      _audio = _audio.concat(action.data);
+      checkIfLiked(_audio);
       AudioStore.emitChange();
       break;
 

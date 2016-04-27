@@ -31,7 +31,6 @@ var ListItem = React.createClass({
       <li id={this.props.post._id}>
         <button onClick={this._playOrPauseTrack}>{playpause}</button>
         {this.props.post.Artist} - {this.props.post.Title}
-        {this.props.isLiked2 !== undefined ? this.props.isLiked2.toString : "NOTLIKED"}
         <button onClick={this._updateLikes}>
         {isFav}
         </button>
@@ -47,7 +46,7 @@ var ListItem = React.createClass({
     AudioActions.updateLikes(info);
     if (this.props.currentTrack !== null &&
         this.props.currentTrack._id === this.props.post._id) {
-      let isLiked = !this.state.isLikedState;
+      let isLiked = !this.props.isLiked;
       AudioActions.setCurrentSong(null, isLiked);
     }
   },

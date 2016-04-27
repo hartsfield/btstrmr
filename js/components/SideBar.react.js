@@ -1,12 +1,11 @@
 var React = require('react');
 var WebAPI = require('../utils/WebAPIUtils.js');
-var UserInfoStore = require('../stores/UserInfoStore.js');
 var AudioActions = require('../actions/AudioActions.js');
 
 const SideBar = React.createClass({
   render: function () {
     return (
-      <div>
+      <div className="sidebar">
          <button
            id="sortByDate"
            onClick={this._changeSort}>
@@ -28,8 +27,7 @@ const SideBar = React.createClass({
 
   _changeSort: function (event) {
     var order = event.target.id;
-    var user = UserInfoStore.getUser();
-    AudioActions.changeSort(order, user.user);
+    AudioActions.changeSort(order, this.props.user.user);
   }
 });
 

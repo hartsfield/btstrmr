@@ -11,15 +11,29 @@ const WebAPIUtils = {
         AppDispatcher.dispatch({
           ActionType: 'new_list_data',
           data: data,
+          order: order,
         });
       }
     });
+  },
+
+  getNextPage: function (order, page, user) {
+    $.post('/api/nextPage', {order:order, page:page, user:user},
+      function (data, textStatus, jqXHR) {
+        console.log(data);
+        AppDispatcher.dispatch({
+          ActionType: 'next_page',
+          data: data,
+        });
+      }
+    );
   },
 
   updateLike: function (info) {
     $.post('/auth/likeTrack', info,
       function (data, textStatus, jqXHR) {
         AppDispatcher.dispatch({
+          //does this even do anything?
           type: 'user_like',
           data: data,
         });

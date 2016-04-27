@@ -1,5 +1,6 @@
 var React = require('react');
 var ListItem = require('./ListItem.react');
+var AudioActions = require('../actions/AudioActions.js');
 
 var List = React.createClass({
 
@@ -12,10 +13,6 @@ var List = React.createClass({
     var item = [];
 
     for (var key in allItems) {
-/*      let isLiked =    this.props.user.user !== undefined
-                    && this.props.user.user.liked.length > 0
-                    ?  this._checkIfLiked(allItems[key]._id)
-                    :  false;*/
       item.push(
         <ListItem
           key={key}
@@ -33,21 +30,14 @@ var List = React.createClass({
         <ul id={this.props.myList}>
           {item}
         </ul>
-        <button>load more</button>
+        <button onClick={this._nextPage}>load more</button>
       </div>
     );
   },
-/*
-  _checkIfLiked: function (id) {
-    let liked = this.props.user.user.liked;
-    for (var i = 0, len = liked.length; i < len; i++) {
-      if (liked[i] == id ) {
-        return true;
-      };
-    };
-    return false
+
+  _nextPage: function () {
+    AudioActions.getNextPage(this.props.currentOrder, this.props.myList.length, this.props.user.user);
   },
-*/
 });
 
 module.exports = List;

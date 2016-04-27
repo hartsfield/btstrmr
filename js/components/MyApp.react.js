@@ -15,6 +15,7 @@ function getDataForState() {
     user: UserInfoStore.getUser(),
     currentTrack: AudioStore.getCurrentSong(),
     isLiked: AudioStore.getIsLiked(),
+    currentOrder: AudioStore.getOrder(),
   };
 }
 
@@ -57,11 +58,11 @@ var MyApp = React.createClass({
             user={this.state.user}
             isPlaying={this.state.isPlaying}
             currentTrack={this.state.currentTrack}
+            currentOrder={this.state.currentOrder}
           />
           <Signup />
           <button onClick={this._userlogout}>logout</button>
           <audio
-            controls
             id="globalAudio"
             onPlay={this._onPlay}
             onPause={this._onPause}
@@ -96,7 +97,7 @@ var MyApp = React.createClass({
       isPlaying: false,
     });
   },
-//wont work if no user
+
   _playNext: function () {
     let ga = document.getElementById("globalAudio");
     var next = document.getElementById(
@@ -104,7 +105,11 @@ var MyApp = React.createClass({
     var result = $.grep(this.state.myList, function(e) {
                    return e._id == next;
                  });
+    if (this.state.user.success === true) {
     AudioActions.setCurrentSong(result[0], this._checkIfLiked(result[0]._id));
+    } else {
+    AudioActions.setCurrentSong(result[0], false);
+    };
     ga.src = '../..' + result[0].Audio + '.mp3';
     ga.load();
     ga.play();

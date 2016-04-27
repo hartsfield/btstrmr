@@ -13,6 +13,10 @@ var AudioActions = {
     WebAPIUtils.getListData(order, user);
   },
 
+  getNextPage: function (order, page, user) {
+    WebAPIUtils.getNextPage(order, page, user);
+  },
+
   setCurrentSong: function (song, isLiked) {
     AppDispatcher.dispatch({
       ActionType: 'set_current_song',
