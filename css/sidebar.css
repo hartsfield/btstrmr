@@ -1,0 +1,35 @@
+
+html body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+ /* width: 5em;
+  height: 1.8em;*/
+  background: transparent;
+}
+
+.sidebar {
+  background-color: #FFCC00;
+  position: fixed;
+  height: 100%;
+  width: 11em;
+  font-weight: 500;
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 1em;
+}
+
+.mainpane {
+  margin-left: 13em;
+}
+
+.btlogo {
+
+}
+
+.glogo {
+  font-size: 0.7em;
+}

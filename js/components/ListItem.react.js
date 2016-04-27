@@ -20,16 +20,20 @@ var ListItem = React.createClass({
                   : false;
 
     let playpause = isPlaying
-                  ? 'pause'
-                  : 'play';
+                  ? '||'
+                  : '►';
 
     let isFav     = this.props.isLiked
-                  ? "unfav"
-                  : "fav";
+                  ? '💖 '
+                  : '💛 ';
 
     return (
       <li id={this.props.post._id}>
-        <button onClick={this._playOrPauseTrack}>{playpause}</button>
+        <button
+          className="arrow"
+          onClick={this._playOrPauseTrack}>
+            {playpause}
+        </button>
         {this.props.post.Artist} - {this.props.post.Title}
         <button onClick={this._updateLikes}>
         {isFav}

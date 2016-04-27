@@ -37,6 +37,7 @@ app.use('/', express.static(path.join(__dirname, './build')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/uploads',  express.static(__dirname + '/uploads'));
 app.use('/assets',  express.static(__dirname + '/assets'));
+app.use('/css',  express.static(__dirname + '/css'));
 app.use(cookieParser());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));

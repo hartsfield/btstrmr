@@ -41,6 +41,10 @@ var MyApp = React.createClass({
     if (this.state.myList !== undefined) {
       return (
         <div>
+          <SideBar
+            user={this.state.user}
+          />
+          <div className="mainpane">
           <GlobalPlayer
             myList={this.state.myList}
             user={this.state.user}
@@ -48,10 +52,6 @@ var MyApp = React.createClass({
             currentTrack={this.state.currentTrack}
             isLiked={this.state.isLiked}
             _playNext={this._playNext}
-          />
-          <p>{this.state.user.success? "logged in" : "not logged in"}</p>
-          <SideBar
-            user={this.state.user}
           />
           <List
             myList={this.state.myList}
@@ -68,7 +68,7 @@ var MyApp = React.createClass({
             onPause={this._onPause}
             onEnded={this._playNext}>
           </audio>
-          <Upload />
+          </div>
         </div>
       );
     } else {

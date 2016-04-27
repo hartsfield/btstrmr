@@ -6,21 +6,25 @@ const SideBar = React.createClass({
   render: function () {
     return (
       <div className="sidebar">
-         <button
-           id="sortByDate"
-           onClick={this._changeSort}>
-           date
-         </button>
-         <button
-           id="sortByLikes"
-           onClick={this._changeSort}>
-           likes
-         </button>
-         <button
-           id="sortByMine"
-           onClick={this._changeSort}>
-           mine
-         </button>
+        <div>
+          <p className="btlogo">BTSTRMR</p>
+          <p className="glogo">GLOBAL</p>
+        </div>
+        <button
+          id="sortByDate"
+          onClick={this._changeSort}>
+          date
+        </button>
+        <button
+          id="sortByLikes"
+          onClick={this._changeSort}>
+          likes
+        </button>
+        <button
+          id="sortByMine"
+          onClick={this._changeSort}>
+          mine
+        </button>
       </div>
     );
   },
