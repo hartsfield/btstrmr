@@ -13,31 +13,43 @@ var ListItem = React.createClass({
   },
 
   render: function () {
-    let isPlaying = this.props.isPlaying
+    var isPlaying = this.props.isPlaying
                  && this.props.currentTrack._id
                 === this.props.post._id
                   ? true
                   : false;
 
-    let playpause = isPlaying
+    var playpause = isPlaying
                   ? '||'
                   : '►';
 
-    let isFav     = this.props.isLiked
+    var isFav     = this.props.isLiked
                   ? '💖 '
                   : '💛 ';
 
     return (
-      <li id={this.props.post._id}>
-        <button
-          className="arrow"
-          onClick={this._playOrPauseTrack}>
-            {playpause}
-        </button>
-        {this.props.post.Artist} - {this.props.post.Title}
-        <button onClick={this._updateLikes}>
-        {isFav}
-        </button>
+      <li id={this.props.post._id} className="post">
+        <img className="postimg" onClick={this._playOrPauseTrack} src={this.props.post.Image}></img>
+        <div className="singleplayer globalplayer logobar">
+          <div 
+            onClick={this._playOrPauseTrack} 
+            className="arrow-right arightsingle">
+              {playpause}
+          </div>
+          <div 
+            onClick={this.props._playNext} 
+            className="arrow-right gnext arightsingle arightNext">
+              ≫
+          </div>
+          <div id="globalInfo" className="singleinfo">
+            {this.props.post.Artist} - {this.props.post.Title}
+          </div>
+          <div 
+            className="aleftpost" 
+            onClick={this._toggleFav}>
+              {isFav}
+          </div>
+        </div>
       </li>
     )
   },

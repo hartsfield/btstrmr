@@ -1,12 +1,10 @@
 var React = require('react');
 var List = require('./List.react');
 var AudioStore = require('../stores/AudioStore.js');
-var Signup = require('./Signup.react');
 var SideBar = require('./SideBar.react.js');
 var GlobalPlayer = require('./GlobalPlayer.react.js');
 var Upload = require('./Upload.react.js');
 var UserInfoStore = require('../stores/UserInfoStore.js');
-var AuthActionCreators = require('../actions/AuthActionCreators.js');
 var AudioActions = require('../actions/AudioActions');
 
 function getDataForState() {
@@ -40,7 +38,8 @@ var MyApp = React.createClass({
   render: function () {
     if (this.state.myList !== undefined) {
       return (
-        <div>
+      <div>
+        <div id="main-container">
           <SideBar
             user={this.state.user}
           />
@@ -53,37 +52,39 @@ var MyApp = React.createClass({
             isLiked={this.state.isLiked}
             _playNext={this._playNext}
           />
+         <audio
+            id="globalAudio"
+            onPlay={this._onPlay}
+            onPause={this._onPause}
+            onTimeUpdate={this._onProgress}
+            onEnded={this._playNext}>
+          </audio>
+          </div>
+        </div>
           <List
+            className="list"
             myList={this.state.myList}
             user={this.state.user}
             isPlaying={this.state.isPlaying}
             currentTrack={this.state.currentTrack}
             currentOrder={this.state.currentOrder}
           />
-          <Signup />
-          <button onClick={this._userlogout}>logout</button>
-          <audio
-            id="globalAudio"
-            onPlay={this._onPlay}
-            onPause={this._onPause}
-            onEnded={this._playNext}>
-          </audio>
-          </div>
-        </div>
+ </div>
       );
     } else {
       return <div>hello</div>
     }
   },
 
+  _onProgress: function (e) {
+    var prog = document.getElementById("progressbar");
+    var perc = (e.target.currentTime/e.target.duration)*100;
+    prog.style.width = perc + "%";
+  },
 
   _onChange: function () {
     this.setState(getDataForState());
     console.log(this.state.myList);
-  },
-
-  _userlogout: function () {
-    AuthActionCreators.logout();
   },
 
   _onPlay: function () {

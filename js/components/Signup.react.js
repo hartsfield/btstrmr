@@ -7,12 +7,20 @@ const SignUp = React.createClass({
       Password: "",
       User: "",
       showSignup: true,
+      showLogin: false, 
     };
   },
 
   render: function () {
     return (
     <div>
+        <div className="auth">
+          { this.props.user.success ?
+            <button id="logoutDoor" className="loginShow" onClick={this._userlogout}></button>
+          :
+            <button id="loginKey" className="loginShow" onClick={this._showLogin}></button>
+          }
+          { this.state.showLogin ? 
     <form
       className="loginForm"
       encType="multipart/form-data"
@@ -32,17 +40,29 @@ const SignUp = React.createClass({
         </input>
         { this.state.showSignup ?
           <div>
-            <button onClick={this._handleSignup}>SignUp</button>
-            <button onClick={this._toggleShowSignup}>or Login</button>
+            <button className="activeAuthButt" onClick={this._handleLogin}>Login</button>
+            <button className="authButt" onClick={this._toggleShowSignup}>or SignUp</button>
           </div>
+
         :
           <div>
-            <button onClick={this._handleLogin}>Login</button>
-            <button onClick={this._toggleShowSignup}>or SignUp</button>
+            <button className="activeAuthButt" onClick={this._handleSignup}>SignUp</button>
+            <button className="authButt" onClick={this._toggleShowSignup}>or Login</button>
           </div>
+
         }
 
     </form>
+          :
+            <img
+              id="spinny"
+              className="sidebar-img-logo" 
+              src="../../assets/SVG-TESTING/disk.svg"
+            />
+          }
+          </div>
+
+
     </div>
     );
   },
@@ -71,14 +91,38 @@ const SignUp = React.createClass({
     return data;
   },
 
-  _handleSignup: function () {
+  _handleSignup: function (e) {
+    e.preventDefault();
     AuthActionCreators.signup(this._mkdata());
+    this.setState({
+      showLogin: false,
+    });
   },
 
 
-  _handleLogin: function () {
+  _handleLogin: function (e) {
+    e.preventDefault();
     AuthActionCreators.login(this._mkdata());
+    this.setState({
+      showLogin: false,
+    });
+
   },
+
+  _userlogout: function () {
+    AuthActionCreators.logout();
+    this.setState({
+      showLogin: false,
+    });
+  },
+
+  _showLogin: function () {
+    this.setState({
+      showLogin: !this.state.showLogin,
+    });
+  }
+
+
 
 });
 

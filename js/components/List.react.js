@@ -26,8 +26,8 @@ var List = React.createClass({
     }
 
     return (
-      <div>
-        <ul id={this.props.myList}>
+      <div style={{height: "0"}}>
+        <ul id="listarea">
           {item}
         </ul>
         <button onClick={this._nextPage}>load more</button>

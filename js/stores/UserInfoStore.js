@@ -16,6 +16,7 @@ function login(credentials) {
 }
 
 function setuser(credentials) {
+  console.log("test", credentials)
   if (credentials.success === true) {
     localStorage.setItem('token', credentials.token);
     $.ajaxSetup({

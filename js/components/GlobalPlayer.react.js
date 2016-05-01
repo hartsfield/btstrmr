@@ -5,22 +5,45 @@ var AudioStore = require('../stores/AudioStore.js');
 const GlobalPlayer = React.createClass({
 
   render: function() {
-    let playpause = this.props.isPlaying
-                  ? "pause"
-                  : "play";
+    var playpause = this.props.isPlaying
+                  ? '||'
+                  : '►';
 
-    let toggleFav = this.props.isLiked
-                  ? "unfav"
-                  : "fav";
+    var toggleFav = this.props.isLiked
+                  ? '💖 '
+                  : '💛 ';
 
     if (this.props.currentTrack === null) {
-      return (<div>BTSTRMR</div>);
+      return (
+        <div 
+          className="logobar">
+            &nbsp;&lt;BTSTRMR&nbsp;&#47;&gt;
+        </div>
+     );
     } else {
       return (
-        <div>
-          <button onClick={this._playOrPauseTrack}>{playpause}</button>
-          <button onClick={this.props._playNext}>next</button>
-          <button onClick={this._toggleFav}>{toggleFav}</button>
+        <div className="globalplayer logobar">
+          <div 
+            onClick={this._playOrPauseTrack} 
+            className="arrow-right">
+              {playpause}
+          </div>
+          <div 
+            onClick={this.props._playNext} 
+            className="arrow-right gnext">
+              ≫
+          </div>
+          <div id="progresscontainer">
+            <div id="progressbar"></div>
+          </div>
+          <div id="globalInfo">
+            {this.props.currentTrack.Artist} - {this.props.currentTrack.Title}
+          </div>
+          <div 
+            className="arrow-left" 
+            onClick={this._toggleFav}>
+              {toggleFav}
+          </div>
         </div>
       );
     };
