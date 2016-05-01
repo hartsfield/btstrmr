@@ -1,6 +1,7 @@
 var React = require('react');
 var ListItem = require('./ListItem.react');
 var AudioActions = require('../actions/AudioActions.js');
+var Footer = require('./Footer.react.js');
 
 var List = React.createClass({
 
@@ -29,8 +30,9 @@ var List = React.createClass({
       <div style={{height: "0"}}>
         <ul id="listarea">
           {item}
+        <button className="loadmore" onClick={this._nextPage}>•••</button>
+        <Footer />
         </ul>
-        <button onClick={this._nextPage}>load more</button>
       </div>
     );
   },

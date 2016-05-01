@@ -69,7 +69,7 @@ var MyApp = React.createClass({
             currentTrack={this.state.currentTrack}
             currentOrder={this.state.currentOrder}
           />
- </div>
+        </div>
       );
     } else {
       return <div>hello</div>

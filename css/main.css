@@ -133,12 +133,13 @@ input {
 
 .logobar {
   font-size: 1.5em;
-  height: 1.23em;
+  height: 1.235em;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 /*  right: 0;*/
-  background-color: rgba(43, 113, 116, 0.8); 
+  background-color: rgba(178, 228, 83, 0.8);
+  color: #486e2a;
   border-left: 1px solid black;
   z-index: -3;
   text-transform: uppercase;
@@ -148,7 +149,7 @@ input {
   display: inline-block;
   padding-left: 5em;
   z-index:  5454;
-  color: whitesmoke;
+  /*! color: whitesmoke; */
 }
 
 .arrow-right {
@@ -235,15 +236,15 @@ input {
   padding-left: 12em;
   list-style: none;
   width: 70%;
-  max-width:  50em;
+  max-width:  40em;
   position: relative;
   z-index: -3;
 }
 
-#pspacer {
+/*#pspacer {
   display: inline-block;
   color: yellow;
-}
+}*/
 
 #progressbar {
   height: 100%;
@@ -258,7 +259,7 @@ input {
   width:  -moz-calc(100% - 18em);
   width:  -webkit-calc(100% - 18em);
   width:  calc(100% - 18em);
-  height:  1.25em;
+  height:  1.22em;
   /*! background:  blue; */
   position:  absolute;
   padding-left: 4.4em;
@@ -272,7 +273,6 @@ input {
 
 
 .post {
-  background-color: #7e2e86;
   width: 100%;
   margin-bottom:  2em;
   color:  whitesmoke;
@@ -318,18 +318,24 @@ input {
   width: 100%;
   border-left: none;
   border-radius: 0.4em;
-  background: #4ca73e;
+  background: #9ee4e4;
 }
 
 .singleinfo {
   width: -moz-calc(100% - 7.5em);
   width: -webkit-calc(100% - 7.5em);
-  width: calc(100% - 7.5em);
+  width: calc(100% - 5.5em);
+  vertical-align: middle;
+  font-size-adjust: 0.3;
+  color: #2c6b66;
+  display: inline-block;
+  z-index:  5454;
+  margin-left: 3em;
 }
 
 .arightsingle {
   border-bottom-left-radius: 0.3em;
-  background: #6244f8;
+  background: #237d76;
 }
 
 .arightNext {
@@ -337,9 +343,137 @@ input {
 }
 
 .arightsingle:after {
-  border-left-color: #6244f8;
+  border-left-color: #237d76;
 }
 
 .arightNext:after {
   border-left-color: #2dbbcc;
+}
+
+.foot {
+  width: 100%;
+  height: 20em;
+  background: #237d76;
+  border-top:  0.5em solid #fc0;
+  color:  whitesmoke;
+  padding-left: 0.1em;
+  text-align: center;
+}
+
+.loadmore {
+  width: 100%;
+  height: 3em;
+  border-radius: 0.3em;
+  background: #e3e3e3;
+  font-size: 2em;
+  margin-bottom:  2em;
+}
+
+#recycle {
+  height: 8em;
+  display: inline-block;
+  vertical-align: middle; 
+}
+
+.footLogo {
+  display: inline-block;
+  padding-top: 9em;
+  padding-left: 1em;
+}
+
+#globalplaypause_image {
+  height: 0.8em;
+  vertical-align: middle;
+}
+
+#globalnext_image {
+  height: 1.2em;
+  vertical-align: middle;
+}
+
+#globalheart_image {
+  height: 0.9em;
+  vertical-align: middle;
+}
+
+.arlogo:hover {
+  cursor: default;
+}
+
+
+.gnext0 {
+  z-index: 7;
+  background: #237d76;
+}
+
+.gnext1 {
+  padding-left: 2.4em;
+  z-index: 6;
+  background: #9ee4e4;
+}
+
+.gnext2 {
+  padding-left: 4.8em;
+  z-index: 5;
+  background: #51c23b;
+}
+
+.gnext3 {
+  padding-left: 7.2em;
+  z-index: 4;
+  background: #9eda2a;
+}
+
+.gnext4 {
+  padding-left: 9.6em;
+  z-index: 3;
+  background: #fc0;
+}
+
+.gnext5 {
+  padding-left: 12.0em;
+  z-index: 2;
+  background: #ff7e00;
+}
+
+.gnext6 {
+  padding-left: 14.4em;
+  background: #844598;
+  z-index: 1;
+}
+
+
+.gnext0:after {
+  border-left-color: #237d76;
+}
+
+.gnext1:after {
+  border-left-color: #9ee4e4;
+}
+
+.gnext2:after {
+  border-left-color: #51c23b;
+}
+
+.gnext3:after {
+  border-left-color: #9eda2a;
+}
+
+.gnext4:after {
+  border-left-color: #fc0;
+}
+
+.gnext5:after {
+  border-left-color: #ff7e00;
+}
+
+.gnext6:after {
+  border-left-color: #844598;
+}
+
+
+#textme {
+  font-size: 0.8em;
+  padding-top: 3.5em;
+  text-decoration: underline;
 }

@@ -20,12 +20,12 @@ var ListItem = React.createClass({
                   : false;
 
     var playpause = isPlaying
-                  ? '||'
-                  : '►';
+                  ? '../../assets/icons/white/pause.svg'
+                  : '../../assets/icons/white/play.svg';
 
-    var isFav     = this.props.isLiked
-                  ? '💖 '
-                  : '💛 ';
+    var toggleFav     = this.props.isLiked
+                  ? '../../assets/icons/white/heart5.svg'
+                  : '../../assets/icons/white/heart2.svg';
 
     return (
       <li id={this.props.post._id} className="post">
@@ -34,20 +34,15 @@ var ListItem = React.createClass({
           <div 
             onClick={this._playOrPauseTrack} 
             className="arrow-right arightsingle">
-              {playpause}
+              <img id="globalplaypause_image" src={playpause}></img>
           </div>
-          <div 
-            onClick={this.props._playNext} 
-            className="arrow-right gnext arightsingle arightNext">
-              ≫
-          </div>
-          <div id="globalInfo" className="singleinfo">
+          <div className="singleinfo">
             {this.props.post.Artist} - {this.props.post.Title}
           </div>
           <div 
             className="aleftpost" 
-            onClick={this._toggleFav}>
-              {isFav}
+            onClick={this._updateLikes}>
+              <img id="globalheart_image" src={toggleFav}></img>
           </div>
         </div>
       </li>
