@@ -18,6 +18,12 @@ var AuthActionCreators = {
       ActionType: 'user_logout',
     });
   },
+  showLoginForm: function () {
+    AppDispatcher.dispatch({
+      ActionType: 'show_login',
+    });
+
+  },
 }
 
 module.exports = AuthActionCreators;

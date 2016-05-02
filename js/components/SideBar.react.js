@@ -3,7 +3,6 @@ var WebAPI = require('../utils/WebAPIUtils.js');
 var Signup = require('./Signup.react');
 var AudioActions = require('../actions/AudioActions.js');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
-var a = 7;
 const SideBar = React.createClass({
 
   render: function () {
@@ -52,12 +51,8 @@ const SideBar = React.createClass({
     );
   },
 
-  _rotate: function () {
-     a = a + 3;
-     document.getElementById("spinny").style.transform = "rotate(" + a + "deg)"; 
-  },
-
   _changeSort: function (event) {
+    window.scrollTo(0, 0);
     var order = event.target.id;
     AudioActions.changeSort(order, this.props.user.user);
   },

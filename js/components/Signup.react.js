@@ -1,5 +1,6 @@
 var React = require('react');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
+var UserInfoStore = require('../stores/UserInfoStore.js');
 
 const SignUp = React.createClass({
   getInitialState: function () {
@@ -20,7 +21,7 @@ const SignUp = React.createClass({
           :
             <button id="loginKey" className="loginShow" onClick={this._showLogin}></button>
           }
-          { this.state.showLogin ? 
+          { this.state.showLogin || UserInfoStore.showLogin() ? 
     <form
       className="loginForm"
       encType="multipart/form-data"
@@ -71,6 +72,7 @@ const SignUp = React.createClass({
     this.setState({
       showSignup: !this.state.showSignup,
     });
+    AuthActionCreators.showLoginForm(); 
   },
 
   _handleSubmit: function (event) {

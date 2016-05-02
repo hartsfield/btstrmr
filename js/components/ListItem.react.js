@@ -1,6 +1,31 @@
 var React = require('react');
 var AudioActions = require('../actions/AudioActions');
 var AudioStore = require('../stores/AudioStore.js');
+var AuthActionCreators = require('../actions/AuthActionCreators.js');
+function timeSince(date) {
+    var seconds = Math.floor((new Date() - date) / 1000);
+    var interval = Math.floor(seconds / 31536000);
+    if (interval > 1) {
+        return interval + " years";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+        return interval + " months";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+        return interval + " days";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+        return interval + " hours";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+        return interval + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+}
 
 var ListItem = React.createClass({
 
@@ -13,6 +38,7 @@ var ListItem = React.createClass({
   },
 
   render: function () {
+    var posted = timeSince(new Date(this.props.post.Posted));
     var isPlaying = this.props.isPlaying
                  && this.props.currentTrack._id
                 === this.props.post._id
@@ -29,6 +55,7 @@ var ListItem = React.createClass({
 
     return (
       <li id={this.props.post._id} className="post">
+        <div className="posteddate">Posted {posted} ago</div>
         <img className="postimg" onClick={this._playOrPauseTrack} src={this.props.post.Image}></img>
         <div className="singleplayer globalplayer logobar">
           <div 
@@ -49,16 +76,22 @@ var ListItem = React.createClass({
     )
   },
 
+
+
   _updateLikes: function () {
-    let info = {
-      post: this.props.post._id,
-      user: this.props.user
-    };
-    AudioActions.updateLikes(info);
-    if (this.props.currentTrack !== null &&
+    if (this.props.success === true){
+      let info = {
+        post: this.props.post._id,
+        user: this.props.user
+      };
+      AudioActions.updateLikes(info);
+      if (this.props.currentTrack !== null &&
         this.props.currentTrack._id === this.props.post._id) {
-      let isLiked = !this.props.isLiked;
-      AudioActions.setCurrentSong(null, isLiked);
+          let isLiked = !this.props.isLiked;
+          AudioActions.setCurrentSong(null, isLiked);
+      }
+    } else {
+      AuthActionCreators.showLoginForm();      
     }
   },
 

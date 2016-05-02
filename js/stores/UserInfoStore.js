@@ -3,6 +3,8 @@ var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var CHANGE_EVENT = 'change';
+var _showLogin = false;
+
 
 //var user = {success: false};
 var user = WebAPIUtils.auth({}, 'checktoken');
@@ -40,6 +42,10 @@ var UserInfoStore = assign({}, EventEmitter.prototype, {
     return user;
   },
 
+  showLogin: function () {
+    return _showLogin;
+  },
+
   emitChange: function () {
     this.emit(CHANGE_EVENT);
   },
@@ -73,6 +79,11 @@ AppDispatcher.register(function(action) {
 
     case 'user_logout':
       logout();
+      UserInfoStore.emitChange();
+      break;
+
+    case 'show_login':
+      _showLogin = !_showLogin;
       UserInfoStore.emitChange();
       break;
 

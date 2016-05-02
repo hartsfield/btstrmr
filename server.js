@@ -16,6 +16,14 @@ var jwt         = require('jsonwebtoken');
 var config      = require('./config.js');
 var User        = require('./models/user.js');
 var Audio       = require('./models/audio.js');
+var https       = require('https');
+var privateKey  = fs.readFileSync('./auth/privkey.pem', 'utf8');
+var certificate = fs.readFileSync('./auth/cert.pem', 'utf8');
+var chain       = fs.readFileSync('./auth/chain.pem', 'utf8');
+var httpServer  = http.createServer(app);
+var credentials = { key: privateKey, cert: certificate, ca: chain };
+var httpsServer = https.createServer(credentials, app);
+
 var serverConf  = {
   port : config.port,
   ip   : config.ip,
@@ -37,6 +45,7 @@ app.use('/', express.static(path.join(__dirname, './build')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/uploads',  express.static(__dirname + '/uploads'));
 app.use('/assets',  express.static(__dirname + '/assets'));
+app.use('/.well-known',  express.static(__dirname + '/.well-known')); // for setting up cert
 app.use('/css',  express.static(__dirname + '/css'));
 app.use(cookieParser());
 app.use(bodyParser.json({limit: '50mb'}));
@@ -329,3 +338,7 @@ authRoutes.use(function(req, res) {
 
 app.use('/auth', authRoutes);
 httpServer.listen(serverConf.port, serverConf.ip, serverConf.start);
+httpsServer.listen(3001, serverConf.ip, function (err, data) {
+  console.log(err, data);
+});
+

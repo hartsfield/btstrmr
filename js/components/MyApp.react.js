@@ -6,6 +6,7 @@ var GlobalPlayer = require('./GlobalPlayer.react.js');
 var Upload = require('./Upload.react.js');
 var UserInfoStore = require('../stores/UserInfoStore.js');
 var AudioActions = require('../actions/AudioActions');
+var a = 0;
 
 function getDataForState() {
   return {
@@ -80,6 +81,10 @@ var MyApp = React.createClass({
     var prog = document.getElementById("progressbar");
     var perc = (e.target.currentTime/e.target.duration)*100;
     prog.style.width = perc + "%";
+
+     a = a + 3;
+     document.getElementById("spinny").style.transform = "rotate(" + a + "deg)"; 
+
   },
 
   _onChange: function () {

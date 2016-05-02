@@ -96,15 +96,15 @@ input {
 }
 */
 #loginKey {
-  background: url('../assets/SVG-TESTING/key2.svg') no-repeat;
-  height: 3em;
-  width: 3em;
+  background: url('../assets/icons/black/key2.svg') no-repeat;
+  height: 4em;
+  width: 4em;
   padding-top: 0.1em;
   padding-bottom: 0.1em;
 }
 
 #logoutDoor {
-  background: url('../assets/SVG-TESTING/log-out.svg') no-repeat;
+  background: url('../assets/icons/black/log-out.svg') no-repeat;
   height: 3em;
   width: 3em;
   padding-top: 0.1em;
@@ -129,6 +129,11 @@ input {
   font-weight: 700;
   border: 1px dashed black;
   background-color: yellow;
+  display: inline-block;
+}
+
+.authButt {
+  display: inline-block;
 }
 
 .logobar {
@@ -138,7 +143,7 @@ input {
   white-space: nowrap;
   overflow: hidden;
 /*  right: 0;*/
-  background-color: rgba(178, 228, 83, 0.8);
+  background-color: rgba(251, 255, 185, 0.8);
   color: #486e2a;
   border-left: 1px solid black;
   z-index: -3;
@@ -162,6 +167,7 @@ input {
   color: white;
   background-color: #4e9600;
   z-index: 2;
+  height: 1.235em;
 }
 
 .arrow-right:after {
@@ -175,8 +181,8 @@ input {
   pointer-events: none;
   border-color: rgba(136, 183, 213, 0);
   border-left-color: #4e9600;
-  border-width: 0.56em;
-  margin-top: -0.56em;
+  border-width: 0.59em;
+  margin-top: -0.59em;
   z-index: 2;
 }
 
@@ -192,6 +198,7 @@ input {
   width:2em;
   padding-left: 0.5em;
   right: 0;
+  height: 1.23em;
 }
 
 .arrow-left:after {
@@ -205,8 +212,8 @@ input {
   pointer-events: none;
   border-color: rgba(136, 183, 213, 0);
   border-right-color: #e68049;
-  border-width: 0.58em;
-  margin-top: -0.58em;
+  border-width: 0.59em;
+  margin-top: -0.59em;
   white-space: nowrap;
 }
 
@@ -296,6 +303,7 @@ input {
   width:2em;
   padding-left: 0.5em;
   border-bottom-right-radius: 0.3em;
+  height: 1.24em;
 }
 
 .aleftpost:after {
@@ -326,7 +334,7 @@ input {
   width: -webkit-calc(100% - 7.5em);
   width: calc(100% - 5.5em);
   vertical-align: middle;
-  font-size-adjust: 0.3;
+  font-size-adjust: 0.33;
   color: #2c6b66;
   display: inline-block;
   z-index:  5454;
@@ -384,16 +392,19 @@ input {
 #globalplaypause_image {
   height: 0.8em;
   vertical-align: middle;
+  padding-bottom: 0.1em;
 }
 
 #globalnext_image {
-  height: 1.2em;
+  height: 1.1em;
   vertical-align: middle;
+  padding-bottom: 0.1em;
 }
 
 #globalheart_image {
   height: 0.9em;
   vertical-align: middle;
+  padding-bottom: 0.1em;
 }
 
 .arlogo:hover {
@@ -415,13 +426,13 @@ input {
 .gnext2 {
   padding-left: 4.8em;
   z-index: 5;
-  background: #51c23b;
+  background: #4e9600;
 }
 
 .gnext3 {
   padding-left: 7.2em;
   z-index: 4;
-  background: #9eda2a;
+  background: #7bcc22;
 }
 
 .gnext4 {
@@ -433,12 +444,12 @@ input {
 .gnext5 {
   padding-left: 12.0em;
   z-index: 2;
-  background: #ff7e00;
+  background: #e68049;;
 }
 
 .gnext6 {
   padding-left: 14.4em;
-  background: #844598;
+  background: #835792;
   z-index: 1;
 }
 
@@ -452,11 +463,11 @@ input {
 }
 
 .gnext2:after {
-  border-left-color: #51c23b;
+  border-left-color: #4e9600;
 }
 
 .gnext3:after {
-  border-left-color: #9eda2a;
+  border-left-color: #7bcc22;
 }
 
 .gnext4:after {
@@ -464,11 +475,11 @@ input {
 }
 
 .gnext5:after {
-  border-left-color: #ff7e00;
+  border-left-color: #e68049;
 }
 
 .gnext6:after {
-  border-left-color: #844598;
+  border-left-color: #835792;
 }
 
 
@@ -476,4 +487,28 @@ input {
   font-size: 0.8em;
   padding-top: 3.5em;
   text-decoration: underline;
+}
+
+.posteddate {
+  background-color: rgba(255, 204, 0, 0.66);
+  position:  relative;
+  top:  7em;
+  width: 15%;
+  padding:  0.5em;
+  margin-left:  calc(85% - 1em);
+  margin-left: calc(85% - 0.8em);
+  color: black;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  border: 3px solid white;
+}
+
+.title {
+  background-color: #e68049;
+  padding: 0.5em;
+  font-size: 1.5em;
+  color: whitesmoke;
+  border-bottom: 0.5em solid #fc0;
+  font-weight: bold;
+  margin-top: 1.3em;
 }
