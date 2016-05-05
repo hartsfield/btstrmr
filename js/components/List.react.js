@@ -10,14 +10,15 @@ var List = React.createClass({
     if (Object.keys(this.props.myList).length < 1) {
       return null;
     }
-    console.log(this.props.currentOrder);
-    if (this.props.currentOrder === 'sortByDate') {
+    if (this.props.currentOrder === 'fresh') {
       title = 'FRESHEST BEATS';
-      } else if (this.props.currentOrder === 'sortByLikes') {
+    } else if (this.props.currentOrder === 'hot') {
       title = 'HOTTEST TRACKS';
-      } else {
+    } else if (this.props.currentOrder === 'favs') {
       title = 'MY FAVS';
-      };
+    } else {
+      title = 'FRESHEST BEATS';
+    };
     var allItems = this.props.myList;
     var item = [];
 

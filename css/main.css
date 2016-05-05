@@ -97,8 +97,8 @@ input {
 */
 #loginKey {
   background: url('../assets/icons/black/key2.svg') no-repeat;
-  height: 4em;
-  width: 4em;
+  height: 2.4em;
+  width: 2.4em;
   padding-top: 0.1em;
   padding-bottom: 0.1em;
 }
@@ -266,7 +266,7 @@ input {
   width:  -moz-calc(100% - 18em);
   width:  -webkit-calc(100% - 18em);
   width:  calc(100% - 18em);
-  height:  1.22em;
+  height:  1.236em;
   /*! background:  blue; */
   position:  absolute;
   padding-left: 4.4em;

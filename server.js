@@ -39,8 +39,15 @@ var serverConf  = {
   }
 };
 
+function ensureSecure(req, res, next){
+  if(req.secure){
+    return next();
+  };
+  res.redirect('https://'+req.hostname+req.url);
+};
 
 var multipartMiddleware = multipart();
+app.all('*', ensureSecure);
 app.use('/', express.static(path.join(__dirname, './build')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/uploads',  express.static(__dirname + '/uploads'));
@@ -52,6 +59,11 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(morgan('dev'));
 app.disable('etag');
+
+app.get('/ROBOTS.txt', function(req, res) {
+  res.type('text/plain');
+  res.send("User-agent: *\nDisallow: *\nAllow: /");
+})
 
 function authenticate(req, res, next) {
   var token = req.body.token     ||
@@ -133,15 +145,16 @@ app.post('/api/getListData', function(req, res) {
 //change to switch?
   var order = req.body.order;
   var user = req.body.user;
-  if (order === 'sortByDate') {
+  console.log(order);
+  if (order === 'fresh') {
     Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
       res.json(posts);
     });
-  } else if (order === 'sortByLikes') {
+  } else if (order === 'hot') {
     Audio.find().sort({Likes :-1}).limit(5).exec(function(err, posts){
       res.json(posts);
     });
-  } else if (order === 'sortByMine' && user !== undefined) {
+  } else if (order === 'favs' && user !== undefined) {
     User.find({_id: user._id}, function(err, user) {
       var likedArray = JSON.parse(JSON.stringify(user[0])).liked;
       Audio.find({_id: 
@@ -162,15 +175,15 @@ app.post('/api/nextPage', function(req, res) {
   var page = req.body.page || 0;
   var order = req.body.order;
   var user = req.body.user;
-  if (order === 'sortByDate') {
+  if (order === 'fresh') {
     Audio.find().sort({Posted :-1}).skip(page).limit(5).exec(function(err, posts){
       res.json(posts);
     });
-  } else if (order === 'sortByLikes') {
+  } else if (order === 'hot') {
     Audio.find().sort({Likes :-1}).skip(page).limit(5).exec(function(err, posts){
       res.json(posts);
     });
-  } else if (order === 'sortByMine' && user !== undefined) {
+  } else if (order === 'favs' && user !== undefined) {
     //pagification not working
     User.find({_id: user._id}, function(err, user) {
       var likedArray = JSON.parse(JSON.stringify(user[0])).liked;

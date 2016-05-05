@@ -79,7 +79,7 @@ var ListItem = React.createClass({
 
 
   _updateLikes: function () {
-    if (this.props.success === true){
+    if (this.props.user !== undefined){
       let info = {
         post: this.props.post._id,
         user: this.props.user
@@ -91,7 +91,7 @@ var ListItem = React.createClass({
           AudioActions.setCurrentSong(null, isLiked);
       }
     } else {
-      AuthActionCreators.showLoginForm();      
+      AuthActionCreators.showLoginForm(); 
     }
   },
 

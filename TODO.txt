@@ -1,0 +1,12 @@
+-fix auth (verification, feedback, loading divs)
+-tell user when no more tracks to display
+-mobile
+-minify everything/pagespeed insights
+-es5/es6 safari
+-add more music
+-routing
+-about page?
+-custom 404 page?
+-seo
+-look over all code
+-test: edge, safari, chrome firefox

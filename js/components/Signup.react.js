@@ -17,9 +17,17 @@ const SignUp = React.createClass({
     <div>
         <div className="auth">
           { this.props.user.success ?
-            <button id="logoutDoor" className="loginShow" onClick={this._userlogout}></button>
+            <button
+              id="logoutDoor"
+              className="loginShow"
+              onClick={this._userlogout}>
+            </button>
           :
-            <button id="loginKey" className="loginShow" onClick={this._showLogin}></button>
+            <button
+              id="loginKey"
+              className="loginShow"
+              onClick={this._showLogin}>
+            </button>
           }
           { this.state.showLogin || UserInfoStore.showLogin() ? 
     <form
@@ -27,12 +35,18 @@ const SignUp = React.createClass({
       encType="multipart/form-data"
       onSubmit={this._handleSubmit}>
         <input className="usernameInput"
+            pattern=".{4,15}"
+            required
+            title="4-15 characters"
             id="User"
             placeholder="username"
             onChange={this._handleValueChange}
             defaultValue={this.state.User}>
         </input>
         <input className="passwordInput"
+            pattern=".{4,15}"
+            required
+            title="4-15 characters"
             id="Password"
             type="password"
             placeholder="password"
@@ -41,14 +55,29 @@ const SignUp = React.createClass({
         </input>
         { this.state.showSignup ?
           <div>
-            <button className="activeAuthButt" onClick={this._handleLogin}>Login</button>
-            <button className="authButt" onClick={this._toggleShowSignup}>or SignUp</button>
+            <button
+              className="activeAuthButt"
+              onClick={this._handleLogin}>
+              Login
+            </button>
+            <button
+              className="authButt"
+              onClick={this._toggleShowSignup}>
+              or SignUp
+            </button>
           </div>
-
         :
           <div>
-            <button className="activeAuthButt" onClick={this._handleSignup}>SignUp</button>
-            <button className="authButt" onClick={this._toggleShowSignup}>or Login</button>
+            <button
+              className="activeAuthButt"
+              onClick={this._handleSignup}>
+              SignUp
+            </button>
+            <button
+              className="authButt"
+              onClick={this._toggleShowSignup}>
+              or Login
+            </button>
           </div>
 
         }
@@ -62,8 +91,6 @@ const SignUp = React.createClass({
             />
           }
           </div>
-
-
     </div>
     );
   },
@@ -87,18 +114,33 @@ const SignUp = React.createClass({
   },
 
   _mkdata: function () {
-    var data = new FormData();
-    data.append('password', this.state.Password);
-    data.append('username', this.state.User);
-    return data;
+    var p = this.state.Password;
+    var u = this.state.User;
+    if ((p.length > 20 || p.length < 4) && (u.length > 15 || u.length < 4)) {
+        return {error: true, errPass: "4 - 20 characters", errName: "4 - 15 characters, alphanumeric"}
+    } else if ((p.length > 20 || p.length < 4)) {
+        return {error: true, errPass: "4 - 20 characters"}
+    } else if ((u.length > 15 || u.length < 4)) {
+        return {error: true, errName: "4 - 15 characters, alphanumeric"}
+    } else {
+      var data = new FormData();
+      data.append('password', this.state.Password);
+      data.append('username', this.state.User);
+      return data;
+    }
   },
 
   _handleSignup: function (e) {
+    var data = this._mkdata();
+    if (data.error) {
+      // 
+    } else {
     e.preventDefault();
     AuthActionCreators.signup(this._mkdata());
     this.setState({
       showLogin: false,
     });
+    }
   },
 
 

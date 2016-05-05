@@ -5,7 +5,8 @@ var CHANGE_EVENT = 'change';
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var UserInfoStore = require('../stores/UserInfoStore.js');
 
-var _audio = WebAPIUtils.getListData('sortByDate');
+var _order_hash = window.location.hash.slice(1, window.location.hash.length);
+var _audio = WebAPIUtils.getListData(_order_hash);
 var _user = {success: false};
 var _currentSong = null;
 var _isCurrentSongLiked = false;

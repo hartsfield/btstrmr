@@ -13,20 +13,20 @@ const SideBar = React.createClass({
           <p className="glogo">GLOBAL</p>
         <li
           className="sidebar-img"
-          id="sortByDate"
+          id="fresh"
           onClick={this._changeSort}>
           FRESH
         </li>
         <li
           className="sidebar-img"
-          id="sortByLikes"
+          id="hot"
           onClick={this._changeSort}>
           HOT
         </li>
         {this.props.user.success ?
         <li
           className="sidebar-img"
-          id="sortByMine"
+          id="favs"
           onClick={this._changeSort}>
           FAVS
         </li>
@@ -52,6 +52,7 @@ const SideBar = React.createClass({
   },
 
   _changeSort: function (event) {
+    window.location.hash =  event.target.innerHTML.toLowerCase();
     window.scrollTo(0, 0);
     var order = event.target.id;
     AudioActions.changeSort(order, this.props.user.user);
