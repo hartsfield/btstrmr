@@ -5,6 +5,7 @@
   "repository": "private",
   "main": "js/app.js",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.15.0",
     "colors": "^1.1.2",
     "connect-multiparty": "^2.0.0",
@@ -12,14 +13,14 @@
     "cookieparser": "^0.1.0",
     "express": "^4.13.4",
     "flux": "^2.0.1",
+    "jsonwebtoken": "^5.7.0",
+    "mobile-detect": "^1.3.2",
+    "mongoose": "^4.4.12",
     "morgan": "^1.7.0",
     "object-assign": "^1.0.0",
     "react": "latest",
     "react-dom": "latest",
-    "serve-favicon": "^2.3.0",
-    "jsonwebtoken": "^5.7.0",
-    "mongoose": "^4.4.12",
-    "bcrypt": "^0.8.5"
+    "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
     "babelify": "~7.2.0",

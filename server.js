@@ -1,3 +1,6 @@
+//sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3400
+//sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 3001
+
 var fs          = require('fs');
 var path        = require('path');
 var http        = require('http');
@@ -156,7 +159,7 @@ app.post('/api/getListData', function(req, res) {
     });
   } else if (order === 'favs' && user !== undefined) {
     User.find({_id: user._id}, function(err, user) {
-      var likedArray = JSON.parse(JSON.stringify(user[0])).liked;
+      var likedArray = JSON.parse(JSON.stringify(user[0])).liked.slice(0, 5);
       Audio.find({_id: 
         { $in: likedArray }}, 
         function(err, docs) { 
@@ -184,22 +187,19 @@ app.post('/api/nextPage', function(req, res) {
       res.json(posts);
     });
   } else if (order === 'favs' && user !== undefined) {
-    //pagification not working
     User.find({_id: user._id}, function(err, user) {
       var likedArray = JSON.parse(JSON.stringify(user[0])).liked;
-      Audio.find({_id: 
-        { $in: likedArray }}, 
-        function(err, docs) { 
-          if (err) console.log(err);
-          res.json((docs));
-        });
+      console.log(likedArray);
+      Audio.find({_id: { $in: likedArray }}).sort({Posted: 1}).skip(page).limit(5).exec(function(err, docs) {
+        res.json((docs));
+      });
     });
   } else {
     Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
       res.json(posts);
     });
   }
-})
+});
 
 authRoutes.post('/likeTrack', function (req, res) {
   var uid = req.body.user._id

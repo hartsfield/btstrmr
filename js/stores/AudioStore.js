@@ -6,7 +6,14 @@ var WebAPIUtils = require('../utils/WebAPIUtils.js');
 var UserInfoStore = require('../stores/UserInfoStore.js');
 
 var _order_hash = window.location.hash.slice(1, window.location.hash.length);
-var _audio = WebAPIUtils.getListData(_order_hash);
+
+if (_order_hash !== 'fresh' && _order_hash !== 'hot' && _order_hash !== 'favs') {
+  console.log("test fresh", _order_hash);
+  var _audio = WebAPIUtils.getListData("fresh");
+} else {
+  console.log("test order", _order_hash);
+  var _audio = WebAPIUtils.getListData(_order_hash);
+}
 var _user = {success: false};
 var _currentSong = null;
 var _isCurrentSongLiked = false;

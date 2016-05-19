@@ -1,12 +1,14 @@
--fix auth (verification, feedback, loading divs)
--tell user when no more tracks to display
--mobile
+-fix auth (verification, feedback, loading divs, token expiration, mobile css, user fav)
+                 DONE -tell user when no more tracks to display
+                 DONE -number of likes
+                 DONE -routing
+                 DONE -mobile
 -minify everything/pagespeed insights
 -es5/es6 safari
 -add more music
--routing
+--
+-proptypes
 -about page?
--custom 404 page?
 -seo
 -look over all code
 -test: edge, safari, chrome firefox

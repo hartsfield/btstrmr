@@ -45,18 +45,51 @@ var ListItem = React.createClass({
                   ? true
                   : false;
 
+    if (this.props.mobile !== null) {
+    var playpause = isPlaying
+                  ? '../../assets/icons/black/pause.svg'
+                  : '../../assets/icons/black/play.svg';
+
+    var toggleFav = this.props.isLiked
+                  ? '../../assets/icons/red/heart5.svg'
+                  : '../../assets/icons/black/heart2.svg';
+
+      return (
+      <li id={this.props.post._id} className="post">
+        <div className="mobile_singleplayer">
+          <div 
+            onClick={this._playOrPauseTrack} 
+            className="mobile_aright">
+              <img id="mobile_globalplaypause_image" src={playpause}></img>
+          </div>
+          <div className="singleinfo mobile_singleinfo">
+            {this.props.post.Artist} - {this.props.post.Title}
+          </div>
+          <div 
+            className="mobile_aleftpost" 
+            onClick={this._updateLikes}>
+              <img id="mobile_globalheart_image" src={toggleFav}></img>
+              &nbsp;{this.props.post.Likes}
+          </div>
+        </div>
+      </li>
+      )
+    } else {
     var playpause = isPlaying
                   ? '../../assets/icons/white/pause.svg'
                   : '../../assets/icons/white/play.svg';
 
-    var toggleFav     = this.props.isLiked
+    var toggleFav = this.props.isLiked
                   ? '../../assets/icons/white/heart5.svg'
                   : '../../assets/icons/white/heart2.svg';
 
     return (
       <li id={this.props.post._id} className="post">
         <div className="posteddate">Posted {posted} ago</div>
-        <img className="postimg" onClick={this._playOrPauseTrack} src={this.props.post.Image}></img>
+        <img className="postimg"
+             onClick={this._playOrPauseTrack}
+             src={this.props.post.Image}>
+        </img>
         <div className="singleplayer globalplayer logobar">
           <div 
             onClick={this._playOrPauseTrack} 
@@ -70,10 +103,12 @@ var ListItem = React.createClass({
             className="aleftpost" 
             onClick={this._updateLikes}>
               <img id="globalheart_image" src={toggleFav}></img>
+              &nbsp;{this.props.post.Likes}
           </div>
         </div>
       </li>
     )
+    };
   },
 
 

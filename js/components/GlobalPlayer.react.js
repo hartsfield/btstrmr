@@ -1,6 +1,7 @@
 var React = require('react');
 var AudioActions = require('../actions/AudioActions.js');
 var AudioStore = require('../stores/AudioStore.js');
+var UIActions = require('../actions/UIActions.js');
 
 const GlobalPlayer = React.createClass({
 
@@ -9,10 +10,51 @@ const GlobalPlayer = React.createClass({
                   ? '../../assets/icons/white/pause.svg'
                   : '../../assets/icons/white/play.svg';
 
+    if (this.props.mobile !== null) {
+    var toggleFav = this.props.isLiked
+                  ? '../../assets/icons/red/heart5.svg'
+                  : '../../assets/icons/white/heart2.svg';
+ 
+    return (
+    <div>
+      {this.props.currentTrack === null ?
+      <div id="mobile_header">
+        <div id="showNav" onClick={this._showNav}>
+          <img id="showNav_image"
+               src="../../assets/icons/white/list.svg">
+          </img>
+        </div>
+        <div id="mobile_logo">BTSTRMR</div>
+      </div>
+      :
+      <div id="mobile_header">
+        <div id="showNav" onClick={this._showNav}>
+          <img id="showNav_image"
+               src="../../assets/icons/white/list.svg">
+          </img>
+        </div>
+        <div 
+          onClick={this._playOrPauseTrack} 
+          className="mobile_play">
+            <img id="mobile_play_image" src={playpause}></img>
+        </div>
+          <div id="mobile_globalInfo">
+            {this.props.currentTrack.Artist} - {this.props.currentTrack.Title}
+          </div>
+          <div 
+            className="mobile_globalheart" 
+            onClick={this._toggleFav}>
+              <img id="mobile_globalheart_image-a" src={toggleFav}></img>
+          </div>
+
+      </div>
+      }
+    </div>
+    );
+    } else {
     var toggleFav = this.props.isLiked
                   ? '../../assets/icons/white/heart5.svg'
                   : '../../assets/icons/white/heart2.svg';
-
     if (this.props.currentTrack === null) {
       return (
         <div className="globalplayer logobar">
@@ -51,6 +93,8 @@ const GlobalPlayer = React.createClass({
           </div>
         </div>
       );
+
+    };
     };
   },
 
@@ -61,6 +105,10 @@ const GlobalPlayer = React.createClass({
     } else if (!this.props.isPlaying) {
       ga.play();
     };
+  },
+
+  _showNav: function () {
+    UIActions.showNav();
   },
 
   _toggleFav: function () {

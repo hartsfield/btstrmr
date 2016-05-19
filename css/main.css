@@ -53,8 +53,6 @@ input {
 
 
 .sidebar-img-logo {
-  padding-top: 2em;
-  padding: 2em;
   width: 5em;
 }
 
@@ -330,8 +328,8 @@ input {
 }
 
 .singleinfo {
-  width: -moz-calc(100% - 7.5em);
-  width: -webkit-calc(100% - 7.5em);
+  width: -moz-calc(100% - 5.5em);
+  width: -webkit-calc(100% - 5.5em);
   width: calc(100% - 5.5em);
   vertical-align: middle;
   font-size-adjust: 0.33;
@@ -359,7 +357,7 @@ input {
 }
 
 .foot {
-  width: 100%;
+ /* width: 100%;*/
   height: 20em;
   background: #237d76;
   border-top:  0.5em solid #fc0;
@@ -511,4 +509,244 @@ input {
   border-bottom: 0.5em solid #fc0;
   font-weight: bold;
   margin-top: 1.3em;
+}
+
+.likes {
+  background-color: RGBA(131, 87, 146, 0.66);
+}
+
+
+#listarea_mobile {
+  width: 100%;
+  padding-top: 8em;
+}
+
+#mobile_header {
+  height: 10em;
+  background-color: #FC0;
+  width: calc(100% + 11em);
+  margin-left: -11em;
+  position: fixed;
+  vertical-align: middle;
+}
+
+.mobile_play {
+  vertical-align: middle;
+  position: relative;
+  margin-left: 1em;
+  display: inline-block;
+  height: 80%;
+}
+
+#mobile_play_image {
+  vertical-align: middle;
+  height: 100%;
+}
+
+#showNav {
+  vertical-align: middle;
+  height: 100%;
+  display: inline-block;
+  background: red;
+}
+
+#showNav_image {
+  vertical-align: middle;
+  background: #e68049;
+  height: 100%;
+}
+
+#mobile_nav {
+  width: 100%;
+  height: 100%;
+  background-color: #fc0;
+  position: fixed;
+}
+
+#mobile_logo {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 8em;
+  position: absolute;
+  right: 1.5em;
+  color: #939933;
+}
+
+.mobile_sidebar {
+  padding-top: 9em; 
+  position: fixed;
+  z-index: 3324324324 !important;
+  height: 0;
+}
+
+
+
+#mobile_loginKey {
+  height: 12.4em;
+  width: 12.4em;
+  background: url('../assets/icons/black/key2.svg') no-repeat;
+  background-size: 10em;
+  position: absolute;
+  bottom: 20em;
+}
+
+.mobile_btlogo {
+  display: inline-block;
+  font-size: 4em;
+  vertical-align: middle;
+}
+
+#mobile_spinny {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#mobile_logodiv {
+  text-align: left;
+  margin-top: -4em;
+}
+
+.mobile_sidebar-img {
+  margin-top: 1em;
+  font-size: 3.7em;
+  background-color: whitesmoke;
+  padding-left: 2.5em;
+}
+
+.mobile_aright {
+  display: inline-block;
+  padding-left: 2.7em;
+  padding-right: 1.7em;
+  color: black;
+}
+
+#mobile_globalplaypause_image {
+  height: 5.8em;
+  vertical-align: middle;
+  padding-bottom: 0.1em;
+}
+
+.mobile_singleinfo {
+  margin-left: 0;
+  font-size: 2.5em;
+  width: -moz-calc(100% - 6.6em);
+  width: -webkit-calc(100% - 6.6em);
+  width: calc(100% - 6.6em);
+}
+
+#listarea_mobile > li {
+  padding-top: 3em;
+  width: 94%;
+}
+
+.mobile_sidebar-img-logo {
+  width: 5em;
+  padding: 2em;
+}
+
+.mobile_aleftpost {
+  display: inline-block; 
+  position: absolute;
+  color: black;
+  font-size: 2em;
+  width: 5.5em;
+}
+
+#mobile_globalheart_image {
+  height: 2.9em;
+  vertical-align: middle;
+  padding-bottom: 0.1em;
+}
+
+#mobile_globalheart_image-a {
+  height: 7.4em;
+  vertical-align: middle;
+  padding-bottom: 0.1em;
+}
+
+.mobile_globalheart {
+  display: inline-block;
+  position: absolute;
+  right: 13em;
+  padding-top: 1.2em;
+}
+
+#mobile_globalInfo {
+  display: inline;
+  vertical-align: top;
+  padding: 0.3em;
+  font-size: 1.8em;
+  color: white;
+  text-transform: uppercase;
+  width: 47%;
+  position: absolute;
+  padding-top: 0.9em;
+}
+
+.mobile_title {
+  font-size: 3em;
+  margin-top: 0.6em;
+  background-color: #e68049;
+  padding: 0.5em;
+  color: whitesmoke;
+  border-bottom: 0.5em solid #fc0;
+  font-weight: bold;
+}
+
+.mobile_User {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  font-size: 3em; 
+}
+
+.mobile_Password {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  font-size: 3em; 
+  margin-top: 1em;
+}
+
+.mobile_loginForm {
+  text-align: center; 
+  background: #fc0;
+  z-index: 3;
+}
+
+.mobile_auth {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  padding-top: 13.3em;
+  z-index: -1;
+}
+
+.mobile_authButt {
+  font-size: 2em;
+  display: inline-block;
+}
+
+.mobile_activeAuthButt {
+  font-size: 3em;
+  margin-top: 1em;
+  margin-right: 2em;
+  font-weight: 700;
+  border: 1px dashed black;
+  background-color: yellow;
+  display: inline-block;
+}
+
+#mobile_logoutDoor {
+  height: 7em;
+  width: 7em;
+  position: absolute;
+  bottom: 23em;
+  background: url('../assets/icons/black/log-out.svg') no-repeat;
+  background-size: 7em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+.mobile_li_first {
+  margin-top: 3.5em;
 }
