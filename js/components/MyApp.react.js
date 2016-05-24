@@ -27,7 +27,7 @@ function getDataForState() {
 var MyApp = React.createClass({
 
   getInitialState: function () {
-    let state = getDataForState();
+    var state = getDataForState();
     state.isPlaying = false;
     return state;
   },
@@ -116,7 +116,7 @@ var MyApp = React.createClass({
   },
 
   _playNext: function () {
-    let ga = document.getElementById("globalAudio");
+    var ga = document.getElementById("globalAudio");
     var next = document.getElementById(
                  this.state.currentTrack._id).nextSibling.id;
     var result = $.grep(this.state.myList, function(e) {
@@ -133,7 +133,7 @@ var MyApp = React.createClass({
   },
 
   _checkIfLiked: function (id) {
-    let liked = this.state.user.user.liked;
+    var liked = this.state.user.user.liked;
     for (var i = 0, len = liked.length; i < len; i++) {
       if (liked[i] == id ) {
         console.log("true");

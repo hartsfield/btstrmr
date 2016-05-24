@@ -1,6 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 
-const WebAPIUtils = {
+var WebAPIUtils = {
   getListData: function (order, user) {
     $.ajax({
       url: '/api/getListData',

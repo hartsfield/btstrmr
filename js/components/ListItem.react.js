@@ -115,14 +115,14 @@ var ListItem = React.createClass({
 
   _updateLikes: function () {
     if (this.props.user !== undefined){
-      let info = {
+      var info = {
         post: this.props.post._id,
         user: this.props.user
       };
       AudioActions.updateLikes(info);
       if (this.props.currentTrack !== null &&
         this.props.currentTrack._id === this.props.post._id) {
-          let isLiked = !this.props.isLiked;
+          var isLiked = !this.props.isLiked;
           AudioActions.setCurrentSong(null, isLiked);
       }
     } else {
@@ -131,10 +131,10 @@ var ListItem = React.createClass({
   },
 
   _playOrPauseTrack: function () {
-    let ga = document.getElementById('globalAudio');
+    var ga = document.getElementById('globalAudio');
     if (this.props.currentTrack === null
      || this.props.currentTrack._id !== this.props.post._id) {
-      let isLiked = this.props.isLiked;
+      var isLiked = this.props.isLiked;
       AudioActions.setCurrentSong(this.props.post, isLiked);
       ga.src= '../..' + this.props.post.Audio + '.mp3';
       ga.load();
@@ -149,8 +149,8 @@ var ListItem = React.createClass({
   },
 
   _listenForTrack: function () {
-    let audio = AudioStore.getCurrentSong();
-    let isModified = this.props.currentTrack !== null
+    var audio = AudioStore.getCurrentSong();
+    var isModified = this.props.currentTrack !== null
                   && audio._id
                  === this.props.post._id
                    ? true

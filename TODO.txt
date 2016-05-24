@@ -4,9 +4,9 @@ user fav, special characters)
                  DONE -number of likes
                  DONE -routing
                  DONE -mobile
+                 DONE -es5/es6 safari
+                 DONE -add more music
 -minify everything/pagespeed insights
--es5/es6 safari
--add more music
 -remove upload
 --
 -proptypes

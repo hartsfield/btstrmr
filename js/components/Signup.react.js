@@ -12,7 +12,7 @@ function checkIfHidden() {
 }
 
 
-const SignUp = React.createClass({
+var SignUp = React.createClass({
   getInitialState: function () {
     return {
       Password: "",
@@ -147,7 +147,7 @@ const SignUp = React.createClass({
   },
 
   _handleValueChange: function (event) {
-    const et = event.target;
+    var et = event.target;
     this.setState({
       [et.id]: et.value,
     });

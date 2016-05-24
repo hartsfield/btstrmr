@@ -5,7 +5,7 @@ var AudioActions = require('../actions/AudioActions.js');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 var UIActions = require('../actions/UIActions.js');
 
-const SideBar = React.createClass({
+var SideBar = React.createClass({
 
   render: function () {
     if (this.props.mobile === null) {
@@ -13,7 +13,6 @@ const SideBar = React.createClass({
       <ul className="sidebar">
       <Signup user={this.props.user} mobile={this.props.mobile}/>
           <p className="btlogo">BTSTRMR</p>
-          <div className="bubble"></div>
           <p className="glogo">GLOBAL</p>
         <li
           className="sidebar-img"

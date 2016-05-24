@@ -3,7 +3,7 @@ var AudioActions = require('../actions/AudioActions.js');
 var AudioStore = require('../stores/AudioStore.js');
 var UIActions = require('../actions/UIActions.js');
 
-const GlobalPlayer = React.createClass({
+var GlobalPlayer = React.createClass({
 
   render: function() {
     var playpause = this.props.isPlaying
@@ -99,7 +99,7 @@ const GlobalPlayer = React.createClass({
   },
 
   _playOrPauseTrack: function () {
-    let ga = document.getElementById('globalAudio');
+    var ga = document.getElementById('globalAudio');
     if (this.props.isPlaying) {
       ga.pause();
     } else if (!this.props.isPlaying) {
@@ -112,12 +112,12 @@ const GlobalPlayer = React.createClass({
   },
 
   _toggleFav: function () {
-    let info = {
+    var info = {
       post: this.props.currentTrack._id,
       user: this.props.user.user
     };
     AudioActions.updateLikes(info);
-    let isLiked = !this.props.isLiked;
+    var isLiked = !this.props.isLiked;
     AudioActions.setCurrentSong(null, isLiked);
   },
 

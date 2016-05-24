@@ -6,7 +6,7 @@ html, body, ul{
   width: 100%;
   position: relative;
   z-index: -4;
-  background-color: #eff0e0;
+  background-color: #f0f0e0;
 }
 
 button {
@@ -274,7 +274,7 @@ input {
 #progresscontainer {
   width:  -moz-calc(100% - 18em);
   width:  -webkit-calc(100% - 18em);
-  width:  calc(100% - 18em);
+  width:  calc(100% - 14.3em);
   height:  1.236em;
   /*! background:  blue; */
   position:  absolute;
@@ -768,7 +768,7 @@ input {
 
 #verification {
   position: absolute;
-  color: red;
+  color: #fff;
   top: 3.2em;
   font-size: 0.7em;
   left: 1.3em;
@@ -862,52 +862,6 @@ input {
     from {margin-left: -20em;}
     to {margin-left: 0;}
 }*/
-
-.bubble {
-    height: 0.5em;
-    width: 0.5em;
-    border-radius: 2em;
-    background-color: black;
-    display: inline-block;
-    position: absolute;
-    right: 8.09em;
-    top: 8.85em;
-    -webkit-animation-name: bubble; /* Chrome, Safari, Opera */
-    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
-    -webkit-animation-iteration-count: infinite;
-    animation-name: bubble;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-}
-
-/* Chrome, Safari, Opera */
-@-webkit-keyframes bubble {
-  0%   { background-color: black;
-         width:1.0em;
-         height: 1.0em;
-       /*transform: translate(3em,10em); /* Standard syntax */
-       }
-  100% {  background-color: white;
-         transform-origin: center;
-         -ms-transform: scale(4,4); /* IE 9 */
-         -webkit-transform: scale(4,4); /* Safari */
-         transform: scale(4,4); /* Standard syntax */
-       }
-}
-
-/* Standard syntax */
-@keyframes bubble {
-  0%   { background-color: #e68049;
-         width:2px;
-         height: 2px;
-       /*transform: translate(3em,10em); /* Standard syntax */
-       }
-  100% {  background-color: transparent;
-         -ms-transform: scale(4,4); /* IE 9 */
-         -webkit-transform: scale(4,4); /* Safari */
-         transform: scale(2,2); /* Standard syntax */
-       }
-}
 
 img {
     -webkit-animation-name: img; /* Chrome, Safari, Opera */

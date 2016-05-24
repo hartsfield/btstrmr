@@ -22,10 +22,10 @@ var _currentOrder = 'sortByDate'
 function updateLike(info) {
   WebAPIUtils.updateLike(info);
   _user = UserInfoStore.getUser();
-  let index = findSong(info.post);
+  var index = findSong(info.post);
   if (_audio[index].isLiked === true) {
     _audio[index].isLiked = false;
-    let idex = _user.user.liked.indexOf(info.post);
+    var idex = _user.user.liked.indexOf(info.post);
     _user.user.liked.splice(idex, 1);
   } else {
     _audio[index].isLiked = true;
@@ -53,7 +53,7 @@ function setCurrentSong(song, isLiked) {
 function checkIfLiked(audioList) {
   _user = UserInfoStore.getUser();
   if (_user.success === true && _user.user.liked.length >= 1) {
-    let liked = _user.user.liked;
+    var liked = _user.user.liked;
     for (var key in audioList) {
       for (var i = 0, len = liked.length; i < len; i++) {
         if (liked[i] === audioList[key]._id ) {
