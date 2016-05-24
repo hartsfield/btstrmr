@@ -5,7 +5,8 @@ html, body, ul{
   height: 100%;
   width: 100%;
   position: relative;
-  z-index: -4
+  z-index: -4;
+  background-color: #eff0e0;
 }
 
 button {
@@ -54,6 +55,7 @@ input {
 
 .sidebar-img-logo {
   width: 5em;
+  margin-left: 2.999em;
 }
 
 .mainpane {
@@ -63,7 +65,7 @@ input {
 
 .btlogo {
   line-height: 0.1em;
-  padding-top: 0.9em;
+  padding-top: 8em;
 }
 
 .glogo {
@@ -103,10 +105,11 @@ input {
 
 #logoutDoor {
   background: url('../assets/icons/black/log-out.svg') no-repeat;
-  height: 3em;
+  height: 2.3em;
   width: 3em;
   padding-top: 0.1em;
   padding-bottom: 0.1em;
+  position: relative;
 }
 
 .loginShow {
@@ -117,10 +120,12 @@ input {
 
 .auth {
   height: 7em;
+  position: absolute;
+  padding-bottom: 2.3em;
 }
 
 .loginForm {
-  padding-top: 2.2em;
+  padding-top: 1.0em;
 }
 
 .activeAuthButt {
@@ -128,10 +133,16 @@ input {
   border: 1px dashed black;
   background-color: yellow;
   display: inline-block;
+  margin-top: 0.3em;
+  cursor: pointer;
 }
 
 .authButt {
+  cursor: pointer;
   display: inline-block;
+  font-size: 0.7em;
+  margin-left: 1em;
+  text-decoration: underline;
 }
 
 .logobar {
@@ -298,7 +309,7 @@ input {
   position: absolute;
   background-color: #e68049;
   color: white;
-  width:2em;
+  width:3.31em;
   padding-left: 0.5em;
   border-bottom-right-radius: 0.3em;
   height: 1.24em;
@@ -328,15 +339,15 @@ input {
 }
 
 .singleinfo {
-  width: -moz-calc(100% - 5.5em);
-  width: -webkit-calc(100% - 5.5em);
-  width: calc(100% - 5.5em);
+  width: -moz-calc(100% - 9.45em);
+  width: -webkit-calc(100% - 9.45em);
+  width: calc(100% - 9.45em);
   vertical-align: middle;
-  font-size-adjust: 0.33;
+  font-size: 0.7em;
   color: #2c6b66;
   display: inline-block;
   z-index:  5454;
-  margin-left: 3em;
+  margin-left: 4em;
 }
 
 .arightsingle {
@@ -750,3 +761,259 @@ input {
 .mobile_li_first {
   margin-top: 3.5em;
 }
+
+#User, #Password {
+  width: 10em;
+}
+
+#verification {
+  position: absolute;
+  color: red;
+  top: 3.2em;
+  font-size: 0.7em;
+  left: 1.3em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.logobar {
+    -moz-animation-name: dropHeader;
+    -moz-animation-iteration-count: 1;
+    -moz-animation-timing-function: ease-out;
+    -moz-animation-duration: 0.6s;
+
+    -webkit-animation-name: dropHeader;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-duration: 0.6s;
+
+    animation-name: dropHeader;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-duration: 0.6s;
+}
+
+@-moz-keyframes dropHeader {
+  0%   { -moz-transform: translateY(-80px); }
+  100% { -moz-transform: translateY(0); }
+}
+
+@-webkit-keyframes dropHeader {
+  0%   { -webkit-transform: translateY(-80px); }
+  100% { -webkit-transform: translateY(0); }
+}
+
+@keyframes dropHeader {
+  0%   { transform: translateY(-80px); }
+  100% { transform: translateY(0); }
+} 
+
+.sidebar:hover {
+  background-color: #EA27DA;
+}
+
+.sidebar {
+    -webkit-transition: background-color 2s, -webkit-transform 2s;
+    transition: background-color 2s, transform 2s; 
+    
+    -moz-animation-name: slideLeft;
+    -moz-animation-iteration-count: 1;
+    -moz-animation-timing-function: ease-out;
+    -moz-animation-duration: 0.6s;
+
+    -webkit-animation-name: slideLeft;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-duration: 0.6s;
+
+    animation-name: slideLeft;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-duration: 0.6s;
+}
+
+@-moz-keyframes slideLeft {
+  0%   { -moz-transform: translateX(-13em); }
+  100% { -moz-transform: translateX(0); }
+}
+
+@-webkit-keyframes slideLeft {
+  0%   { -webkit-transform: translateX(-13em); }
+  100% { -webkit-transform: translateX(0); }
+}
+
+@keyframes slideLeft {
+  0%   { transform: translateX(-13em); }
+  100% { transform: translateX(0); }
+}
+
+/*#listarea {
+  -webkit-animation:slidein 1s linear;
+  -moz-animation:slidein 1s linear;
+  animation:slidein 1s linear;
+}
+
+@-webkit-keyframes slidein {
+    from {margin-left: -20em;}
+    to {margin-left: 0;}
+}
+
+@keyframes slidein {
+    from {margin-left: -20em;}
+    to {margin-left: 0;}
+}*/
+
+.bubble {
+    height: 0.5em;
+    width: 0.5em;
+    border-radius: 2em;
+    background-color: black;
+    display: inline-block;
+    position: absolute;
+    right: 8.09em;
+    top: 8.85em;
+    -webkit-animation-name: bubble; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: infinite;
+    animation-name: bubble;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes bubble {
+  0%   { background-color: black;
+         width:1.0em;
+         height: 1.0em;
+       /*transform: translate(3em,10em); /* Standard syntax */
+       }
+  100% {  background-color: white;
+         transform-origin: center;
+         -ms-transform: scale(4,4); /* IE 9 */
+         -webkit-transform: scale(4,4); /* Safari */
+         transform: scale(4,4); /* Standard syntax */
+       }
+}
+
+/* Standard syntax */
+@keyframes bubble {
+  0%   { background-color: #e68049;
+         width:2px;
+         height: 2px;
+       /*transform: translate(3em,10em); /* Standard syntax */
+       }
+  100% {  background-color: transparent;
+         -ms-transform: scale(4,4); /* IE 9 */
+         -webkit-transform: scale(4,4); /* Safari */
+         transform: scale(2,2); /* Standard syntax */
+       }
+}
+
+img {
+    -webkit-animation-name: img; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+    animation-name: img;
+    animation-duration: 1s;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes img {
+  0%   { 
+       /*transform: translate(3em,10em); /* Standard syntax */
+         -ms-transform: scale(0.4,0.4); /* IE 9 */
+         -webkit-transform: scale(0.4,0.4); /* Safari */
+         transform: scale(0.4,0.4); /* Standard syntax */
+
+       }
+  100% { 
+         -ms-transform: scale(1,1); /* IE 9 */
+         -webkit-transform: scale(1,1); /* Safari */
+         transform: scale(1,1); /* Standard syntax */
+       }
+}
+
+/* Standard syntax */
+@keyframes img {
+  0%   { 
+       /*transform: translate(3em,10em); /* Standard syntax */
+         -ms-transform: scale(0.4,0.4); /* IE 9 */
+         -webkit-transform: scale(0.4,0.4); /* Safari */
+         transform: scale(0.4,0.4); /* Standard syntax */
+
+       }
+  100% { 
+         -ms-transform: scale(1,1); /* IE 9 */
+         -webkit-transform: scale(1,1); /* Safari */
+         transform: scale(1,1); /* Standard syntax */
+       }
+}
+
+#recycle {
+    -webkit-animation-name: rec; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+    animation-name: rec;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes rec {
+  0%   { -moz-transform: translateY(0); -webkit-transform: translateY(0); }
+  25%  { -moz-transform: translateY(-0.5em); -webkit-transform: translateY(-0.5em);}
+  75%  { -moz-transform: translateY(0.5em); -webkit-transform: translateY(0.5em); }
+  100% { -moz-transform: translateY(0); -webkit-transform: translateY(0); }
+}
+
+.titleimg {
+  position: absolute;
+  right: 1em;
+}
+
+
+.titleimg {
+    -webkit-animation-name: ti; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
+    -webkit-animation-iteration-count: infinite;
+    animation-name: ti;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes ti {
+  0%   {
+       }
+
+  50% { 
+         -ms-transform: scale(1.1,1.1); /* IE 9 */
+         -webkit-transform: scale(1.1,1.1); /* Safari */
+         transform: scale(1.1,1.1); /* Standard syntax */
+       }
+  100%   { 
+         -ms-transform: scale(1,1); /* IE 9 */
+         -webkit-transform: scale(1,1); /* Safari */
+         transform: scale(1,1); /* Standard syntax */
+       }
+
+
+}
+
+/* Standard syntax */
+@keyframes ti {
+  0%   {
+       }
+
+  50% { 
+         -ms-transform: scale(1.1,1.1); /* IE 9 */
+         -webkit-transform: scale(1.1,1.1); /* Safari */
+         transform: scale(1.1,1.1); /* Standard syntax */
+       }
+  100%   { 
+         -ms-transform: scale(1,1); /* IE 9 */
+         -webkit-transform: scale(1,1); /* Safari */
+         transform: scale(1,1); /* Standard syntax */
+       }
+
+}
+
+

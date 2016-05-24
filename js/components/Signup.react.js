@@ -17,8 +17,17 @@ const SignUp = React.createClass({
     return {
       Password: "",
       User: "",
-      showSignup: true,
-      showLogin: false, 
+      showForms: false,
+      showSignup: false, 
+      showLogin: true,
+    };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.user.success) {
+      this.setState({
+        showForms: false,
+      });
     };
   },
 
@@ -37,14 +46,17 @@ const SignUp = React.createClass({
             <button
               class="loginShow"
               id={ this.props.mobile === null ? "loginKey" :  "mobile_loginKey"  }
-              onClick={this._showLogin}>
+              onClick={this._showForms}>
             </button>
           }
-          { this.state.showLogin || UserInfoStore.showLogin() ? 
+          { this.state.showForms ? /*|| UserInfoStore.showLogin() ? */
     <form
       className={this.props.mobile === null ? "loginForm" : "mobile_loginForm" }
       encType="multipart/form-data"
       onSubmit={this._handleSubmit}>
+      <div id="verification">{!this.props.user.success && !this.props.user.ignore 
+            ?this.props.user.message : "" }
+      </div>
         <input className="usernameInput"
             pattern=".{4,15}"
             required
@@ -67,7 +79,7 @@ const SignUp = React.createClass({
             onChange={this._handleValueChange}
             defaultValue={this.state.Password}>
         </input>
-        { this.state.showSignup ?
+        { !this.state.showSignup ?
           <div>
             <button
               className={this.props.mobile === null
@@ -75,12 +87,12 @@ const SignUp = React.createClass({
               onClick={this._handleLogin}>
               Login
             </button>
-            <button
+            <div
               className={this.props.mobile === null
                        ? "authButt" : "mobile_authButt" }
               onClick={this._toggleShowSignup}>
               or SignUp
-            </button>
+            </div>
           </div>
         :
           <div>
@@ -91,12 +103,12 @@ const SignUp = React.createClass({
               onClick={this._handleSignup}>
               SignUp
             </button>
-            <button
+            <div
               className={this.props.mobile === null
                        ? "authButt" : "mobile_authButt" }
               onClick={this._toggleShowSignup}>
               or Login
-            </button>
+            </div>
           </div>
 
         }
@@ -121,9 +133,11 @@ const SignUp = React.createClass({
     );
   },
 
-  _toggleShowSignup: function () {
+  _toggleShowSignup: function (e) {
+ //   e.preventDefault();
     this.setState({
       showSignup: !this.state.showSignup,
+      showLogin: !this.state.showLogin,
     });
     AuthActionCreators.showLoginForm(); 
   },
@@ -162,7 +176,7 @@ const SignUp = React.createClass({
       // 
     } else {
       e.preventDefault();
-      AuthActionCreators.signup(this._mkdata());
+      AuthActionCreators.signup(data);
       this.setState({
         showSignup: !this.state.showSignup,
         showLogin: false, 
@@ -173,11 +187,16 @@ const SignUp = React.createClass({
 
 
   _handleLogin: function (e) {
-    e.preventDefault();
-    AuthActionCreators.login(this._mkdata());
+//   e.preventDefault();
+   var data = this._mkdata();
+   if (data.error) {
+     //
+   } else {
+    AuthActionCreators.login(data);
     this.setState({
       showLogin: false,
     });
+   }
     checkIfHidden();
   },
 
@@ -188,17 +207,14 @@ const SignUp = React.createClass({
     });
   },
 
-  _showLogin: function () {
-   if (this.state.showLogin === true
-     ||this.state.showSignup === false) {
+  _showForms: function () {
+   if (this.state.showForms) {
      this.setState({
-      showLogin: false,
-      showSignup: true,
+       showForms: false,
     });
    } else {
      this.setState({
-       showLogin: true,
-       showSignup: false,
+       showForms: true,
      }); 
    }
     checkIfHidden();

@@ -27,11 +27,16 @@ var httpServer  = http.createServer(app);
 var credentials = { key: privateKey, cert: certificate, ca: chain };
 var httpsServer = https.createServer(credentials, app);
 
+var mongoConf = {
+  'auto_reconnect': true,
+  'poolSize': 5
+}
+
 var serverConf  = {
   port : config.port,
   ip   : config.ip,
   start: function() {
-    mongoose.connect(config.database, function() {
+    mongoose.connect(config.database, mongoConf, function() {
       console.log('server started @'.blue    +
                   ' http://'.green           +
                   serverConf.ip + ':'.green  +
@@ -80,6 +85,7 @@ function authenticate(req, res, next) {
           console.log(err);
           res.json({
             success: false,
+            ignore: true,
             message: "Bad Token",
           });
         } else {
@@ -88,6 +94,7 @@ function authenticate(req, res, next) {
             if (err || doc === null) {
               res.json({
                 success: false,
+                ignore: true,
                 message: 'No such user',
               });
             } else {
@@ -107,6 +114,7 @@ function authenticate(req, res, next) {
   } else {
     res.json({
       success: false,
+      ignore: true,
       message: 'No token',
     });
   }
@@ -121,14 +129,14 @@ function issueToken(req, res, pass) {
     if (!user) {
       res.json({ success: false, message: "User not found"});
     } else if (user && pass) {
+      console.log(user.password);
       bcrypt.compare(req.body.password, user.password, function(err, hash) {
-      if (err) {
+      if (err || !hash) {
         res.json({success: false, message: "Invalid password"});
       } else {
         user.password = "hash";
-        console.log(user);
         var token = jwt.sign({user: user}, config.secret, {
-          expiresIn: 2000
+          expiresIn: 25000
         });
         res.cookie("auth", token);
         console.log(user.toObject());
@@ -159,13 +167,11 @@ app.post('/api/getListData', function(req, res) {
     });
   } else if (order === 'favs' && user !== undefined) {
     User.find({_id: user._id}, function(err, user) {
-      var likedArray = JSON.parse(JSON.stringify(user[0])).liked.slice(0, 5);
-      Audio.find({_id: 
-        { $in: likedArray }}, 
-        function(err, docs) { 
-          if (err) console.log(err);
-          res.json((docs));
-        });
+      var likedArray = JSON.parse(JSON.stringify(user[0])).liked.reverse().slice(0, 5);
+      Audio.find({_id: { $in: likedArray }}).skip(0).limit(5).exec(function(err, docs) {
+        var senddoc = sort(docs, likedArray);
+        res.json(senddoc);
+      });
     });
   } else {
     Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
@@ -174,9 +180,20 @@ app.post('/api/getListData', function(req, res) {
   }
 });
 
+function sort(arr, sort) {
+  var newArr = [];
+  //console.log(arr.length, sort.length);
+  for (var i = 0, len = arr.length; i < len; i++) {
+    newArr[sort.indexOf(arr[i]._id.toString())] = arr[i];
+  }
+  //console.log(newArr);
+  return newArr;
+}
+
 app.post('/api/nextPage', function(req, res) {
   var page = req.body.page || 0;
   var order = req.body.order;
+  //get hash for user
   var user = req.body.user;
   if (order === 'fresh') {
     Audio.find().sort({Posted :-1}).skip(page).limit(5).exec(function(err, posts){
@@ -188,10 +205,11 @@ app.post('/api/nextPage', function(req, res) {
     });
   } else if (order === 'favs' && user !== undefined) {
     User.find({_id: user._id}, function(err, user) {
-      var likedArray = JSON.parse(JSON.stringify(user[0])).liked;
+      var likedArray = JSON.parse(JSON.stringify(user[0])).liked.reverse().splice(page, 5);
       console.log(likedArray);
-      Audio.find({_id: { $in: likedArray }}).sort({Posted: 1}).skip(page).limit(5).exec(function(err, docs) {
-        res.json((docs));
+      Audio.find({_id: { $in: likedArray }}).exec(function(err, docs) {
+        var senddoc = sort(docs, likedArray);
+        res.json(senddoc);
       });
     });
   } else {
@@ -245,7 +263,6 @@ authRoutes.post('/likeTrack', function (req, res) {
 app.post('/api/signup', multipartMiddleware, function(req, res) {
   var uname = req.body.username;
   var pass  = req.body.password;
-  console.log(uname, pass);
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(pass, salt, function(err, hash) {
       var nick = new User({
@@ -255,7 +272,8 @@ app.post('/api/signup', multipartMiddleware, function(req, res) {
       });
       nick.save(function(err) {
         if (err) {
-          console.log( err );
+          console.log(err)
+          res.json({success: false, message: "User Exists"});
         } else {
           issueToken(req, res, true);
         }
@@ -327,6 +345,7 @@ authRoutes.use(function(req, res) {
           console.log(err);
           return res.status(403).send({
             success: false,
+            ignore: true,
             message: "Bad Token"
           });
         } else {
@@ -335,6 +354,7 @@ authRoutes.use(function(req, res) {
             success: true,
             message: 'Enjoy token!',
             token: token,
+            ignore: true,
             user: decoded.user,
           });
         }
@@ -342,6 +362,7 @@ authRoutes.use(function(req, res) {
   } else {
     return res.status(403).send({
       success: false,
+      ignore: true,
       message: 'No token'
     });
   }

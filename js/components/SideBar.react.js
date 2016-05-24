@@ -13,6 +13,7 @@ const SideBar = React.createClass({
       <ul className="sidebar">
       <Signup user={this.props.user} mobile={this.props.mobile}/>
           <p className="btlogo">BTSTRMR</p>
+          <div className="bubble"></div>
           <p className="glogo">GLOBAL</p>
         <li
           className="sidebar-img"
