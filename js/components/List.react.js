@@ -1,10 +1,12 @@
 var React = require('react');
 var ListItem = require('./ListItem.react');
 var AudioActions = require('../actions/AudioActions.js');
+//var AudioStore = require('../stores/AudioStore.js');
 var Footer = require('./Footer.react.js');
-var Signup = require('./Signup.react.js');
+//var Signup = require('./Signup.react.js');
 var title = 'FRESHEST BEATS';
 var titleimg = '../../assets/icons/white/time.svg';
+var useraction = false;
 
 var List = React.createClass({
 
@@ -27,6 +29,13 @@ var List = React.createClass({
       this.setState({
         nextPageClicked: false,
       });
+    };
+
+    if (newProps.user.success !== this.props.user.success && !useraction) {
+      useraction = true;
+      AudioActions.getNextPage(this.props.currentOrder,
+                               this.props.myList.length,
+                               this.props.user.user);
     };
 
     if (newProps.myList.length < this.props.myList.length
@@ -72,7 +81,7 @@ var List = React.createClass({
     }
 
     return (
-      <div style={{height: "0"}}>
+      <div className="listwrap">
         <ul id={ this.props.mobile === null ? "listarea" : "listarea_mobile"}>
         <div className={ this.props.mobile === null ? "title" : "mobile_title"}>
         {title}
@@ -89,12 +98,14 @@ var List = React.createClass({
       </div>
     );
   },
-
+  
   _nextPage: function () {
     this.setState({
       nextPageClicked: true,          
     });
-    AudioActions.getNextPage(this.props.currentOrder, this.props.myList.length, this.props.user.user);
+    AudioActions.getNextPage(this.props.currentOrder,
+                             this.props.myList.length,
+                             this.props.user.user);
   },
 });
 

@@ -1,18 +1,25 @@
+//MyApp
+
 var React = require('react');
-var List = require('./List.react');
+
 var AudioStore = require('../stores/AudioStore.js');
+var UIStore = require('../stores/UIStore.js');
+var UserInfoStore = require('../stores/UserInfoStore.js');
+
+var AudioActions = require('../actions/AudioActions');
+
+var List = require('./List.react');
 var SideBar = require('./SideBar.react.js');
 var GlobalPlayer = require('./GlobalPlayer.react.js');
-var Upload = require('./Upload.react.js');
-var UserInfoStore = require('../stores/UserInfoStore.js');
-var UIStore = require('../stores/UIStore.js');
-var AudioActions = require('../actions/AudioActions');
+var Signup = require('./Signup.react');
+
 var MobileDetect = require('mobile-detect');
 var md = new MobileDetect(window.navigator.userAgent);
 var _order_hash = window.location.hash.slice(1, window.location.hash.length);
 var a = 0;
 
 function getDataForState() {
+
   return {
     myList: AudioStore.getList(_order_hash),
     user: UserInfoStore.getUser(),
@@ -82,10 +89,14 @@ var MyApp = React.createClass({
             currentOrder={this.state.currentOrder}
             mobile={this.state.mobile}
           />
+          <Signup 
+            user={this.state.user}
+            mobile={this.state.mobile}
+          />
         </div>
       );
     } else {
-      return <div>hello</div>
+      return <div>LOADING....</div>
     }
   },
 
@@ -94,8 +105,8 @@ var MyApp = React.createClass({
     var perc = (e.target.currentTime/e.target.duration)*100;
     prog.style.width = perc + "%";
 
-     a = a + 3;
-     document.getElementById("spinny").style.transform = "rotate(" + a + "deg)"; 
+    a = a + 3;
+    document.getElementById("spinny").style.transform = "rotate(" + a + "deg)"; 
 
   },
 
@@ -118,14 +129,17 @@ var MyApp = React.createClass({
   _playNext: function () {
     var ga = document.getElementById("globalAudio");
     var next = document.getElementById(
-                 this.state.currentTrack._id).nextSibling.id;
+                 this.state.currentTrack._id
+               ).nextSibling.id;
     var result = $.grep(this.state.myList, function(e) {
                    return e._id == next;
                  });
     if (this.state.user.success === true) {
-    AudioActions.setCurrentSong(result[0], this._checkIfLiked(result[0]._id));
+      AudioActions.setCurrentSong(
+        result[0], this._checkIfLiked(result[0]._id)
+      );
     } else {
-    AudioActions.setCurrentSong(result[0], false);
+      AudioActions.setCurrentSong(result[0], false);
     };
     ga.src = '../..' + result[0].Audio + '.mp3';
     ga.load();
@@ -135,12 +149,10 @@ var MyApp = React.createClass({
   _checkIfLiked: function (id) {
     var liked = this.state.user.user.liked;
     for (var i = 0, len = liked.length; i < len; i++) {
-      if (liked[i] == id ) {
-        console.log("true");
+      if (liked[i] === id ) {
         return true;
       };
     };
-    console.log("false");
     return false
   },
 

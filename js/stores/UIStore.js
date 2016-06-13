@@ -7,7 +7,6 @@ var _showNav = false;
 
 var UIStore = assign({}, EventEmitter.prototype, {
   getShowNav: function () {
-    console.log(_showNav);
     return _showNav;
   },
 

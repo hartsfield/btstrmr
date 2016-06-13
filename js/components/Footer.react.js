@@ -5,7 +5,7 @@ var Footer = React.createClass({
     return (
       <div className="foot">
         <img id="recycle" src="../../assets/icons/white/earth.svg"></img>
-        <div className="footLogo">BTSTRMR</div>
+        <div className="footLogo">♫ BTSTRMR</div>
         <div id="textme">TXT@(681)222.5982</div>
       </div>
     )    

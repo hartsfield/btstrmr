@@ -19,26 +19,26 @@ var WebAPIUtils = {
 
   getNextPage: function (order, page, user) {
     $.post('/api/nextPage', {order:order, page:page, user:user},
-      function (data, textStatus, jqXHR) {
-        console.log(data);
-        AppDispatcher.dispatch({
-          ActionType: 'next_page',
-          data: data,
-        });
-      }
-    );
+           function (data, textStatus, jqXHR) {
+             AppDispatcher.dispatch({
+               ActionType: 'next_page',
+               data: data,
+             });
+           }
+          );
   },
 
   updateLike: function (info) {
     $.post('/auth/likeTrack', info,
-      function (data, textStatus, jqXHR) {
-        AppDispatcher.dispatch({
-          //does this even do anything?
-          type: 'user_like',
-          data: data,
-        });
-      }
-    );
+           function (data, textStatus, jqXHR) {
+             AppDispatcher.dispatch({
+               //does this even do anything?
+               Actiontype: 'user_like',
+               data: data,
+             });
+             //   WebAPIUtils.getListData()
+           }
+          );
   },
 
   auth: function (credentials, type) {

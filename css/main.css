@@ -65,7 +65,7 @@ input {
 
 .btlogo {
   line-height: 0.1em;
-  padding-top: 8em;
+  padding-top: 0.5em;
 }
 
 .glogo {
@@ -119,13 +119,15 @@ input {
 }
 
 .auth {
-  height: 7em;
-  position: absolute;
-  padding-bottom: 2.3em;
+  position: fixed;
+  background: #000;
+  margin-left: 40%;
+  margin-top: 20%;
+  border-radius: 0.5em;
 }
 
 .loginForm {
-  padding-top: 1.0em;
+  padding: 1em;
 }
 
 .activeAuthButt {
@@ -143,6 +145,7 @@ input {
   font-size: 0.7em;
   margin-left: 1em;
   text-decoration: underline;
+  color: white;
 }
 
 .logobar {
@@ -596,15 +599,19 @@ input {
   height: 12.4em;
   width: 12.4em;
   background: url('../assets/icons/black/key2.svg') no-repeat;
-  background-size: 10em;
+  background-size: 8em;
   position: absolute;
-  bottom: 20em;
+  margin-top: 2.7em;
 }
 
 .mobile_btlogo {
   display: inline-block;
   font-size: 4em;
   vertical-align: middle;
+}
+
+#spinny {
+  display: block;
 }
 
 #mobile_spinny {
@@ -614,7 +621,7 @@ input {
 
 #mobile_logodiv {
   text-align: left;
-  margin-top: -4em;
+  margin-left: 10em;
 }
 
 .mobile_sidebar-img {
@@ -660,7 +667,7 @@ input {
   position: absolute;
   color: black;
   font-size: 2em;
-  width: 5.5em;
+/*  width: 5.5em;*/
 }
 
 #mobile_globalheart_image {
@@ -705,61 +712,68 @@ input {
 }
 
 .mobile_User {
-  display: block;
-  width: 90%;
-  margin: 0 auto;
-  font-size: 3em; 
+  font-size: 4em; 
 }
 
+#User {
+  margin-right: 0.5em;
+}
+
+
+
 .mobile_Password {
-  display: block;
-  width: 90%;
-  margin: 0 auto;
-  font-size: 3em; 
-  margin-top: 1em;
+  font-size: 4em; 
+  margin-top: 0.5em;
 }
 
 .mobile_loginForm {
-  text-align: center; 
-  background: #fc0;
-  z-index: 3;
+  display: inline-block;
+  margin-left: 1em;
+  background-color: transparent;
+  width: 45em;
 }
 
 .mobile_auth {
   position: fixed;
   height: 100%;
-  width: 100%;
+  width: 0;
   padding-top: 13.3em;
   z-index: -1;
 }
 
 .mobile_authButt {
-  font-size: 2em;
+  font-size: 3em;
   display: inline-block;
+  color: white;
 }
 
 .mobile_activeAuthButt {
-  font-size: 3em;
+  font-size: 4em;
   margin-top: 1em;
-  margin-right: 2em;
+  margin-right: 1em;
   font-weight: 700;
   border: 1px dashed black;
   background-color: yellow;
   display: inline-block;
 }
 
+.grey {
+  color: #e1e1e1;
+  text-decoration: underline;
+  margin-left: 1em;
+}
+
 #mobile_logoutDoor {
-  height: 7em;
-  width: 7em;
+
+  height: 10em;
+  width: 10em;
   position: absolute;
-  bottom: 23em;
   background: url('../assets/icons/black/log-out.svg') no-repeat;
-  background-size: 7em;
-  padding-top: 0.1em;
-  padding-bottom: 0.1em;
+  background-size: 8.3em;
+  margin-top: 2.7em;
 }
 .mobile_li_first {
-  margin-top: 3.5em;
+ /* margin-top: 3.5em;*/
 }
 
 #User, #Password {
@@ -767,11 +781,18 @@ input {
 }
 
 #verification {
-  position: absolute;
-  color: #fff;
+ /* position: absolute;*/
+  color: #e68049;
   top: 3.2em;
   font-size: 0.7em;
   left: 1.3em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#mobile_verification {
+  font-size: 3em;
+  color: #e68049;
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -786,6 +807,7 @@ input {
     -webkit-animation-iteration-count: 1;
     -webkit-animation-timing-function: ease-out;
     -webkit-animation-duration: 0.6s;
+    -webkit-backface-visibility: hidden;
 
     animation-name: dropHeader;
     animation-iteration-count: 1;
@@ -825,6 +847,7 @@ input {
     -webkit-animation-iteration-count: 1;
     -webkit-animation-timing-function: ease-out;
     -webkit-animation-duration: 0.6s;
+    -webkit-backface-visibility: hidden;
 
     animation-name: slideLeft;
     animation-iteration-count: 1;
@@ -903,6 +926,8 @@ img {
 }
 
 #recycle {
+    -ms-animation-name: rec; /* Chrome, Safari, Opera */
+    -ms-animation-duration: 2s; /* Chrome, Safari, Opera */
     -webkit-animation-name: rec; /* Chrome, Safari, Opera */
     -webkit-animation-duration: 2s; /* Chrome, Safari, Opera */
     animation-name: rec;
@@ -970,4 +995,16 @@ img {
 
 }
 
+.cover {
+  height: 100%;
+  width: 100%;
+  background: RGBA(111, 74, 54, 0.59) none repeat scroll 0% 0%;
+  position: fixed;
+  left: 0em;
+  top: 0em;
+  z-index: -3;
+}
 
+.listwrap {
+  height: 0;
+}

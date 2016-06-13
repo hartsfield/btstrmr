@@ -6,6 +6,7 @@ var path        = require('path');
 var http        = require('http');
 var express     = require('express');
 var app         = express();
+var compression = require('compression');
 var httpServer  = http.createServer(app);
 var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
@@ -56,6 +57,7 @@ function ensureSecure(req, res, next){
 
 var multipartMiddleware = multipart();
 app.all('*', ensureSecure);
+app.use(compression());
 app.use('/', express.static(path.join(__dirname, './build')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/uploads',  express.static(__dirname + '/uploads'));
@@ -71,7 +73,7 @@ app.disable('etag');
 app.get('/ROBOTS.txt', function(req, res) {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: *\nAllow: /");
-})
+});
 
 function authenticate(req, res, next) {
   var token = req.body.token     ||
@@ -98,7 +100,7 @@ function authenticate(req, res, next) {
                 message: 'No such user',
               });
             } else {
-              console.log(doc.toObject());
+              //console.log(doc.toObject());
               doc.password = "hash"
               res.json({
                 success: true,
@@ -129,14 +131,13 @@ function issueToken(req, res, pass) {
     if (!user) {
       res.json({ success: false, message: "User not found"});
     } else if (user && pass) {
-      console.log(user.password);
       bcrypt.compare(req.body.password, user.password, function(err, hash) {
       if (err || !hash) {
         res.json({success: false, message: "Invalid password"});
       } else {
         user.password = "hash";
         var token = jwt.sign({user: user}, config.secret, {
-          expiresIn: 25000
+          expiresIn: 1025000
         });
         res.cookie("auth", token);
         console.log(user.toObject());
@@ -182,11 +183,9 @@ app.post('/api/getListData', function(req, res) {
 
 function sort(arr, sort) {
   var newArr = [];
-  //console.log(arr.length, sort.length);
   for (var i = 0, len = arr.length; i < len; i++) {
     newArr[sort.indexOf(arr[i]._id.toString())] = arr[i];
   }
-  //console.log(newArr);
   return newArr;
 }
 
@@ -259,10 +258,13 @@ authRoutes.post('/likeTrack', function (req, res) {
   });
 });
 
-
 app.post('/api/signup', multipartMiddleware, function(req, res) {
   var uname = req.body.username;
   var pass  = req.body.password;
+  var nameRegex = /^[a-zA-Z0-9\-]{4,15}$/;
+  if (!nameRegex.test(uname)) {
+    res.json({success: false, message: "Bad Username"});
+  } else {
   bcrypt.genSalt(10, function(err, salt) {
     bcrypt.hash(pass, salt, function(err, hash) {
       var nick = new User({
@@ -280,6 +282,7 @@ app.post('/api/signup', multipartMiddleware, function(req, res) {
       });
     });
   });
+  }
 });
 
 app.post('/api/login', multipartMiddleware, function(req, res) {
@@ -290,7 +293,7 @@ app.post('/api/checktoken', function(req, res) {
   authenticate(req, res);
 });
 
-
+/*
 app.post('/api/uploadAudioContent', multipartMiddleware, function(req, res) {
 
   var rb = req.body;
@@ -329,7 +332,7 @@ app.post('/api/uploadAudioContent', multipartMiddleware, function(req, res) {
   }
 
 });
-
+*/
 
 
 

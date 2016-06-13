@@ -22,7 +22,6 @@ var AuthActionCreators = {
     AppDispatcher.dispatch({
       ActionType: 'show_login',
     });
-
   },
 }
 

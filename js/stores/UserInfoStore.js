@@ -1,3 +1,4 @@
+var React = require('react');
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
@@ -34,6 +35,7 @@ function logout() {
     headers: {'x-access-token': 'meatball'}
   });
   user = {success: false};
+  location.reload();
 }
 
 var UserInfoStore = assign({}, EventEmitter.prototype, {

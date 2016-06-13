@@ -2,16 +2,6 @@ var React = require('react');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 var UserInfoStore = require('../stores/UserInfoStore.js');
 
-function checkIfHidden() {
-  var a = document.getElementById("mobile_nav-1").style;
-  if (a.visibility === "hidden") {
-    a.visibility = "visible"
-  } else {
-    a.visibility = "hidden"
-  };
-}
-
-
 var SignUp = React.createClass({
   getInitialState: function () {
     return {
@@ -24,6 +14,26 @@ var SignUp = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
+    if (UserInfoStore.showLogin()) {
+      this.setState({
+        showForms: true,
+      });
+    } else {
+      this.setState({
+        showForms: false,
+      });
+    };
+
+    /*    if (UserInfoStore.showLogin() && !this.state.showForms) {
+      this.setState({
+        showForms: true,
+      });
+      AuthActionCreators.showLoginForm();
+    } else if (UserInfoStore.showLogin() && this.state.showForms) {
+      this.setState({
+        showForms: false,
+      });
+      };*/
     if (nextProps.user.success) {
       this.setState({
         showForms: false,
@@ -33,113 +43,86 @@ var SignUp = React.createClass({
 
   render: function () {
     return (
-    <div>
-        <div 
-      className={this.props.mobile === null ? "auth" : "mobile_auth" }>
-          { this.props.user.success ?
-            <button
-              id={ this.props.mobile === null ? "logoutDoor" :  "mobile_logoutDoor"  }
-              className="loginShow"
-              onClick={this._userlogout}>
-            </button>
+      <div>
+        <div className={this.props.mobile === null ? "auth" : "mobile_auth" }>
+          { this.state.showForms ? 
+          <form
+            className={this.props.mobile === null ? "loginForm" : "mobile_loginForm" }
+            encType="multipart/form-data"
+            onSubmit={this._handleSubmit}>
+            <div className="cover" onClick={AuthActionCreators.showLoginForm}></div>
+            <div id={this.props.mobile === null ? "verification" : "mobile_verification" }>
+              { !this.props.user.success && !this.props.user.ignore 
+               ? this.props.user.message : "" }
+            </div>
+            <input className="usernameInput"
+              pattern="[a-zA-Z0-9\-]{4,15}"
+              required
+              title="4-15 characters and one dash '-'"
+              className={this.props.mobile === null ? "" : "mobile_User" }
+              id="User"
+              autocapitalize="none"
+              placeholder="username"
+              onChange={this._handleValueChange}
+              defaultValue={this.state.User}>
+            </input>
+            <input className="passwordInput"
+              pattern=".{4,15}"
+              required
+              title="4-15 characters"
+              className={this.props.mobile === null ? "" : "mobile_Password" }
+              id="Password"
+              type="password"
+              placeholder="password"
+              onChange={this._handleValueChange}
+              defaultValue={this.state.Password}>
+            </input>
+            <div>
+              <button
+                className={this.props.mobile === null
+                         ? "activeAuthButt" : "mobile_activeAuthButt" }
+                onClick={!this.state.showSignup ? this._handleLogin : this._handleSignup }>
+                  { !this.state.showSignup ? "Login" : "SignUp" }
+              </button>
+              <div
+                className={this.props.mobile === null
+                         ? "authButt" : "mobile_authButt" }
+                onClick={this._toggleShowSignup}>
+                { this.state.showSignup ? "Login" : "SignUp" }
+              </div>
+              <div
+                className={this.props.mobile === null
+                         ? "authButt" : "mobile_authButt grey" }
+                onClick={AuthActionCreators.showLoginForm}>
+                no thanks
+              </div>
+            </div>
+          </form>
           :
-            <button
-              class="loginShow"
-              id={ this.props.mobile === null ? "loginKey" :  "mobile_loginKey"  }
-              onClick={this._showForms}>
-            </button>
+          <div></div>
           }
-          { this.state.showForms ? /*|| UserInfoStore.showLogin() ? */
-    <form
-      className={this.props.mobile === null ? "loginForm" : "mobile_loginForm" }
-      encType="multipart/form-data"
-      onSubmit={this._handleSubmit}>
-      <div id="verification">{!this.props.user.success && !this.props.user.ignore 
-            ?this.props.user.message : "" }
+        </div>
       </div>
-        <input className="usernameInput"
-            pattern=".{4,15}"
-            required
-            title="4-15 characters"
-            className={this.props.mobile === null ? "" : "mobile_User" }
-            id="User"
-            autocapitalize="none"
-            placeholder="username"
-            onChange={this._handleValueChange}
-            defaultValue={this.state.User}>
-        </input>
-        <input className="passwordInput"
-            pattern=".{4,15}"
-            required
-            title="4-15 characters"
-            className={this.props.mobile === null ? "" : "mobile_Password" }
-            id="Password"
-            type="password"
-            placeholder="password"
-            onChange={this._handleValueChange}
-            defaultValue={this.state.Password}>
-        </input>
-        { !this.state.showSignup ?
-          <div>
-            <button
-              className={this.props.mobile === null
-                       ? "activeAuthButt" : "mobile_activeAuthButt" }
-              onClick={this._handleLogin}>
-              Login
-            </button>
-            <div
-              className={this.props.mobile === null
-                       ? "authButt" : "mobile_authButt" }
-              onClick={this._toggleShowSignup}>
-              or SignUp
-            </div>
-          </div>
-        :
-          <div>
-            <button
-              className={this.props.mobile === null
-                       ? "activeAuthButt" : "mobile_activeAuthButt" }
-
-              onClick={this._handleSignup}>
-              SignUp
-            </button>
-            <div
-              className={this.props.mobile === null
-                       ? "authButt" : "mobile_authButt" }
-              onClick={this._toggleShowSignup}>
-              or Login
-            </div>
-          </div>
-
-        }
-
-    </form>
-          :
-          <div id={this.props.mobile ? "mobile_logodiv" : "" }>
-            <img
-              id={this.props.mobile ? "mobile_spinny" : "spinny" }
-              className={this.props.mobile ? "mobile_sidebar-img-logo" : "sidebar-img-logo"} 
-              src="../../assets/SVG-TESTING/disk.svg"
-            />
-            {this.props.mobile ? 
-            <p className="mobile_btlogo">BTSTRMR</p>
-            :
-            <div></div>
-            }
-            </div>
-          }
-          </div>
-    </div>
     );
+  },
+
+  _checkIfHidden: function() {
+  if (this.props.mobile !== null) {
+  var a = document.getElementById("mobile_nav-1").style;
+  if (a.visibility === "hidden") {
+    a.visibility = "visible"
+  } else {
+    a.visibility = "hidden"
+  };
+  }
   },
 
   _toggleShowSignup: function (e) {
  //   e.preventDefault();
-    this.setState({
-      showSignup: !this.state.showSignup,
-      showLogin: !this.state.showLogin,
-    });
-    AuthActionCreators.showLoginForm(); 
+      this.setState({
+        showSignup: !this.state.showSignup,
+        showLogin: !this.state.showLogin,
+      });
   },
 
   _handleSubmit: function (event) {
@@ -182,7 +165,7 @@ var SignUp = React.createClass({
         showLogin: false, 
       });
     };
-    checkIfHidden();
+    this._checkIfHidden();
   },
 
 
@@ -197,14 +180,7 @@ var SignUp = React.createClass({
       showLogin: false,
     });
    }
-    checkIfHidden();
-  },
-
-  _userlogout: function () {
-    AuthActionCreators.logout();
-    this.setState({
-      showLogin: false,
-    });
+    this._checkIfHidden();
   },
 
   _showForms: function () {
@@ -217,9 +193,8 @@ var SignUp = React.createClass({
        showForms: true,
      }); 
    }
-    checkIfHidden();
+    this._checkIfHidden();
   },
 
 });
-
 module.exports = SignUp;
