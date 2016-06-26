@@ -48,7 +48,17 @@ var List = React.createClass({
 
   render: function () {
     if (Object.keys(this.props.myList).length < 1) {
-      return null;
+      return (
+      <div className="listwrap">
+        <ul id={ this.props.mobile === null ? "listarea" : "listarea_mobile"}>
+          <div className={ this.props.mobile === null ? "title" : "mobile_title"}>
+            <div className="nosongs">It doesn't look like you've liked any songs yet!</div>
+          </div>
+          <Footer />
+        </ul>
+      </div>
+
+      );
     }
     if (this.props.currentOrder === 'fresh') {
       title = 'FRESHEST BEATS';
@@ -93,6 +103,7 @@ var List = React.createClass({
         :
         <button className="loadmore" onClick={this._nextPage}>•••</button>
         }
+
         <Footer />
         </ul>
       </div>

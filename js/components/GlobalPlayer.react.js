@@ -29,7 +29,6 @@ var GlobalPlayer = React.createClass({
      );
     
     } else {
-    
       return (
         <div className="globalplayer logobar">
           
@@ -79,8 +78,10 @@ var GlobalPlayer = React.createClass({
      var toggleFav = this.props.isLiked
                   ? '../../assets/icons/red/heart5.svg'
                   : '../../assets/icons/white/heart2.svg';
- 
+
     return (
+
+
     <div>
       {this.props.currentTrack === null ?
       <div id="mobile_header">

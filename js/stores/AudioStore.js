@@ -99,7 +99,6 @@ var AudioStore = assign({}, EventEmitter.prototype, {
   },
 
   addChangeListener: function (callback) {
-    console.log("added listener");
     this.on(CHANGE_EVENT, callback);
   },
 

@@ -37,23 +37,31 @@ var serverConf  = {
   port : config.port,
   ip   : config.ip,
   start: function() {
-    mongoose.connect(config.database, mongoConf, function() {
-      console.log('server started @'.blue    +
-                  ' http://'.green           +
-                  serverConf.ip + ':'.green  +
-                  colors.red(serverConf.port)+
-                  '/'.green);
-      console.log("connected to mongodb!")
+    mongoose.connect(config.database, mongoConf, function(err) {
+      if (err) {
+        console.log("ERROR!!!".bold.red + " Something went wrong" +
+                    " conecting to mongodb. Make "  +
+                    "sure you've started the service.")
+      } else {
+        console.log("connected to mongodb!")
+      };
+        console.log('server started @'.blue    +
+                    ' http(s)://'.green           +
+                    serverConf.ip + ':'.green  +
+                    colors.red(serverConf.port)+
+                    '/'.green);
+
     });
   }
 };
 
 function ensureSecure(req, res, next){
-  if(req.secure){
+  if (req.secure) {
     return next();
+  } else {
+    res.redirect('https://'+req.hostname+req.url);
+  }
   };
-  res.redirect('https://'+req.hostname+req.url);
-};
 
 var multipartMiddleware = multipart();
 app.all('*', ensureSecure);
@@ -376,6 +384,7 @@ authRoutes.use(function(req, res) {
 app.use('/auth', authRoutes);
 httpServer.listen(serverConf.port, serverConf.ip, serverConf.start);
 httpsServer.listen(3001, serverConf.ip, function (err, data) {
-  console.log(err, data);
+  if (err) console.log(err);
+  console.log("ssl is ready".green);
 });
 

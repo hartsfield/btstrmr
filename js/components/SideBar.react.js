@@ -16,12 +16,14 @@ var SideBar = React.createClass({
               id={ this.props.mobile === null ? "logoutDoor" :  "mobile_logoutDoor"  }
               className="loginShow"
               onClick={this._userlogout}>
+              <img src="../assets/icons/black/log-out.svg" ></img>
             </button>
           :
             <button
               class="loginShow"
               id={ this.props.mobile === null ? "loginKey" :  "mobile_loginKey"  }
               onClick={this._showForms}>
+              <img src="../assets/icons/black/key2.svg" ></img>
             </button>
           }
 
@@ -41,13 +43,16 @@ var SideBar = React.createClass({
           <p className="btlogo">BTSTRMR</p>
           <p className="glogo">GLOBAL</p>
           <li
-            className="sidebar-img"
+            className={ this.props.currentOrder === "fresh" 
+                      ? "sidebar-img selected" : "sidebar-img" }
             id="fresh"
             onClick={this._changeSort}>
             FRESH
           </li>
           <li
-            className="sidebar-img"
+            className={ this.props.currentOrder === "hot" 
+                      ? "sidebar-img selected" : "sidebar-img" }
+ 
             id="hot"
             onClick={this._changeSort}>
             HOT
@@ -56,7 +61,8 @@ var SideBar = React.createClass({
          {this.props.user.success ?
         
           <li
-            className="sidebar-img"
+            className={ this.props.currentOrder === "favs" 
+                      ? "sidebar-img selected" : "sidebar-img" }
             id="favs"
             onClick={this._changeSort}>
             FAVS

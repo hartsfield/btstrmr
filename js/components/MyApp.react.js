@@ -60,6 +60,7 @@ var MyApp = React.createClass({
             user={this.state.user}
             mobile={this.state.mobile}
             showNav={this.state.showNav}
+            currentOrder={this.state.currentOrder}
           />
           <div className="mainpane">
           <GlobalPlayer
