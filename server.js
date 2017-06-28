@@ -55,16 +55,17 @@ var serverConf  = {
   }
 };
 
-function ensureSecure(req, res, next){
-  if (req.secure) {
-    return next();
-  } else {
-    res.redirect('https://'+req.hostname+req.url);
-  }
-  };
+// function ensureSecure(req, res, next){
+//   if (req.secure) {
+//     return next();
+//   } else {
+//     res.redirect('https://'+req.hostname+req.url);
+//   }
+// };
 
 var multipartMiddleware = multipart();
-app.all('*', ensureSecure);
+app.all('*');
+// app.all('*', ensureSecure);
 app.use(compression());
 app.use('/', express.static(path.join(__dirname, './build')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
@@ -200,20 +201,26 @@ function sort(arr, sort) {
 app.post('/api/nextPage', function(req, res) {
   var page = req.body.page || 0;
   var order = req.body.order;
+  console.log(page, order);
   //get hash for user
   var user = req.body.user;
   if (order === 'fresh') {
-    Audio.find().sort({Posted :-1}).skip(page).limit(5).exec(function(err, posts){
+    Audio.find().sort({Posted :-1}).skip(Number(page)).limit(5).exec(function(err, posts){
+      if (err) {
+        console.log(err);
+      }
       res.json(posts);
     });
   } else if (order === 'hot') {
-    Audio.find().sort({Likes :-1}).skip(page).limit(5).exec(function(err, posts){
+    Audio.find().sort({Likes :-1}).skip(Number(page)).limit(5).exec(function(err, posts){
+      if (err) {
+        console.log(err);
+      }
       res.json(posts);
     });
   } else if (order === 'favs' && user !== undefined) {
     User.find({_id: user._id}, function(err, user) {
       var likedArray = JSON.parse(JSON.stringify(user[0])).liked.reverse().splice(page, 5);
-      console.log(likedArray);
       Audio.find({_id: { $in: likedArray }}).exec(function(err, docs) {
         var senddoc = sort(docs, likedArray);
         res.json(senddoc);
@@ -221,6 +228,9 @@ app.post('/api/nextPage', function(req, res) {
     });
   } else {
     Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
+      if (err) {
+        console.log(err);
+      }
       res.json(posts);
     });
   }
@@ -228,7 +238,6 @@ app.post('/api/nextPage', function(req, res) {
 
 authRoutes.post('/likeTrack', function (req, res) {
   var uid = req.body.user._id
-  console.log(req.body);
   User.findOne({ _id: uid }, function(err, doc) {
     if (err) console.log(err);
     if (!doc) {
@@ -383,8 +392,8 @@ authRoutes.use(function(req, res) {
 
 app.use('/auth', authRoutes);
 httpServer.listen(serverConf.port, serverConf.ip, serverConf.start);
-httpsServer.listen(3001, serverConf.ip, function (err, data) {
-  if (err) console.log(err);
-  console.log("ssl is ready".green);
-});
+// httpsServer.listen(3001, serverConf.ip, function (err, data) {
+//   if (err) console.log(err);
+//   console.log("ssl is ready".green);
+// });
 
