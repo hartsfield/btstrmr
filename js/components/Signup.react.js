@@ -48,8 +48,8 @@ var SignUp = React.createClass({
             className={this.props.mobile === null ? "loginForm" : "mobile_loginForm" }
             encType="multipart/form-data"
             onSubmit={this._handleSubmit}>
-            // .cover dims the background of the website when the login form is 
-            // shown. When clicked, it closes the login form.
+            {/* .cover dims the background of the website when the login form is 
+               shown. When clicked, it closes the login form. */}
             <div className="cover" onClick={AuthActionCreators.showLoginForm}></div>
             <div id={this.props.mobile === null ? "verification" : "mobile_verification" }>
               { !this.props.user.success && !this.props.user.ignore 
