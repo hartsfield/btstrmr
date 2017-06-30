@@ -1,3 +1,4 @@
+/* set the font, remove extra space */
 html, body, ul {
   font-family: 'Varela Round', sans-serif;
   margin: 0;

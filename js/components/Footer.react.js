@@ -1,5 +1,6 @@
 var React = require('react');
 
+// A very simple footer, located at the bottom of the page.
 var Footer = React.createClass({
   render: function () {
     return (

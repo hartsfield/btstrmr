@@ -1,147 +1,124 @@
 var React = require('react');
 var AudioActions = require('../actions/AudioActions.js');
-//var AudioStore = require('../stores/AudioStore.js');
 var UIActions = require('../actions/UIActions.js');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 
+// GlobalPlayer is the player at the top of the page that can be seen anywhere
+// on the site and is used to control the state of the audio
 var GlobalPlayer = React.createClass({
-
   render: function() {
+    // Check if the global player is playing and set the icon appropriately
     var playpause = this.props.isPlaying
                   ? '../../assets/icons/white/pause.svg'
                   : '../../assets/icons/white/play.svg';
 
-    if (this.props.mobile === null) {
-    var toggleFav = this.props.isLiked
-                  ? '../../assets/icons/white/heart5.svg'
-                  : '../../assets/icons/white/heart2.svg';
-    if (this.props.currentTrack === null) {
-      return (
-        <div className="globalplayer logobar">
-          <div className="arrow-right gnext0 arlogo">B</div>
-          <div className="arrow-right gnext1 arlogo">T</div>
-          <div className="arrow-right gnext2 arlogo">S</div>
-          <div className="arrow-right gnext3 arlogo">T</div>
-          <div className="arrow-right gnext4 arlogo">R</div>
-          <div className="arrow-right gnext5 arlogo">M</div>
-          <div className="arrow-right gnext6 arlogo">R</div>
-        </div>
-     );
-    
-    } else {
-      return (
-        <div className="globalplayer logobar">
-          
-          <div 
-            onClick={this._playOrPauseTrack} 
-            className="arrow-right">
-              <img
-                id="globalplaypause_image"
-                src={playpause}>
-              </img>
-          </div>
-          
-          <div 
-            onClick={this.props._playNext} 
-            className="arrow-right gnext">
-              <img
-                id="globalnext_image"
-                src={'../../assets/icons/wh' +
-                     'ite/playback-fast-forward.svg'}>
-              </img>
-          </div>
-          
-          <div id="progresscontainer">
-            <div id="progressbar"></div>
-          </div>
-          
-          <div id="globalInfo">
-            {this.props.currentTrack.Artist} - 
-            {this.props.currentTrack.Title}
-          </div>
-          
-          <div 
-            className="arrow-left" 
-            onClick={this._toggleFav}>
-              <img
-                id="globalheart_image"
-                src={toggleFav}>
-              </img>
-          </div>
-
-        </div>
-      );
-
-    };
-
-    } else {
-     var toggleFav = this.props.isLiked
+    // For mobile devices
+    if (this.props.mobile !== null) {
+      // Set the favorite/unfavorite icon state
+      var toggleFav = this.props.isLiked
                   ? '../../assets/icons/red/heart5.svg'
                   : '../../assets/icons/white/heart2.svg';
 
-    return (
-
-
-    <div>
-      {this.props.currentTrack === null ?
-      <div id="mobile_header">
-        <div
-          id="showNav"
-          onClick={this._showNav}>
-          <img
-            id="showNav_image"
-            src="../../assets/icons/white/list.svg">
-          </img>
+      return (
+      <div>
+        {/* If there is no track playing, just show the header */}
+        {this.props.currentTrack === null ?
+        <div id="mobile_header">
+          {/* This button shows the navigation menu on mobile */}
+          <div id="showNav" onClick={this._showNav}>
+            <img id="showNav_image" src="../../assets/icons/white/list.svg"></img>
+          </div>
+          <div id="mobile_logo">BTSTRMR</div>
         </div>
-        <div id="mobile_logo">
-          BTSTRMR
-        </div>
-      </div>
-      
-      :
-      
-      <div id="mobile_header">
         
-        <div
-          id="showNav"
-          onClick={this._showNav}>
-          <img
-             id="showNav_image"
-             src="../../assets/icons/white/list.svg">
-          </img>
-        </div>
-       
-        <div 
-          onClick={this._playOrPauseTrack} 
-          className="mobile_play">
-            <img
-              id="mobile_play_image"
-              src={playpause}>
-            </img>
-        </div>
-      
-        <div id="mobile_globalInfo">
-          {this.props.currentTrack.Artist} - 
-          {this.props.currentTrack.Title}
-        </div>
+        /* If there is a track playing, show the player */
+        :
+        
+        <div id="mobile_header">
+
+          {/* This button shows the navigation menu on mobile */}
+          <div id="showNav" onClick={this._showNav}>
+            <img id="showNav_image" src="../../assets/icons/white/list.svg"></img>
+          </div>
          
-        <div 
-          className="mobile_globalheart" 
-          onClick={this._toggleFav}>
-            <img
-              id="mobile_globalheart_image-a"
-              src={toggleFav}>
-            </img>
+          {/* Play/pause button */}
+          <div onClick={this._playOrPauseTrack} className="mobile_play">
+            <img id="mobile_play_image" src={playpause}></img>
+          </div>
+        
+          {/* Track information */}
+          <div id="mobile_globalInfo">
+            {this.props.currentTrack.Artist} - 
+            {this.props.currentTrack.Title}
+          </div>
+           
+          {/* Favorite/unfavorite button */}
+          <div className="mobile_globalheart" onClick={this._toggleFav}>
+              <img id="mobile_globalheart_image-a" src={toggleFav}></img>
+          </div>
         </div>
-      
+        }
       </div>
-      }
-    </div>
-    );
-    
+      );
+    // For non-mobile devices
+    } else {
+      // Set the favorited/not-favorited icon state
+      var toggleFav = this.props.isLiked
+                    ? '../../assets/icons/white/heart5.svg'
+                    : '../../assets/icons/white/heart2.svg';
+
+      // If there is no track playing, just show the header
+      if (this.props.currentTrack === null) {
+        return (
+          <div className="globalplayer logobar">
+            <div className="arrow-right gnext0 arlogo">B</div>
+            <div className="arrow-right gnext1 arlogo">T</div>
+            <div className="arrow-right gnext2 arlogo">S</div>
+            <div className="arrow-right gnext3 arlogo">T</div>
+            <div className="arrow-right gnext4 arlogo">R</div>
+            <div className="arrow-right gnext5 arlogo">M</div>
+            <div className="arrow-right gnext6 arlogo">R</div>
+          </div>
+       );
+      // If there is a song playing, show the global player
+      } else {
+        return (
+          <div className="globalplayer logobar">
+
+            {/* Play/pause button */}
+            <div onClick={this._playOrPauseTrack} className="arrow-right">
+              <img id="globalplaypause_image" src={playpause}></img>
+            </div>
+            
+            {/* Play the next track in the list */}
+            <div onClick={this.props._playNext} className="arrow-right gnext">
+              <img id="globalnext_image" src={'../../assets/icons/white/playback-fast-forward.svg'}></img>
+            </div>
+            
+            {/* Progress bar */}
+            <div id="progresscontainer">
+              <div id="progressbar"></div>
+            </div>
+            
+            {/* Track information */}
+            <div id="globalInfo">
+              {this.props.currentTrack.Artist} - 
+              {this.props.currentTrack.Title}
+            </div>
+            
+            {/* Favorite/unfavorite button */}
+            <div className="arrow-left" onClick={this._toggleFav}>
+              <img id="globalheart_image" src={toggleFav}></img>
+            </div>
+
+          </div>
+        );
+      };  
     };
   },
 
+  // _playOrPauseTrack checks if the song is playing, if so; it pauses the 
+  // track, else it resumes it.
   _playOrPauseTrack: function () {
     var ga = document.getElementById('globalAudio');
     if (this.props.isPlaying) {
@@ -151,10 +128,13 @@ var GlobalPlayer = React.createClass({
     };
   },
 
+  // _showNav shows the navigation menu on mobile.
   _showNav: function () {
     UIActions.showNav();
   },
 
+  // _toggleFav checks if the user is logged in, if so; it toggles the like
+  // button, else, it prompts the user to login/signup.
   _toggleFav: function () {
     if ( this.props.user.success ) {
       var info = {
@@ -172,4 +152,3 @@ var GlobalPlayer = React.createClass({
 });
 
 module.exports = GlobalPlayer;
-

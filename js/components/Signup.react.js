@@ -2,7 +2,10 @@ var React = require('react');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 var UserInfoStore = require('../stores/UserInfoStore.js');
 
+// SignUp is the component for the signin/login forms
 var SignUp = React.createClass({
+  // by default, leave password and user name blank and don't show the forms.
+  // When the forms are shown, it shows the login form by default.
   getInitialState: function () {
     return {
       Password: "",
@@ -13,6 +16,8 @@ var SignUp = React.createClass({
     };
   },
 
+  // used to detect when a user performs an action which requires the login
+  // form to be displayed and closes the form on a successful signin
   componentWillReceiveProps: function(nextProps) {
     if (UserInfoStore.showLogin()) {
       this.setState({
@@ -24,16 +29,6 @@ var SignUp = React.createClass({
       });
     };
 
-    /*    if (UserInfoStore.showLogin() && !this.state.showForms) {
-      this.setState({
-        showForms: true,
-      });
-      AuthActionCreators.showLoginForm();
-    } else if (UserInfoStore.showLogin() && this.state.showForms) {
-      this.setState({
-        showForms: false,
-      });
-      };*/
     if (nextProps.user.success) {
       this.setState({
         showForms: false,
@@ -41,15 +36,20 @@ var SignUp = React.createClass({
     };
   },
 
+  // some code in this section is more portable than in other sections, so 
+  // checkig for mobile platforms is done per-element.
   render: function () {
     return (
       <div>
         <div className={this.props.mobile === null ? "auth" : "mobile_auth" }>
           { this.state.showForms ? 
+          // Form starts here
           <form
             className={this.props.mobile === null ? "loginForm" : "mobile_loginForm" }
             encType="multipart/form-data"
             onSubmit={this._handleSubmit}>
+            // .cover dims the background of the website when the login form is 
+            // shown. When clicked, it closes the login form.
             <div className="cover" onClick={AuthActionCreators.showLoginForm}></div>
             <div id={this.props.mobile === null ? "verification" : "mobile_verification" }>
               { !this.props.user.success && !this.props.user.ignore 
