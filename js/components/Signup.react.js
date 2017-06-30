@@ -51,10 +51,14 @@ var SignUp = React.createClass({
             {/* .cover dims the background of the website when the login form is 
                shown. When clicked, it closes the login form. */}
             <div className="cover" onClick={AuthActionCreators.showLoginForm}></div>
+            {/* #verification will only be shown if the user chooses a 
+               user name that's a;ready been taken or if their password is 
+               invalid */}
             <div id={this.props.mobile === null ? "verification" : "mobile_verification" }>
               { !this.props.user.success && !this.props.user.ignore 
                ? this.props.user.message : "" }
             </div>
+            {/* username */}
             <input className="usernameInput"
               pattern="[a-zA-Z0-9\-]{4,15}"
               required
@@ -66,6 +70,7 @@ var SignUp = React.createClass({
               onChange={this._handleValueChange}
               defaultValue={this.state.User}>
             </input>
+            {/* password */}
             <input className="passwordInput"
               pattern=".{4,15}"
               required
@@ -78,9 +83,10 @@ var SignUp = React.createClass({
               defaultValue={this.state.Password}>
             </input>
             <div>
+              {/* This button will change depending on whether the user is 
+                 signing up a new account or logging into an existing account. */}
               <button
-                className={this.props.mobile === null
-                         ? "activeAuthButt" : "mobile_activeAuthButt" }
+                className={this.props.mobile === null ? "activeAuthButt" : "mobile_activeAuthButt" }
                 onClick={!this.state.showSignup ? this._handleLogin : this._handleSignup }>
                   { !this.state.showSignup ? "Login" : "SignUp" }
               </button>
@@ -99,6 +105,7 @@ var SignUp = React.createClass({
             </div>
           </form>
           :
+          {/* Don't show the login/signup form */}
           <div></div>
           }
         </div>

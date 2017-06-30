@@ -55,17 +55,17 @@ var serverConf  = {
   }
 };
 
-// function ensureSecure(req, res, next){
-//   if (req.secure) {
-//     return next();
-//   } else {
-//     res.redirect('https://'+req.hostname+req.url);
-//   }
-// };
+function ensureSecure(req, res, next){
+  if (req.secure) {
+    return next();
+  } else {
+    res.redirect('https://'+req.hostname+req.url);
+  }
+};
 
 var multipartMiddleware = multipart();
-app.all('*');
-// app.all('*', ensureSecure);
+// app.all('*');
+app.all('*', ensureSecure);
 app.use(compression());
 app.use('/', express.static(path.join(__dirname, './build')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
@@ -392,8 +392,8 @@ authRoutes.use(function(req, res) {
 
 app.use('/auth', authRoutes);
 httpServer.listen(serverConf.port, serverConf.ip, serverConf.start);
-// httpsServer.listen(3001, serverConf.ip, function (err, data) {
-//   if (err) console.log(err);
-//   console.log("ssl is ready".green);
-// });
+httpsServer.listen(3001, serverConf.ip, function (err, data) {
+  if (err) console.log(err);
+  console.log("ssl is ready".green);
+});
 
