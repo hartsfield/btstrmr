@@ -104,8 +104,7 @@ var SignUp = React.createClass({
               </div>
             </div>
           </form>
-          :
-          {/* Don't show the login/signup form */}
+          : //  Don't show the login/signup form
           <div></div>
           }
         </div>
