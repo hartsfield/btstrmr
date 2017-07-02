@@ -16,10 +16,15 @@ var AudioActions = {
     });
   },
 
+  // 
   changeSort: function (order, user) {
     WebAPIUtils.getListData(order, user);
   },
 
+  // getNextPage gets the next page. The order is specified by the current
+  // sort order the user is navigated to (fresh, hot, etc), the page is used
+  // so that the server can detect which songs to send back, and the user, if
+  // any, so that the "favorited" tracks can be retrieved.
   getNextPage: function (order, page, user) {
     WebAPIUtils.getNextPage(order, page, user);
   },

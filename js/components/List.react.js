@@ -3,20 +3,27 @@ var ListItem = require('./ListItem.react');
 var AudioActions = require('../actions/AudioActions.js');
 var Footer = require('./Footer.react.js');
 
+// Page title in the header
 var title = 'FRESHEST BEATS';
+// Image will be aligned to the right
 var titleimg = '../../assets/icons/white/time.svg';
+// used for detecting whether the user has already requested the next page
 var useraction = false;
 
 var List = React.createClass({
 
   getInitialState: function() {
     return {
-      noMoreData: false,
-      nextPageClicked: false,
+      noMoreData: false,      // will be true when there is no more data in
+                              // the list
+      nextPageClicked: false, 
     };
   },
 
   componentWillReceiveProps: function (newProps) {
+    // if you request more tracks but the length of songs hasn't changed that
+    // means there's no more data. We check if next page was clicked because
+    // sometimes componentWillReceiveProps is triggered by other actions
     if ((newProps.myList.length === this.props.myList.length)
        && (this.state.nextPageClicked === true)){ 
       this.setState({
@@ -24,12 +31,15 @@ var List = React.createClass({
       });
     };
 
+    // nextPageClicked is used to detect when an action was performed. This
+    // basically "resets" it, making the logic much simpler
     if (this.state.nextPageClicked === true) {
       this.setState({
         nextPageClicked: false,
       });
     };
 
+    // If the user signs out or signs in we need to 
     if (newProps.user.success !== this.props.user.success && !useraction) {
       useraction = true;
       AudioActions.getNextPage(this.props.currentOrder,
@@ -37,6 +47,8 @@ var List = React.createClass({
                                this.props.user.user);
     };
 
+    // If the length of the list resets or the order changes we need to tell 
+    // the app that in fact there is more data
     if (newProps.myList.length < this.props.myList.length
         || newProps.currentOrder !== this.props.currentOrder) {
       this.setState({
@@ -109,6 +121,7 @@ var List = React.createClass({
     );
   },
   
+  // _nextPage gets the next page of data
   _nextPage: function () {
     this.setState({
       nextPageClicked: true,          
