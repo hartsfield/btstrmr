@@ -1,9 +1,8 @@
 var React = require('react');
 var ListItem = require('./ListItem.react');
 var AudioActions = require('../actions/AudioActions.js');
-//var AudioStore = require('../stores/AudioStore.js');
 var Footer = require('./Footer.react.js');
-//var Signup = require('./Signup.react.js');
+
 var title = 'FRESHEST BEATS';
 var titleimg = '../../assets/icons/white/time.svg';
 var useraction = false;

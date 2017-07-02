@@ -112,29 +112,34 @@ var SignUp = React.createClass({
     );
   },
 
+  // _checkIfHidden is used for hiding and showing the mobile navigation
   _checkIfHidden: function() {
-  if (this.props.mobile !== null) {
-  var a = document.getElementById("mobile_nav-1").style;
-  if (a.visibility === "hidden") {
-    a.visibility = "visible"
-  } else {
-    a.visibility = "hidden"
-  };
-  }
+    if (this.props.mobile !== null) {
+      var a = document.getElementById("mobile_nav-1").style;
+      if (a.visibility === "hidden") {
+        a.visibility = "visible"
+      } else {
+        a.visibility = "hidden"
+      };
+    }
   },
 
+  // toggle between signup and login forms (not for showing the form)
   _toggleShowSignup: function (e) {
- //   e.preventDefault();
-      this.setState({
-        showSignup: !this.state.showSignup,
-        showLogin: !this.state.showLogin,
-      });
+    // e.preventDefault();
+    this.setState({
+      showSignup: !this.state.showSignup,
+      showLogin: !this.state.showLogin,
+    });
   },
 
+  // prevent the page from reloading
   _handleSubmit: function (event) {
     event.preventDefault();
   },
 
+  // et.id are the id fields of the signup/login/password form input fields and
+  // this function is used for setting the state of those properties in React.
   _handleValueChange: function (event) {
     var et = event.target;
     this.setState({
@@ -142,6 +147,8 @@ var SignUp = React.createClass({
     });
   },
 
+  // _mkdata validates and packages the data for its journey to the server
+  // (it's validated server side too)
   _mkdata: function () {
     var p = this.state.Password;
     var u = this.state.User;
@@ -159,10 +166,12 @@ var SignUp = React.createClass({
     }
   },
 
+  // _handleSignup handles initial user signup 
   _handleSignup: function (e) {
+    // sanitize and package the data
     var data = this._mkdata();
     if (data.error) {
-      // 
+      // error handled by browsers validator
     } else {
       e.preventDefault();
       AuthActionCreators.signup(data);
@@ -175,20 +184,23 @@ var SignUp = React.createClass({
   },
 
 
+  // _handleLogin handles user logins
   _handleLogin: function (e) {
-//   e.preventDefault();
-   var data = this._mkdata();
-   if (data.error) {
-     //
-   } else {
-    AuthActionCreators.login(data);
-    this.setState({
-      showLogin: false,
-    });
-   }
+    // sanitize and package user credentials
+    var data = this._mkdata();
+    if (data.error) {
+      // error handled by browsers validator
+    } else {
+      AuthActionCreators.login(data);
+      this.setState({
+        showLogin: false,
+      });
+    }
     this._checkIfHidden();
   },
 
+  // _showForms is used to toggle whether or not the signup/login forms are 
+  // shown
   _showForms: function () {
    if (this.state.showForms) {
      this.setState({
@@ -203,4 +215,5 @@ var SignUp = React.createClass({
   },
 
 });
+
 module.exports = SignUp;
