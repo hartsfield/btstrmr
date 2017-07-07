@@ -162,8 +162,8 @@ var SideBar = React.createClass({
        
          }
          
-         // just some white stripes for aesthetics that turn into a rainbow on
-         // mouse over.
+         {/* just some white stripes for aesthetics that turn into a rainbow on
+          mouse over. */}
          <div id="rainbow">
           <li className="rainbow" ></li>
           <li className="rainbow" ></li>
