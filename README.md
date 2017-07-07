@@ -1,5 +1,7 @@
 # BTSTRMR
 
+>test
+
 Requires node 0.10.26 or greater.
 
 todo: finish readme
