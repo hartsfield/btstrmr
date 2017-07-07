@@ -1,6 +1,6 @@
 # BTSTRMR
 
->test
+[//]: # (This may be the most platform independent comment)
 
 Requires node 0.10.26 or greater.
 
