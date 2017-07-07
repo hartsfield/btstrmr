@@ -1,16 +1,17 @@
 {
-  "name": "rewrite",
-  "description": "Example",
+  "name": "btstrmr",
+  "description": "web app",
   "main": "js/app.js",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://btstrmr.com",
   "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "auth"
   ],
   "dependencies": {
     "jquery": "^2.2.3"
