@@ -291,7 +291,7 @@ app.post('/api/getListData', function(req, res) {
         // The documents aren't retrieved in the order that the user originally
         // saved them in, but the likes are saved in the proper order in the 
         // user profile, sortLikes() is used to sort them out.
-        var senddoc = sortLikes((docs, likedArray);
+        var senddoc = sortLikes(docs, likedArray);
         res.json(senddoc);
       });
     });

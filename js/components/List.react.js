@@ -29,7 +29,7 @@ var Footer = require('./Footer.react.js');
 var title = 'FRESHEST BEATS';
 // Image will be aligned to the right
 var titleimg = '../../assets/icons/white/time.svg';
-// used for detecting whether the user has already requested the next page
+// used for detecting whether the user has already requested the next page.
 var useraction = false;
 
 var List = React.createClass({
@@ -37,7 +37,7 @@ var List = React.createClass({
   getInitialState: function() {
     return {
       noMoreData: false,      // will be true when there is no more data in
-                              // the list
+                              // the list.
       nextPageClicked: false, 
     };
   },
@@ -45,7 +45,7 @@ var List = React.createClass({
   componentWillReceiveProps: function (newProps) {
     // if you request more tracks but the length of songs hasn't changed that
     // means there's no more data. We check if next page was clicked because
-    // sometimes componentWillReceiveProps is triggered by other actions
+    // sometimes componentWillReceiveProps is triggered by other actions.
     if ((newProps.myList.length === this.props.myList.length)
        && (this.state.nextPageClicked === true)){ 
       this.setState({
@@ -54,14 +54,14 @@ var List = React.createClass({
     };
 
     // nextPageClicked is used to detect when an action was performed. This
-    // basically "resets" it, making the logic much simpler
+    // basically "resets" it, making the logic much simpler.
     if (this.state.nextPageClicked === true) {
       this.setState({
         nextPageClicked: false,
       });
     };
 
-    // If the user signs out or signs in we need to 
+    // If the user signs out or signs in we need to.
     if (newProps.user.success !== this.props.user.success && !useraction) {
       useraction = true;
       AudioActions.getNextPage(this.props.currentOrder,
@@ -70,7 +70,7 @@ var List = React.createClass({
     };
 
     // If the length of the list resets or the order changes we need to tell 
-    // the app that in fact there is more data
+    // the app that in fact there is more data.
     if (newProps.myList.length < this.props.myList.length
         || newProps.currentOrder !== this.props.currentOrder) {
       this.setState({
@@ -80,6 +80,8 @@ var List = React.createClass({
   },
 
   render: function () {
+    // If the user visists their "favorites" page before they've "liked" any
+    // songs, they'll see this:
     if (Object.keys(this.props.myList).length < 1) {
       return (
       <div className="listwrap">
@@ -90,9 +92,11 @@ var List = React.createClass({
           <Footer />
         </ul>
       </div>
-
       );
     }
+
+    // This is the logic that decides what the header title and image is based 
+    // on the currentOrder.
     if (this.props.currentOrder === 'fresh') {
       title = 'FRESHEST BEATS';
       titleimg = '../../assets/icons/white/time.svg';
@@ -106,9 +110,10 @@ var List = React.createClass({
       title = 'FRESHEST BEATS';
       titleimg = '../../assets/icons/white/time.svg';
     };
+
+    // For each item, we create a <ListItem> component and add it to the list.
     var allItems = this.props.myList;
     var item = [];
-
     for (var key in allItems) {
       item.push(
         <ListItem
@@ -126,10 +131,13 @@ var List = React.createClass({
     return (
       <div className="listwrap">
         <ul id={ this.props.mobile === null ? "listarea" : "listarea_mobile"}>
+        {/* Title */}
         <div className={ this.props.mobile === null ? "title" : "mobile_title"}>
         {title}
+        {/* Image */}
         <img className="titleimg" src={titleimg}></img>
         </div>
+        {/* Post */}
           {item}
         {this.state.noMoreData ?
         <button className="loadmore" >NO MORE TRACKS</button>
@@ -155,3 +163,4 @@ var List = React.createClass({
 });
 
 module.exports = List;
+

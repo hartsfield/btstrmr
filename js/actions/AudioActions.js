@@ -38,7 +38,9 @@ var AudioActions = {
     });
   },
 
-  // 
+  // changeSort changes the sort order of the music. It can be
+  // either "hot" or "fresh", or if the user is signed in, they
+  // can request their "favs".
   changeSort: function (order, user) {
     WebAPIUtils.getListData(order, user);
   },
@@ -51,6 +53,7 @@ var AudioActions = {
     WebAPIUtils.getNextPage(order, page, user);
   },
 
+  // setCurrentSong set the current song globally
   setCurrentSong: function (song, isLiked) {
     AppDispatcher.dispatch({
       ActionType: 'set_current_song',
