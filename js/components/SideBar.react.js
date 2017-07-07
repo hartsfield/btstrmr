@@ -21,8 +21,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 var React = require('react');
-//var WebAPI = require('../utils/WebAPIUtils.js');
-//var Signup = require('./Signup.react');
 var AudioActions = require('../actions/AudioActions.js');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 var UIActions = require('../actions/UIActions.js');
@@ -30,9 +28,75 @@ var UIActions = require('../actions/UIActions.js');
 var SideBar = React.createClass({
 
   render: function () {
-    if (this.props.mobile === null) {
+    // For mobile devices
+    if (this.props.mobile !== null) {
+      // JSX for mobile nav bar pop-up
+      if (this.props.showNav) {
+        return (
+          <div id="mobile_nav">
+            <ul className="mobile_sidebar" id="mobile_nav-1">
+          {/* Show a different icon based on whether the user is signed in */}
+          { this.props.user.success ?
+            <button
+              id={ this.props.mobile === null ? "logoutDoor" :  "mobile_logoutDoor"  }
+              className="loginShow"
+              onClick={this._userlogout}>
+            </button>
+          :
+            <button
+              class="loginShow"
+              id={ this.props.mobile === null ? "loginKey" :  "mobile_loginKey"  }
+              onClick={this._showForms}>
+            </button>
+          }
+
+          {/* logo and record icon */}
+          <div id={this.props.mobile ? "mobile_logodiv" : "" }>
+            <img
+              id={this.props.mobile ? "mobile_spinny" : "spinny" }
+              className={this.props.mobile ? "mobile_sidebar-img-logo" : "sidebar-img-logo"} 
+              src="../../assets/SVG-TESTING/disk.svg"
+            />
+            <p className="mobile_btlogo">BTSTRMR</p>
+            {/* Navigation */}
+            </div>
+              <li
+                className="mobile_li_first mobile_sidebar-img"
+                id="fresh"
+                onClick={this._changeSort}>
+                FRESH
+              </li>
+              <li
+                className="mobile_sidebar-img"
+                id="hot"
+                onClick={this._changeSort}>
+                HOT
+              </li>
+              {this.props.user.success ? // only show "favs" section if signed in
+              <li
+                className="mobile_sidebar-img"
+                id="favs"
+                onClick={this._changeSort}>
+                FAVS
+              </li>
+              :
+              <div></div>
+              }
+            </ul>
+          </div>
+        );
+      } else {
+        // Don't show nav
+        return (
+          <div></div>      
+        );
+      };
+
+    } else {
+      // non mobile navigation
       return (
         <ul className="sidebar">
+          {/* Show a different icon based on whether the user is signed in */}
           { this.props.user.success ?
             <button
               id={ this.props.mobile === null ? "logoutDoor" :  "mobile_logoutDoor"  }
@@ -49,6 +113,7 @@ var SideBar = React.createClass({
             </button>
           }
 
+          {/* logo and record icon */}
           <div id={this.props.mobile ? "mobile_logodiv" : "" }>
             <img
               id={this.props.mobile ? "mobile_spinny" : "spinny" }
@@ -64,6 +129,7 @@ var SideBar = React.createClass({
 
           <p className="btlogo">BTSTRMR</p>
           <p className="glogo">GLOBAL</p>
+          {/* Navigation */}
           <li
             className={ this.props.currentOrder === "fresh" 
                       ? "sidebar-img selected" : "sidebar-img" }
@@ -95,7 +161,9 @@ var SideBar = React.createClass({
           <div></div>
        
          }
-       
+         
+         // just some white stripes for aesthetics that turn into a rainbow on
+         // mouse over.
          <div id="rainbow">
           <li className="rainbow" ></li>
           <li className="rainbow" ></li>
@@ -112,91 +180,33 @@ var SideBar = React.createClass({
           </div>
         </ul>
       );
-    } else {
-      if (this.props.showNav) {
-        return (
-          <div id="mobile_nav">
-
-            <ul 
-              className="mobile_sidebar"
-              id="mobile_nav-1">
-          { this.props.user.success ?
-            <button
-              id={ this.props.mobile === null ? "logoutDoor" :  "mobile_logoutDoor"  }
-              className="loginShow"
-              onClick={this._userlogout}>
-            </button>
-          :
-            <button
-              class="loginShow"
-              id={ this.props.mobile === null ? "loginKey" :  "mobile_loginKey"  }
-              onClick={this._showForms}>
-            </button>
-          }
-
-          <div id={this.props.mobile ? "mobile_logodiv" : "" }>
-            <img
-              id={this.props.mobile ? "mobile_spinny" : "spinny" }
-              className={this.props.mobile ? "mobile_sidebar-img-logo" : "sidebar-img-logo"} 
-              src="../../assets/SVG-TESTING/disk.svg"
-            />
-            <p className="mobile_btlogo">BTSTRMR</p>
-            </div>
-              <li
-                className="mobile_li_first mobile_sidebar-img"
-                id="fresh"
-                onClick={this._changeSort}>
-                FRESH
-              </li>
-              <li
-                className="mobile_sidebar-img"
-                id="hot"
-                onClick={this._changeSort}>
-                HOT
-              </li>
-              {this.props.user.success ?
-              <li
-                className="mobile_sidebar-img"
-                id="favs"
-                onClick={this._changeSort}>
-                FAVS
-              </li>
-              :
-              <div></div>
-              }
-            </ul>
-          </div>
-        );
-      } else {
-        return (
-          <div></div>      
-        );
-      };
     };
   },
 
+  // _changeSort is triggered when a user presses a button on the nav bar
+  // indicating that they want to change the sort order.
   _changeSort: function (e) {
+    // set the url
     window.location.hash =  e.target.innerHTML.toLowerCase();
+    // scroll back up
     window.scrollTo(0,0);
     var order = e.target.id;
     UIActions.showNav();
     AudioActions.changeSort(order, this.props.user.user);
   },
 
+  // _userlogout logs the user out
   _userlogout: function () {
     AuthActionCreators.logout();
-    /*  this.setState({
-      showLogin: false,
-      });*/
   },
 
 
+  // _showForms shows the login/signup forms
   _showForms: function () {
     AuthActionCreators.showLoginForm();
     if (this.props.mobile !== null) {
       UIActions.showNav();
     }
-//    this._checkIfHidden();
   },
 
 });
