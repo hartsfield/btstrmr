@@ -22,11 +22,11 @@
 
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 
-// WebAPIUtils are our AJAX calls and dispatch flux processes on success.
+// WebAPIUtils make our AJAX calls and dispatch flux processes on success.
 var WebAPIUtils = {
   // getListData gets the first page of tracks/track info.
   // order is the order in which to get the songs (newest, most favorited, etc).
-  // We also send back the user so the API can retreive their "liked" songs.
+  // We also send back the user so the API can retrieve their "liked" songs.
   getListData: function (order, user) {
     $.ajax({
       url: '/api/getListData',
@@ -47,8 +47,8 @@ var WebAPIUtils = {
   // getNextPage gets the next page of track/track info.
   // order is the order in which to get the songs (newest, most favorited, etc).
   // page indicates to the server the number of songs we already have loaded so
-  // that it can programatically determine the page. We also send back the user 
-  // so the API can retreive their "liked" songs.
+  // that it can programmatically determine the page. We also send back the user 
+  // so the API can retrieve their "liked" songs.
   getNextPage: function (order, page, user) {
     $.post('/api/nextPage', {order:order, page:page, user:user},
       function (data, textStatus, jqXHR) {
@@ -89,7 +89,7 @@ var WebAPIUtils = {
   //   data.append('username', this.state.User);
   //   return data;
   //
-  //   type indicates whether the user is intending to signin or signup.
+  // type indicates whether the user is intending to signin or signup.
   auth: function (credentials, type) {
     var path = '/api/' + type;
     $.post({

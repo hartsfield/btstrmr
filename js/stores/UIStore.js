@@ -54,7 +54,7 @@ var UIStore = assign({}, EventEmitter.prototype, {
   },
 });
 
-// Register actions.
+// Register actions and emit changes.
 AppDispatcher.register(function(action) {
   switch (action.ActionType) {
 
