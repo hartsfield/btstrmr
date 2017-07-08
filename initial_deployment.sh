@@ -22,7 +22,7 @@
 ##############################################################################
 
 # FOR UBUNTU ONLY
-sudo apt install npm nodejs nodejs-legacy mongodb 
+sudo apt install npm nodejs nodejs-legacy mongodb letsencrypt
 sudo npm install -g bower browserify clean-css-cli
 bower install
 npm install
