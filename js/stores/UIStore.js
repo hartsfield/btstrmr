@@ -35,23 +35,30 @@ var UIStore = assign({}, EventEmitter.prototype, {
     return _showNav;
   },
 
+  // Called on change.
   emitChange: function () {
     this.emit(CHANGE_EVENT);
   },
 
+  // In js/components/MyApp.react.js we can define a function to call on change
+  // events with UIStore.addChangeListener(cb)
   addChangeListener: function (callback) {
     this.on(CHANGE_EVENT, callback);
   },
 
+  // In js/components/MyApp.react.js we can remove a function we once called on
+  // change events with UIStore.addChangeListener(cb) using 
+  // UIStore.removeChangeListener(cb)
   removeChangeListener: function (callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
 });
 
-
+// Register actions.
 AppDispatcher.register(function(action) {
   switch (action.ActionType) {
 
+    // show_nav is used for toggling the mobile navigation dialog.
     case 'show_nav':
       _showNav = !_showNav;
       UIStore.emitChange();
