@@ -60,32 +60,33 @@ function getDataForState() {
   };
 }
 
+// MyApp is the entry point for most of our components.
 var MyApp = React.createClass({
 
   getInitialState: function () {
-    // get state
+    // Get state.
     var state = getDataForState();
-    // this is set here because refreshing this data causes bugs
+    // This is set here because refreshing this data causes bugs.
     state.isPlaying = false;
     return state;
   },
 
   componentDidMount: function () {
-    // Listen for changes and reload components
+    // Listen for changes and reload components.
     AudioStore.addChangeListener(this._onChange);
     UIStore.addChangeListener(this._onChange);
     UserInfoStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
-    // Remove change listeners to prevent memory leaks
+    // Remove change listeners to prevent memory leaks.
     AudioStore.removeChangeListener(this._onChange);
     UIStore.removeChangeListener(this._onChange);
     UserInfoStore.removeChangeListener(this._onChange);
   },
 
   render: function () {
-    // Once the list data is loaded, render the component
+    // Once the list data is loaded, render the components.
     if (this.state.myList !== undefined) {
       return (
       <div>
@@ -137,7 +138,7 @@ var MyApp = React.createClass({
   },
 
   // _onProgress is triggered whenever the song progresses in the audio player.
-  // It exapands the progress div and rotates the record icon.
+  // It expands the progress div and rotates the record icon.
   _onProgress: function (e) {
     var prog = document.getElementById("progressbar");
     var perc = (e.target.currentTime/e.target.duration)*100;
@@ -149,12 +150,12 @@ var MyApp = React.createClass({
   },
 
   // _onChange is used above in the event listeners to reload our state on
-  // change
+  // change.
   _onChange: function () {
     this.setState(getDataForState());
   },
 
-  // _onPlay sets the play state
+  // _onPlay sets the play state.
   _onPlay: function () {
     this.setState({
       isPlaying: true,
@@ -162,32 +163,32 @@ var MyApp = React.createClass({
   },
 
   // _onPause sets the pause state, combining _onPlay and _onPause causes
-  // bugs because of the multple pause buttons on the page.
+  // bugs because of the multiple pause buttons on the page.
   _onPause: function () {
     this.setState({
       isPlaying: false,
     });
   },
 
-  // _playNext is used to load the next song into the global audio player
+  // _playNext is used to load the next song into the global audio player.
   _playNext: function () {
     var ga = document.getElementById("globalAudio");
-    // Find the cirrent track, then get the next element and extract track data
+    // Find the current track, then get the next element and extract track data.
     var next = document.getElementById(
                this.state.currentTrack._id).nextSibling.id;
     var result = $.grep(this.state.myList, function(e) {
                    return e._id == next;
                  });
-    // If the user is logged in check if the song is liked
+    // If the user is logged in check if the song is liked.
     if (this.state.user.success === true) {
       AudioActions.setCurrentSong(
         result[0], this._checkIfLiked(result[0]._id)
       );
     } else {
-      // set the current song to the next song
+      // Set the current song to the next song.
       AudioActions.setCurrentSong(result[0], false);
     };
-    // load and play the next song
+    // Load and play the next song.
     ga.src = '../..' + result[0].Audio + '.mp3';
     ga.load();
     ga.play();

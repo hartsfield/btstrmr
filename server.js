@@ -64,7 +64,7 @@ var mongoConf = {
 var serverConf  = {
   port : config.port,
   ip   : config.ip,
-  // Start is used as a call back function for connecting to mongo and logging
+  // Start is used as a callback function for connecting to mongo and logging
   // a start up message after we start the server.
   start: function() {
     // connect to mongodb
@@ -76,7 +76,7 @@ var serverConf  = {
       } else {
         console.log("connected to mongodb!")
       };
-      // log the address the server is running on
+      // Log the address the server is running on.
         console.log('server started @'.blue    +
                     ' http(s)://'.green           +
                     serverConf.ip + ':'.green  +
@@ -87,7 +87,7 @@ var serverConf  = {
   }
 };
 
-// ensureSecure is used for making sure all connections are routed through SSL
+// ensureSecure is used for making sure all connections are routed through SSL.
 function ensureSecure(req, res, next){
   if (req.secure) {
     return next();
@@ -96,38 +96,38 @@ function ensureSecure(req, res, next){
   }
 };
 
-// initialize multipartMiddleware used for multipart data
+// Initialize multipartMiddleware used for multipart data.
 var multipartMiddleware = multipart();
 // app.all('*');
-// make sure all connections are secure
+// Make sure all connections are secure.
 app.all('*', ensureSecure);
-// use compression to comply with google web standards
+// Use compression to comply with google web standards.
 app.use(compression());
-// The code for our website (after it's built)
+// The code for our website (after it's built).
 app.use('/', express.static(path.join(__dirname, './build')));
-// allow access to /bower_components, /uploads, /assets, etc.
+// Allow access to /bower_components, /uploads, /assets, etc.
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/uploads',  express.static(__dirname + '/uploads'));
 app.use('/assets',  express.static(__dirname + '/assets'));
 app.use('/css',  express.static(__dirname + '/css'));
-// app.use('/.well-known',  express.static(__dirname + '/.well-known')); // for setting up cert
+// app.use('/.well-known',  express.static(__dirname + '/.well-known')); // for setting up cert.
 // Allow express to parse cookies used for identification and accept json and
 // urlencoded data.
 app.use(cookieParser());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-// http request logger/middleware
+// http request logger/middleware.
 app.use(morgan('dev'));
 // app.disable('etag');
 
-// Take care of web crawlers
+// Take care of web crawlers.
 app.get('/ROBOTS.txt', function(req, res) {
   res.type('text/plain');
   res.send("User-agent: *\nDisallow: *\nAllow: /");
 });
 
-// authenticate is used for signing up and checking auth tokens on certain
-// requests
+// Authenticate is used for signing up and checking auth tokens on certain
+// requests.
 function authenticate(req, res, next) {
   var token = req.body.token     ||
               req.query.token    ||
@@ -147,7 +147,7 @@ function authenticate(req, res, next) {
           });
         } else {
           req.decoded = decoded;
-          // Look up the user in the database and send back relevant data
+          // Look up the user in the database and send back relevant data.
           User.findOne({_id: decoded.user._id}, function(err, doc) {
             if (err || doc === null) {
               res.json({
@@ -157,7 +157,7 @@ function authenticate(req, res, next) {
               });
             } else {
               // console.log(doc.toObject());
-              // Remove the hashed password before sending back a fresh token
+              // Remove the hashed password before sending back a fresh token.
               doc.password = "hash"
               res.json({
                 success: true,
@@ -180,7 +180,7 @@ function authenticate(req, res, next) {
 
 }
 
-// issueToken issues a new token on sign in
+// issueToken issues a new token on sign in.
 function issueToken(req, res, pass) {
   User.findOne({
     name: req.body.username
@@ -195,16 +195,16 @@ function issueToken(req, res, pass) {
         if (err || !hash) {
           res.json({success: false, message: "Invalid password"});
         } else {
-          // remove the password hash and replace it with the text "hash"
+          // Remove the password hash and replace it with the text "hash".
           user.password = "hash";
-          // create the token with the users data
+          // Create the token with the users data.
           var token = jwt.sign({user: user}, config.secret, {
             expiresIn: 1025000
           });
-          // set the cookie
+          // Set the cookie.
           res.cookie("auth", token);
           // console.log(user.toObject());
-          // Issue the token and user data to the client
+          // Issue the token and user data to the client.
           res.json({
             success: true,
             message: 'Enjoy token!',
@@ -217,13 +217,13 @@ function issueToken(req, res, pass) {
   });
 };
 
-// sortLikes is used in the API to sort the liked songs retreived from the 
+// sortLikes is used in the API to sort the liked songs retrieved from the 
 // database in the order that the user originally liked them in.
 function sortLikes(original, liked) {
   var newArr = [];
   for (var i = 0, len = original.length; i < len; i++) {
     // newArr[n] = original[i] where n is the score found in the users "liked"
-    // array
+    // array.
     newArr[liked.indexOf(original[i]._id.toString())] = original[i];
   }
   return newArr;
@@ -253,13 +253,13 @@ function sortLikes(original, liked) {
 // the router at the beginning of the API.
 var authRoutes = express.Router();
 
-// /api/getListData gets the inital data for the app
+// /api/getListData gets the initial data for the app
 app.post('/api/getListData', function(req, res) {
   var order = req.body.order;
   var user = req.body.user;
   console.log(order);
-  // change to switch?
-  // Get the most recently posted songs, limited to 5 at a time
+  // Change to switch?
+  // Get the most recently posted songs, limited to 5 at a time.
   if (order === 'fresh') {
     Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
       if (err) {
@@ -267,7 +267,7 @@ app.post('/api/getListData', function(req, res) {
       }
       res.json(posts);
     });
-  // Get the most liked songs, limited to 5 at a time
+  // Get the most liked songs, limited to 5 at a time.
   } else if (order === 'hot') {
     Audio.find().sort({Likes :-1}).limit(5).exec(function(err, posts){
       if (err) {
@@ -275,15 +275,15 @@ app.post('/api/getListData', function(req, res) {
       }
       res.json(posts);
     });
-    // Get the users favorite songs, limited to 5 at a time
+    // Get the users favorite songs, limited to 5 at a time.
   } else if (order === 'favs' && user !== undefined) {
     User.find({_id: user._id}, function(err, user) {
       if (err) {
         console.log(err);
       }
-      // reverse, slice. and parse
+      // Reverse, slice. and parse.
       var likedArray = JSON.parse(JSON.stringify(user[0])).liked.reverse().slice(0, 5);
-      // Find all the songs matching the objectIds in the users liked array
+      // Find all the songs matching the objectIds in the users liked array.
       Audio.find({_id: { $in: likedArray }}).skip(0).limit(5).exec(function(err, docs) {
         if (err) {
           console.log(err);
@@ -296,7 +296,7 @@ app.post('/api/getListData', function(req, res) {
       });
     });
   } else {
-    // By default get the most recently posted songs, limited to 5 at a time
+    // By default get the most recently posted songs, limited to 5 at a time.
     Audio.find().sort({Posted :-1}).limit(5).exec(function(err, posts){
       if (err) {
         console.log(err);
@@ -314,7 +314,7 @@ app.post('/api/nextPage', function(req, res) {
   console.log(page, order);
   var user = req.body.user;
   // Depending on the order. get the next 5 tracks, main diference between this
-  // and /api/getListData is that this use the "skip" functionality of mongodb
+  // and /api/getListData is that this use the "skip" functionality of mongodb.
   if (order === 'fresh') {
     Audio.find().sort({Posted :-1}).skip(Number(page)).limit(5).exec(function(err, posts){
       if (err) {
@@ -347,17 +347,17 @@ app.post('/api/nextPage', function(req, res) {
   }
 });
 
-// /api/signup is used for signing up new accounts
+// /api/signup is used for signing up new accounts.
 app.post('/api/signup', multipartMiddleware, function(req, res) {
   // Here we get the user name and password and make sure the user name 
-  // complies with the RegExp
+  // complies with the RegExp.
   var uname = req.body.username;
   var pass  = req.body.password;
   var nameRegex = /^[a-zA-Z0-9\-]{4,15}$/;
   if (!nameRegex.test(uname)) {
     res.json({success: false, message: "Bad Username"});
   } else {
-    // use bcrypt to salt and encrypt the password
+    // Use bcrypt to salt and encrypt the password.
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(pass, salt, function(err, hash) {
         // create a document
@@ -437,9 +437,9 @@ app.post('/api/uploadAudioContent', multipartMiddleware, function(req, res) {
 
 // /likeTrack is an authorized rout (meaning it requires a user to be logged in)
 // and it allows them to "like" a track and add it to their collection, or
-// "unlike" a track and remove it from their collection
+// "unlike" a track and remove it from their collection.
 authRoutes.post('/likeTrack', function (req, res) {
-  // Look up user
+  // Look up user.
   var uid = req.body.user._id
   User.findOne({ _id: uid }, function(err, doc) {
     if (err) console.log(err);
@@ -471,10 +471,10 @@ authRoutes.post('/likeTrack', function (req, res) {
               { $inc: {"Likes": -1} },
               function(err, model) {
                 if (err) console.log(err);
-              res.json({
-                        user: info,
-                        success: true,
-                      });
+                res.json({
+                  user: info,
+                  success: true,
+                });
               }
             );
           });
@@ -525,11 +525,11 @@ authRoutes.use(function(req, res) {
 });
 
 // Tell express to use the authRoutes function for /auth (needs to be defined
-// here)
+// here).
 app.use('/auth', authRoutes);
 
 // Start the https server and http for fallback (but theoretically everything
-// should always be encrypted)
+// should always be encrypted).
 httpServer.listen(serverConf.port, serverConf.ip, serverConf.start);
 httpsServer.listen(3001, serverConf.ip, function (err, data) {
   if (err) console.log(err);

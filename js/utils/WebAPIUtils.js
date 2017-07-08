@@ -22,7 +22,11 @@
 
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 
+// WebAPIUtils are our AJAX calls and dispatch flux processes on success.
 var WebAPIUtils = {
+  // getListData gets the first page of tracks/track info.
+  // order is the order in which to get the songs (newest, most favorited, etc).
+  // We also send back the user so the API can retreive their "liked" songs.
   getListData: function (order, user) {
     $.ajax({
       url: '/api/getListData',
@@ -30,6 +34,7 @@ var WebAPIUtils = {
       dataType: 'json',
       data: {"order": order, "user": user},
       success: function (data, textStatus, jqXHR) {
+        // Flux dispatch. AudioStore.js.
         AppDispatcher.dispatch({
           ActionType: 'new_list_data',
           data: data,
@@ -39,30 +44,52 @@ var WebAPIUtils = {
     });
   },
 
+  // getNextPage gets the next page of track/track info.
+  // order is the order in which to get the songs (newest, most favorited, etc).
+  // page indicates to the server the number of songs we already have loaded so
+  // that it can programatically determine the page. We also send back the user 
+  // so the API can retreive their "liked" songs.
   getNextPage: function (order, page, user) {
     $.post('/api/nextPage', {order:order, page:page, user:user},
-           function (data, textStatus, jqXHR) {
-             AppDispatcher.dispatch({
-               ActionType: 'next_page',
-               data: data,
-             });
-           }
-          );
+      function (data, textStatus, jqXHR) {
+        // Flux dispatch. AudioStore.js.
+        AppDispatcher.dispatch({
+          ActionType: 'next_page',
+          data: data,
+        });
+      }
+    );
   },
 
+  // updateLike updates the likes associated with a particular track and updates
+  // the users liked tracks.
+  // info is an object of the form:
+  //  var info = {
+  //    post: this.props.post._id,
+  //    user: this.props.user
+  //  };
   updateLike: function (info) {
-    $.post('/auth/likeTrack', info,
-           function (data, textStatus, jqXHR) {
-             AppDispatcher.dispatch({
-               //does this even do anything?
-               Actiontype: 'user_like',
-               data: data,
-             });
-             //   WebAPIUtils.getListData()
-           }
-          );
+    $.post('/auth/likeTrack', info/*,
+      function (data, textStatus, jqXHR) {
+        // Flux dispatch. AudioStore.js.
+        AppDispatcher.dispatch({
+          Actiontype: 'user_like',
+          data: data,
+        });
+        //   WebAPIUtils.getListData()
+      } */
+    );
   },
 
+  // auth is used for logging in and signing up. It takes credentials and sends 
+  // them to the server in an attempt to signup a new user. The credentials are 
+  // created using the FormData() constructor like so:
+  //   var data = new FormData();
+  //   data.append('password', this.state.Password);
+  //   data.append('username', this.state.User);
+  //   return data;
+  //
+  //   type indicates whether the user is intending to signin or signup.
   auth: function (credentials, type) {
     var path = '/api/' + type;
     $.post({
@@ -71,6 +98,7 @@ var WebAPIUtils = {
       contentType: false,
       data: credentials,
       success: function (data, textStatus, jqXHR) {
+        // Flux dispatch. UserInfoStore.js.
         AppDispatcher.dispatch({
           ActionType: 'set_user',
           data: data,

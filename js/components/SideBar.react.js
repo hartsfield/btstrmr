@@ -25,6 +25,8 @@ var AudioActions = require('../actions/AudioActions.js');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 var UIActions = require('../actions/UIActions.js');
 
+// Sidebar is the sidebar on the left side of the website that contains the nav.
+// It's hidden on mobile and must be toggled by button press.
 var SideBar = React.createClass({
 
   render: function () {
@@ -130,6 +132,8 @@ var SideBar = React.createClass({
           <p className="btlogo">BTSTRMR</p>
           <p className="glogo">GLOBAL</p>
           {/* Navigation */}
+          {/* This <li> changes the class name based on whether or not the nav button */}
+          {/* has been clicked. */}
           <li
             className={ this.props.currentOrder === "fresh" 
                       ? "sidebar-img selected" : "sidebar-img" }

@@ -20,7 +20,7 @@
 //  SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 
-// The User schema is the model for our user data
+// The User schema is the model for our user data.
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -35,17 +35,17 @@ module.exports = mongoose.model('User', new Schema({
                 minlength: 4,
                 required : true,
                },
-  // Not required yet, but could come in useful
+  // Not required yet, but could come in useful.
   email      : {type: String,
                 minlength: 4,
                 maxlength: 15,
                },
-  // Eventually users will be able to upload songs and earn karma
+  // Eventually users will be able to upload songs and earn karma.
   karma      : {type: Number, default: 0},
-  // Not implemented yet, but this feature will allow users to trac all the
+  // Not implemented yet, but this feature will allow users to track all the
   // songs they listen to.
   heard      : [String],
   liked      : [String],
-  submissions: [String], // Not implmented yet
-  created    : {type: Date, default: Date.now} // Date account was created 
+  submissions: [String], // Not implemented yet
+  created    : {type: Date, default: Date.now} // Date account was created.
 }));

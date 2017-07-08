@@ -52,10 +52,11 @@ function timeSince(date) {
   return Math.floor(seconds) + " seconds";
 }
 
+// ListItem is a single list item containing a single track.
 var ListItem = React.createClass({
   render: function () {
     var posted = timeSince(new Date(this.props.post.Posted));
-    // Check if the current item is playing or not
+    // Check if the current item is playing or not.
     var isPlaying = this.props.isPlaying
                  && this.props.currentTrack._id
                 === this.props.post._id
@@ -64,12 +65,12 @@ var ListItem = React.createClass({
 
     // For mobile devices
     if (this.props.mobile !== null) {
-      // Set the play/pause icon state
+      // Set the play/pause icon state.
       var playpause = isPlaying
                     ? '../../assets/icons/black/pause.svg'
                     : '../../assets/icons/black/play.svg';
 
-      // check if the user has liked the song or not and set the icon state
+      // Check if the user has liked the song or not and set the icon state.
       var toggleFav = this.props.isLiked
                     ? '../../assets/icons/red/heart5.svg'
                     : '../../assets/icons/black/heart2.svg';
@@ -162,22 +163,22 @@ var ListItem = React.createClass({
     }
   },
 
-  // _playOrPauseTrack toggles the play state of the song
+  // _playOrPauseTrack toggles the play state of the song.
   _playOrPauseTrack: function () {
-    // Get the global audio player
+    // Get the global audio player.
     var ga = document.getElementById('globalAudio');
-    // check if the current track is already loaded, if not; load it, 
+    // Check if the current track is already loaded, if not; load it, 
     // if so and it's playing; pause it, if it's already paused; play it.
     if (this.props.currentTrack === null
      || this.props.currentTrack._id !== this.props.post._id) {
-      // set the prop for whether the song is liked in the global player
+      // Set the prop for whether the song is liked in the global player.
       var isLiked = this.props.isLiked;
-      // set the current song in props
+      // Set the current song in props.
       AudioActions.setCurrentSong(this.props.post, isLiked);
-      // load the song into the player
+      // Load the song into the player.
       ga.src= '../..' + this.props.post.Audio + '.mp3';
       ga.load();
-      // play the song
+      // Play the song.
       ga.play();
     } else if (this.props.currentTrack._id === this.props.post._id
      && this.props.isPlaying) {

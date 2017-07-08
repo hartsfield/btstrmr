@@ -29,21 +29,24 @@ var Footer = require('./Footer.react.js');
 var title = 'FRESHEST BEATS';
 // Image will be aligned to the right
 var titleimg = '../../assets/icons/white/time.svg';
-// used for detecting whether the user has already requested the next page.
 var useraction = false;
 
+// List is the list of songs loaded from the database and presented to the 
+// user.
 var List = React.createClass({
 
   getInitialState: function() {
     return {
       noMoreData: false,      // will be true when there is no more data in
                               // the list.
-      nextPageClicked: false, 
+
+      nextPageClicked: false, // used for detecting whether the user has
+                              // already requested the next page.
     };
   },
 
   componentWillReceiveProps: function (newProps) {
-    // if you request more tracks but the length of songs hasn't changed that
+    // If you request more tracks but the length of songs hasn't changed that
     // means there's no more data. We check if next page was clicked because
     // sometimes componentWillReceiveProps is triggered by other actions.
     if ((newProps.myList.length === this.props.myList.length)
@@ -54,14 +57,15 @@ var List = React.createClass({
     };
 
     // nextPageClicked is used to detect when an action was performed. This
-    // basically "resets" it, making the logic much simpler.
+    // basically "resets" it, making the logic here much simpler.
     if (this.state.nextPageClicked === true) {
       this.setState({
         nextPageClicked: false,
       });
     };
 
-    // If the user signs out or signs in we need to.
+    // This reloads the song data on user sign in to detect which songs they
+    // may have "liked".
     if (newProps.user.success !== this.props.user.success && !useraction) {
       useraction = true;
       AudioActions.getNextPage(this.props.currentOrder,
@@ -80,7 +84,7 @@ var List = React.createClass({
   },
 
   render: function () {
-    // If the user visists their "favorites" page before they've "liked" any
+    // If the user visits their "favorites" page before they've "liked" any
     // songs, they'll see this:
     if (Object.keys(this.props.myList).length < 1) {
       return (

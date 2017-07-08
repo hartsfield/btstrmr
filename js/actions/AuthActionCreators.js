@@ -22,10 +22,10 @@
 
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 
-// AuthActionCreators are action related to authorization
+// AuthActionCreators are actions related to authorization
 var AuthActionCreators = {
 
-  // signup takes credentials and sends them to the server in an attempt to
+  // Signup takes credentials and sends them to the server in an attempt to
   // signup a new user. The credentials are created using the FormData()
   // constructor like so:
   //   var data = new FormData();
@@ -48,14 +48,14 @@ var AuthActionCreators = {
     });
   },
   
-  // logout action initializes a logout
+  // logout action initializes a logout.
   logout: function () {
     AppDispatcher.dispatch({
       ActionType: 'user_logout',
     });
   },
 
-  // showLoginForm action shows the login form 
+  // showLoginForm action shows the login form.
   showLoginForm: function () {
     AppDispatcher.dispatch({
       ActionType: 'show_login',

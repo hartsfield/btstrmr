@@ -23,6 +23,7 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var WebAPIUtils = require('../utils/WebAPIUtils.js');
 
+// AudioAction are actions related to audio
 var AudioActions = {
 
   // updateLikes adds or removes a like from a specific song and user profile
@@ -53,7 +54,7 @@ var AudioActions = {
     WebAPIUtils.getNextPage(order, page, user);
   },
 
-  // setCurrentSong set the current song globally
+  // setCurrentSong sets the current song globally
   setCurrentSong: function (song, isLiked) {
     AppDispatcher.dispatch({
       ActionType: 'set_current_song',

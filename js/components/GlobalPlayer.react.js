@@ -102,7 +102,7 @@ var GlobalPlayer = React.createClass({
             <div className="arrow-right gnext6 arlogo">R</div>
           </div>
        );
-      // If there is a song playing, show the global player
+      // If there is a track playing, show the global player
       } else {
         return (
           <div className="globalplayer logobar">

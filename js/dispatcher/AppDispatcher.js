@@ -20,7 +20,7 @@
 //  SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 
-// This file allows us to import the flux dispatcher
+// This file allows us to import the flux dispatcher.
 var Dispatcher = require('flux').Dispatcher;
 
 module.exports = new Dispatcher();

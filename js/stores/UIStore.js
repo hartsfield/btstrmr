@@ -25,9 +25,12 @@ var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
+// _showNav is the mobile navigation.
 var _showNav = false;
 
+// UIStore is the store for user interface state data.
 var UIStore = assign({}, EventEmitter.prototype, {
+  // Returns whether or not _showNav is toggled.
   getShowNav: function () {
     return _showNav;
   },
