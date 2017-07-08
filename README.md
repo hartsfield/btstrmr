@@ -25,7 +25,7 @@ standard components.
 
 Requires node >=0.10.26.
 
-![preview](https://i.imgur.com/MFsTkbX.png)
+![preview](https://i.imgur.com/XDzATQf.png)
 
 
 For initial deployments run and after server restarts:
