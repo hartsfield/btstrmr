@@ -28,7 +28,7 @@ Requires node >=0.10.26.
 ![preview](https://i.imgur.com/XDzATQf.png)
 
 
-For initial deployments run and after server restarts:
+For initial deployments and after server restarts run:
 
     $ ./initial_deployment.sh
 
