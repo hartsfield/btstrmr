@@ -20,6 +20,8 @@
 
 # BTSTRMR
 
+![preview](https://i.imgur.com/MFsTkbX.png)
+
 Requires node 0.10.26 or greater.
 
 todo: finish readme
