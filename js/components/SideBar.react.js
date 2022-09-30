@@ -46,7 +46,7 @@ var SideBar = React.createClass({
             </button>
           :
             <button
-              class="loginShow"
+              className="loginShow"
               id={ this.props.mobile === null ? "loginKey" :  "mobile_loginKey"  }
               onClick={this._showForms}>
             </button>
@@ -108,7 +108,7 @@ var SideBar = React.createClass({
             </button>
           :
             <button
-              class="loginShow"
+              className="loginShow"
               id={ this.props.mobile === null ? "loginKey" :  "mobile_loginKey"  }
               onClick={this._showForms}>
               <img src="../assets/icons/black/key2.svg" ></img>

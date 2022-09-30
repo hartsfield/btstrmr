@@ -5,7 +5,7 @@
   "repository": "private",
   "main": "js/app.js",
   "dependencies": {
-    "bcrypt": "^0.8.5",
+    "bcryptjs": "latest",
     "body-parser": "^1.15.0",
     "colors": "^1.1.2",
     "compression": "^1.6.2",
@@ -20,8 +20,8 @@
     "mongoose": "^4.4.12",
     "morgan": "^1.7.0",
     "object-assign": "^1.0.0",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "^15.2.0",
+    "react-dom": "^15.2.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
