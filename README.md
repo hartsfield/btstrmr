@@ -23,8 +23,6 @@
 A music blog built with React+FLUX, MongoDB, Express, and other industry 
 standard components.
 
-https://btstrmr.com/
-
 Requires node >=0.10.26.
 
 ![preview](https://i.imgur.com/XDzATQf.png)
