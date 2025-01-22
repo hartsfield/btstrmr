@@ -23,7 +23,7 @@
 // var ReactDOM = require('react-dom');
 var React = require('react');
 var MyApp = require('./components/MyApp.react');
-import ReactDOM from 'react-dom/client';
+var ReactDOM = require('react-dom/client');
 
 // This is where our app hooks into the html element with ID "myapp" found in 
 // the build/index.html file
