@@ -88,7 +88,8 @@ var MyApp = createReactClass({
   render: function () {
     // Once the list data is loaded, render the components.
     // if (this.state.myList !== undefined) {
-    if (this.state.myList == undefined) {
+    this.state.myList = []
+    if (this.state.myList !== undefined) {
       return (
       <div>
         <div id="main-container">
