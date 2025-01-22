@@ -21,11 +21,11 @@
 # SOFTWARE.
 ##############################################################################
 
-# If something goes wrong starting the server, make sue you've generated the 
-# ssl certs and install the node modules and bower components.
+# If something goes wrong starting the server, make sure you've generated the 
+# ssl certs and installed the node modules and bower components.
 # For ssl: use letsencrypt and copy the .pem files to the "auth/" directory
 # For node modules: npm install
-# For Bower components: bower install
+# For bower components: bower install
 
 # build the react app
 browserify . -o ./build/main.min.js
