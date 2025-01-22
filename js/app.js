@@ -27,7 +27,5 @@ var ReactDOM = require('react-dom/client');
 
 // This is where our app hooks into the html element with ID "myapp" found in 
 // the build/index.html file
-ReactDOM.render(
-  <MyApp />,
-  document.getElementById('myapp')
-);
+const root = ReactDOM.createRoot(document.getElementById('myapp'));
+root.render(<MyApp />);
