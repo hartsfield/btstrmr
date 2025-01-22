@@ -20,13 +20,14 @@
 //  SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 
-var ReactDOM = require('react-dom');
+// var ReactDOM = require('react-dom');
 var React = require('react');
 var MyApp = require('./components/MyApp.react');
+import ReactDOM from 'react-dom/client';
 
 // This is where our app hooks into the html element with ID "myapp" found in 
 // the build/index.html file
-React.render(
+ReactDOM.render(
   <MyApp />,
   document.getElementById('myapp')
 );
