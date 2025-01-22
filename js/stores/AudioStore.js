@@ -1,16 +1,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  Copyright (c) 2017 J. Hartsfield
-                                                                               
+
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
 //  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 //  copies of the Software, and to permit persons to whom the Software is
 //  furnished to do so, subject to the following conditions:
-                                                                               
+
 //  The above copyright notice and this permission notice shall be included in all
 //  copies or substantial portions of the Software.
-                                                                               
+
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 //  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -117,7 +117,7 @@ function checkIfLiked(audioList) {
     };
     _audio = audioList;
   };
-    _audio = audioList;
+  _audio = audioList;
 }
 
 // AudioStore is the store for song/audio state data.
@@ -152,7 +152,7 @@ var AudioStore = assign({}, EventEmitter.prototype, {
   addChangeListener: function (callback) {
     this.on(CHANGE_EVENT, callback);
   },
- 
+
   // In js/components/MyApp.react.js we can remove a function we once called on
   // change events with AudioStore.addChangeListener(cb) using 
   // AudioStore.removeChangeListener(cb)
@@ -165,34 +165,34 @@ var AudioStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   switch (action.ActionType) {
 
-    // When a song is liked or unliked, this action is performed.
+      // When a song is liked or unliked, this action is performed.
     case 'update_likes':
       updateLike(action.data);
       AudioStore.emitChange();
       break;
-    
-    // This action is performed when a user logs in. It's in the UIStore
-    // because this info is used to determine whether or not to mark a song as
-    // liked.
+
+      // This action is performed when a user logs in. It's in the UIStore
+      // because this info is used to determine whether or not to mark a song as
+      // liked.
     case 'user_login':
       checkIfLiked(AudioStore.getList());
       break;
 
-    // This action is performed when more data is loaded into the list or the 
-    // view changes.
+      // This action is performed when more data is loaded into the list or the 
+      // view changes.
     case 'new_list_data':
       checkIfLiked(action.data);
       _currentOrder = action.order;
       AudioStore.emitChange();
       break;
 
-    // This action is performed when the current song changes.
+      // This action is performed when the current song changes.
     case 'set_current_song':
       setCurrentSong(action.data, action.isLiked);
       AudioStore.emitChange();
       break;
 
-    // This action is performed when the next page of data is loaded.
+      // This action is performed when the next page of data is loaded.
     case 'next_page':
       _audio = _audio.concat(action.data);
       checkIfLiked(_audio);

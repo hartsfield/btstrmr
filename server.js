@@ -57,12 +57,12 @@ var Audio = require('./models/audio.js');
 // var httpsServer = https.createServer(credentials, app);
 
 // Connection settings for mongodb
-var mongoConf = {
-    // Reconnect on error
-    'auto_reconnect': true,
-    // Set the maximum poolSize for each individual server or proxy connection.
-    'poolSize': 5,
-}
+// var mongoConf = {
+//     // Reconnect on error
+//     'auto_reconnect': true,
+//     // Set the maximum poolSize for each individual server or proxy connection.
+//     'poolSize': 5,
+// }
 
 // Configure the server. 
 var serverConf = {
@@ -71,23 +71,24 @@ var serverConf = {
     // Start is used as a callback function for connecting to mongo and logging
     // a start up message after we start the server.
     start: function() {
+        mongoose.connect(config.database)
         // connect to mongodb
-        mongoose.connect(config.database, mongoConf, function(err) {
-            if (err) {
-                console.log("ERROR!!!".bold.red + " Something went wrong" +
-                    " conecting to mongodb. Make " +
-                    "sure you've started the service.")
-            } else {
-                console.log("connected to mongodb!")
-            };
-            // Log the address the server is running on.
-            console.log('server started @'.blue +
-                ' http(s)://'.green +
-                serverConf.ip + ':'.green +
-                colors.red(serverConf.port) +
-                '/'.green);
+        // mongoose.connect(config.database, mongoConf, function(err) {
+        //     if (err) {
+        //         consolelog("ERROR!!!".bold.red + " Something went wrong" +
+        //             " conecting to mongodb. Make " +
+        //             "sure you've started the service.", err)
+        //     } else {
+        //         console.log("connected to mongodb!")
+        //     };
+        //     // Log the address the server is running on.
+        //     console.log('server started @'.blue +
+        //         ' http(s)://'.green +
+        //         serverConf.ip + ':'.green +
+        //         colors.red(serverConf.port) +
+        //         '/'.green);
 
-        });
+        // });
     }
 };
 
@@ -251,27 +252,27 @@ function sortLikes(original, liked) {
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    // BTSTRMR API
-    //
-    // PUBLIC
-    // /api/getListData    Returns the audio data to the client
-    // /api/nextPage       Returns the next page of data (5 tracks)
-    // /api/signup         Creates a new account
-    // /api/login          Allows existing users to login to an account
-    // /api/checkToken     Checks the users JSON web token
-    //
-    // AUTHORIZED
-    // /likeTrack          Like a track
-    //
-    //
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+// BTSTRMR API
+//
+// PUBLIC
+// /api/getListData    Returns the audio data to the client
+// /api/nextPage       Returns the next page of data (5 tracks)
+// /api/signup         Creates a new account
+// /api/login          Allows existing users to login to an account
+// /api/checkToken     Checks the users JSON web token
+//
+// AUTHORIZED
+// /likeTrack          Like a track
+//
+//
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-    // authRoutes is used for api routes that require authorization, we initialize
-    // the router at the beginning of the API.
-    var authRoutes = express.Router();
+// authRoutes is used for api routes that require authorization, we initialize
+// the router at the beginning of the API.
+var authRoutes = express.Router();
 
 // /api/getListData gets the initial data for the app
 app.post('/api/getListData', function(req, res) {
@@ -283,12 +284,7 @@ app.post('/api/getListData', function(req, res) {
     if (order === 'fresh') {
         Audio.find().sort({
             Posted: -1
-        }).limit(5).exec(function(err, posts) {
-            if (err) {
-                console.log(err);
-            }
-            res.json(posts);
-        });
+        }).limit(5).exec();
         // Get the most liked songs, limited to 5 at a time.
     } else if (order === 'hot') {
         Audio.find().sort({

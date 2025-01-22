@@ -1,0 +1,23 @@
+{
+  "app": {
+    "name": "btstrmr",
+    "command": "",
+    "domain_name": "btstrmr.xyz",
+    "version": "0.01",
+    "env": {},
+    "port": "13400",
+    "alertsOn": true,
+    "tls_enabled": true,
+    "repo": "https://github.com/hartsfield/btstrmr.xyz"
+  },
+  "gcloud": {
+    "command": "gcloud",
+    "zone": "us-central1-a",
+    "project": "mysterygift",
+    "user": "john",
+    "livedir": "/home/john/live/",
+    "instance": "main",
+    "proxy_home": "/home/john/bp/",
+    "proxyConf": ""
+  }
+}
