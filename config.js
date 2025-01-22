@@ -29,7 +29,7 @@ module.exports = {
     database: 'mongodb://localhost:27017/btco3',
     // Not running on port 80 because it requires root, instead, run the iptables
     // commands found at the top of server.js.
-    port: '3400',
+    port: '13400',
     // Make sure to set this properly
     // ip: '10.0.0.130',
     ip: '0.0.0.0',

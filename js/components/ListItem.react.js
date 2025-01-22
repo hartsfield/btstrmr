@@ -25,6 +25,7 @@ var AudioActions = require('../actions/AudioActions');
 var AudioStore = require('../stores/AudioStore.js');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 
+var createReactClass = require('create-react-class');
 // timeSince gets the time since the song was added to the database and
 // properly formats the returned value (eg '6 months' ago)
 function timeSince(date) {
@@ -53,7 +54,7 @@ function timeSince(date) {
 }
 
 // ListItem is a single list item containing a single track.
-var ListItem = React.createClass({
+var ListItem = createReactClass({
   render: function () {
     var posted = timeSince(new Date(this.props.post.Posted));
     // Check if the current item is playing or not.

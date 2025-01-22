@@ -3,7 +3,7 @@
   "description": "web app",
   "main": "js/app.js",
   "license": "MIT",
-  "homepage": "https://btstrmr.com",
+  "homepage": "https://btstrmr.xyz",
   "private": true,
   "ignore": [
     "**/.*",

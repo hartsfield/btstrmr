@@ -20,10 +20,6 @@
 //  SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 
-    // When you first start the Linux server, run these commands so btstrmr doesn't
-    // need to be run as root. 
-    // sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3400
-// sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 3001
 
 var fs = require('fs');
 var path = require('path');
@@ -44,26 +40,6 @@ var jwt = require('jsonwebtoken');
 var config = require('./config.js');
 var User = require('./models/user.js');
 var Audio = require('./models/audio.js');
-// var https = require('https');
-// var privateKey = fs.readFileSync('./auth/privkey.pem', 'utf8');
-// var certificate = fs.readFileSync('./auth/cert.pem', 'utf8');
-// var chain = fs.readFileSync('./auth/chain.pem', 'utf8');
-// var httpServer = http.createServer(app);
-// var credentials = {
-//     key: privateKey,
-//     cert: certificate,
-//     ca: chain
-// };
-// var httpsServer = https.createServer(credentials, app);
-
-// Connection settings for mongodb
-// var mongoConf = {
-//     // Reconnect on error
-//     'auto_reconnect': true,
-//     // Set the maximum poolSize for each individual server or proxy connection.
-//     'poolSize': 5,
-// }
-
 // Configure the server. 
 var serverConf = {
     port: config.port,
@@ -104,9 +80,9 @@ function ensureSecure(req, res, next) {
 
 // Initialize multipartMiddleware used for multipart data.
 var multipartMiddleware = multipart();
-// app.all('*');
+app.all('*');
 // Make sure all connections are secure.
-app.all('*', ensureSecure);
+// app.all('*', ensureSecure);
 // Use compression to comply with google web standards.
 app.use(compression());
 // The code for our website (after it's built).

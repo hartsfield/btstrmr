@@ -24,10 +24,10 @@ var React = require('react');
 var AudioActions = require('../actions/AudioActions.js');
 var UIActions = require('../actions/UIActions.js');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
-
+var createReactClass = require('create-react-class');
 // GlobalPlayer is the player at the top of the page that can be seen anywhere
 // on the site and is used to control the state of the audio
-var GlobalPlayer = React.createClass({
+var GlobalPlayer = createReactClass({
   render: function() {
     // Check if the global player is playing and set the icon appropriately
     var playpause = this.props.isPlaying

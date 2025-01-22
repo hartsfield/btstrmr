@@ -21,9 +21,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 var React = require('react');
+var createReactClass = require('create-react-class');
 
 // A very simple footer, located at the bottom of the page.
-var Footer = React.createClass({
+var Footer = createReactClass({
   render: function () {
     return (
       <div className="foot">

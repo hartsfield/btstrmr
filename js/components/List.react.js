@@ -31,9 +31,10 @@ var title = 'FRESHEST BEATS';
 var titleimg = '../../assets/icons/white/time.svg';
 var useraction = false;
 
+var createReactClass = require('create-react-class');
 // List is the list of songs loaded from the database and presented to the 
 // user.
-var List = React.createClass({
+var List = createReactClass({
 
   getInitialState: function() {
     return {

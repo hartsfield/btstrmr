@@ -44,7 +44,7 @@ var _order_hash = window.location.hash.slice(1, window.location.hash.length);
 // spinDegree is used foor the record icon in the logo. Whenever a song is 
 // playing the record rotates by 3 degree but starts at 0.
 var spinDegree = 0;
-
+var createReactClass = require('create-react-class');
 // getDataForState is run whenever state data is needed or needs to be refreshed
 function getDataForState() {
   return {
@@ -61,7 +61,7 @@ function getDataForState() {
 }
 
 // MyApp is the entry point for most of our components.
-var MyApp = React.createClass({
+var MyApp = createReactClass({
 
   getInitialState: function () {
     // Get state.

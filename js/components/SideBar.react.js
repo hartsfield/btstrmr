@@ -25,9 +25,10 @@ var AudioActions = require('../actions/AudioActions.js');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 var UIActions = require('../actions/UIActions.js');
 
+var createReactClass = require('create-react-class');
 // Sidebar is the sidebar on the left side of the website that contains the nav.
 // It's hidden on mobile and must be toggled by button press.
-var SideBar = React.createClass({
+var SideBar = createReactClass({
 
   render: function () {
     // For mobile devices

@@ -23,9 +23,9 @@
 var React = require('react');
 var AuthActionCreators = require('../actions/AuthActionCreators.js');
 var UserInfoStore = require('../stores/UserInfoStore.js');
-
+var createReactClass = require('create-react-class');
 // SignUp is the component for the signin/login forms
-var SignUp = React.createClass({
+var SignUp = createReactClass({
   // By default, leave password and user name blank and don't show the forms.
   // When the forms are shown, it shows the login form by default.
   getInitialState: function () {
