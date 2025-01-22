@@ -20,9 +20,9 @@
 //  SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 
-// When you first start the Linux server, run these commands so btstrmr doesn't
-// need to be run as root. 
-// sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3400
+    // When you first start the Linux server, run these commands so btstrmr doesn't
+    // need to be run as root. 
+    // sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3400
 // sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 3001
 
 var fs = require('fs');
@@ -251,27 +251,27 @@ function sortLikes(original, liked) {
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-// BTSTRMR API
-//
-// PUBLIC
-// /api/getListData    Returns the audio data to the client
-// /api/nextPage       Returns the next page of data (5 tracks)
-// /api/signup         Creates a new account
-// /api/login          Allows existing users to login to an account
-// /api/checkToken     Checks the users JSON web token
-//
-// AUTHORIZED
-// /likeTrack          Like a track
-//
-//
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+    // BTSTRMR API
+    //
+    // PUBLIC
+    // /api/getListData    Returns the audio data to the client
+    // /api/nextPage       Returns the next page of data (5 tracks)
+    // /api/signup         Creates a new account
+    // /api/login          Allows existing users to login to an account
+    // /api/checkToken     Checks the users JSON web token
+    //
+    // AUTHORIZED
+    // /likeTrack          Like a track
+    //
+    //
+    //////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
 
-// authRoutes is used for api routes that require authorization, we initialize
-// the router at the beginning of the API.
-var authRoutes = express.Router();
+    // authRoutes is used for api routes that require authorization, we initialize
+    // the router at the beginning of the API.
+    var authRoutes = express.Router();
 
 // /api/getListData gets the initial data for the app
 app.post('/api/getListData', function(req, res) {
@@ -517,12 +517,12 @@ authRoutes.post('/likeTrack', function(req, res) {
             }, function(err, results) {
                 if (results.nModified) {
                     Audio.update({
-                            "_id": req.body.post
-                        }, {
-                            $inc: {
-                                "Likes": 1
-                            }
-                        },
+                        "_id": req.body.post
+                    }, {
+                        $inc: {
+                            "Likes": 1
+                        }
+                    },
                         function(err, model) {
                             if (err) console.log(err);
                             res.json({
@@ -540,12 +540,12 @@ authRoutes.post('/likeTrack', function(req, res) {
                         }
                     }, function(err, results) {
                         Audio.update({
-                                "_id": req.body.post
-                            }, {
-                                $inc: {
-                                    "Likes": -1
-                                }
-                            },
+                            "_id": req.body.post
+                        }, {
+                            $inc: {
+                                "Likes": -1
+                            }
+                        },
                             function(err, model) {
                                 if (err) console.log(err);
                                 res.json({
